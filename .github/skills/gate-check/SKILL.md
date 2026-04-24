@@ -6,6 +6,10 @@ user-invocable: true
 model: GPT-5.4 xhigh (copilot)
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Phase Gate Validation
 
 This skill validates whether the project is ready to advance to the next development
@@ -294,7 +298,7 @@ For items that can't be automatically verified, **ask the user**:
 
 ## 4b. Director Panel Assessment
 
-Before generating the final verdict, spawn all four directors as **parallel subagents** via Task using the parallel gate protocol defined in this skill. Issue all four Task calls simultaneously — do not wait for one before starting the next.
+Before generating the final verdict, spawn all four directors as **parallel subagents** using the parallel gate protocol defined in this skill. Launch all four subagents before waiting for the first result.
 
 **Spawn in parallel:**
 

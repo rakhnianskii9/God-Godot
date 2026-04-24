@@ -9,6 +9,10 @@ context: |
 model: GPT-5.4 xhigh (copilot)
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Parse Arguments
 
 Read the argument for the target version or sprint number. If a version is given, use the corresponding git tag. If a sprint number is given, use the sprint date range.

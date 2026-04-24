@@ -4,6 +4,10 @@ description: 'Use when validating workspace orchestration and control-plane file
 user-invocable: true
 disable-model-invocation: false
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Orchestration QA Skill
 
 Use this skill when validating that agent orchestration is configured and functioning in the workspace.
@@ -39,14 +43,15 @@ Goal: validate the whole orchestration control plane, not just syntax. The skill
 - [ ] Skill descriptions contain trigger phrases strong enough for discovery
 - [ ] Skill scope matches the file type: workflow bundle vs always-on instruction vs agent responsibility is not confused
 
-### 4. MCP Servers (`.github/mcp/mcp.json`)
+### 4. MCP Runtime (`.vscode/mcp.json` + `.vscode/settings.json`)
 - [ ] JSON is valid and parseable
-- [ ] Every MCP server referenced in agent `tools:` exists in mcp.json
-- [ ] No hardcoded secrets in mcp.json args (only env var references like `${ENV_VAR}`)
+- [ ] Every MCP server referenced in agent `tools:` exists in the active runtime config (`.vscode/mcp.json`) or in built-in GitHub MCP settings
+- [ ] No hardcoded secrets in MCP args/env (only env var references like `${ENV_VAR}`)
 - [ ] Server commands point to valid executables (npx, node, python3, etc.)
-- [ ] Control-plane summaries are truthful: MCP servers claimed in `AGENTS.md`, instructions, or skills actually exist in `mcp.json`
+- [ ] Control-plane summaries are truthful: MCP servers claimed in docs actually exist in `.vscode/mcp.json` or `.vscode/settings.json`
 - [ ] No stale platform claims: removed or never-configured servers are not advertised as available
 - [ ] Environment variable references are consistent with the current runtime contract and do not point to retired paths
+- [ ] If `.github/mcp/mcp.json` exists as a mirror, it does not drift from `.vscode/mcp.json`
 
 ### 5. Hooks (`.github/hooks/`)
 - [ ] `hooks.json` is valid JSON with `PreToolUse` and/or `PostToolUse` arrays
@@ -57,18 +62,18 @@ Goal: validate the whole orchestration control plane, not just syntax. The skill
 - [ ] Hook references use real relative paths and do not point to deleted scripts
 
 ### 6. Operational Orchestration Artifacts
-- [ ] `.github/bin/update-ide` matches the current control plane and does not reference retired systems, old paths, or removed editors/integrations
-- [ ] `.github/bin/start-scorecard-loop` does not reference removed orchestration layers as if they were active
+- [ ] If `.github/bin/update-ide` exists, it matches the current control plane and does not reference retired systems, old paths, or removed editors/integrations
+- [ ] If `.github/bin/start-scorecard-loop` exists, it does not reference removed orchestration layers as if they were active
 - [ ] If `.github/tasks.md` is absent or `task-manager` is not active, docs and MCP configs do not claim it as a source of truth
 - [ ] `.github/context/*` contains only active context artifacts used by the current orchestration model
-- [ ] `.github/context/project-tree.md` reflects the current `.github` structure after orchestration changes
+- [ ] If `.github/context/project-tree.md` exists, it reflects the current `.github` structure after orchestration changes
 
 ### 7. Cross-File Consistency
-- [ ] `instructions/copilot-instructions.md` exists and references `instructions/code-rules.instructions.md`
+- [ ] `.github/instructions/copilot-instructions.md` exists and references `.github/instructions/code-rules.instructions.md`
 - [ ] If `agents/AGENTS.md` exists, it lists only actual agents from `.github/agents/`; if it does not exist, no active doc claims it exists
 - [ ] If agent registry files exist, their model names match frontmatter `model` values
 - [ ] Any skill routing table that exists in active docs or agents matches actual skills in `.github/skills/`
-- [ ] Canonical paths are correct everywhere: no stale references to `.github/AGENTS.md` or `.github/copilot-instructions.md` if the real files live under subdirectories
+- [ ] Canonical paths are correct everywhere: no stale references to root-level agent-registry or copilot-instructions paths if the real files live under subdirectories
 - [ ] Registry summaries do not claim capabilities absent from actual config (for example MCP families, hooks, scripts, or user-invocable agents)
 
 ### 8. Orchestration Doctrine Consistency

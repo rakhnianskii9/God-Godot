@@ -4,6 +4,10 @@ description: 'Use when tracing code reality in this repo: where defined, who cal
 user-invocable: true
 disable-model-invocation: false
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Code Forensics (Search + Usages)
 
 Use this skill for evidence-first navigation in a large repo: locate definitions, usages, boundaries, and execution paths before coding or review.

@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/scripts/core/**", "my-game/scripts/autoload/**"]
+name: "engine-code"
+description: "Use when editing engine-level Godot code, reusable core systems, autoload infrastructure, low-level runtime services, or performance-sensitive engine abstractions."
+applyTo: "my-game/addons/**, my-game/scripts/autoload/**, my-game/scripts/core/**, my-game/scripts/services/**"
 ---
 
 # Engine Code Rules

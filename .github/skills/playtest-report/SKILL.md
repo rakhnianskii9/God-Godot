@@ -5,6 +5,10 @@ argument-hint: "[new|analyze path-to-notes] [--review full|lean|solo]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Parse Arguments
 
 Resolve the review mode (once, store for all gate spawns this run):
@@ -120,7 +124,7 @@ Present the categorized list, then route:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode." Proceed to Phase 4 (save the report).
 - `full` → spawn as normal.
 
-After categorising findings, spawn `creative-director` via Task using gate **CD-PLAYTEST**.
+After categorising findings, spawn `creative-director` as a subagent using gate **CD-PLAYTEST**.
 
 Pass: the structured report content, game pillars and core fantasy (from `design/gdd/game-concept.md`), the specific hypothesis being tested.
 

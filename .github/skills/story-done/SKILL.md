@@ -5,6 +5,10 @@ argument-hint: "[story-file-path] [--review full|lean|solo]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Story Done
 
 This skill closes the loop between design and implementation. Run it at the end
@@ -231,7 +235,7 @@ For each deviation found, categorize:
 - `lean` → skip (not a PHASE-GATE). Note: "QL-TEST-COVERAGE skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-After completing the deviation checks in Phase 4, spawn `qa-lead` via Task using gate **QL-TEST-COVERAGE**.
+After completing the deviation checks in Phase 4, spawn `qa-lead` as a subagent using gate **QL-TEST-COVERAGE**.
 
 Pass:
 - The story file path and story type
@@ -257,7 +261,7 @@ Skip this phase for Config/Data stories (no code tests required).
 - `lean` → skip (not a PHASE-GATE). Note: "TD-CODE-REVIEW skipped — Lean mode." Proceed to Phase 6 (completion report).
 - `full` → spawn as normal.
 
-Spawn `technical-director` via Task using gate **TD-CODE-REVIEW**.
+Spawn `technical-director` as a subagent using gate **TD-CODE-REVIEW**.
 
 Pass: implementation file paths, story file path, relevant GDD section, governing ADR.
 

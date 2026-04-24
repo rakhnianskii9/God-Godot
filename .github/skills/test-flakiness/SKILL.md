@@ -5,6 +5,10 @@ argument-hint: "[ci-log-path | scan | registry]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Test Flakiness Detection
 
 A flaky test is one that sometimes passes and sometimes fails without any code

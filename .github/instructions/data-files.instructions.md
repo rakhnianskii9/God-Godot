@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/data/**", "**/*.json"]
+name: "data-files"
+description: "Use when editing gameplay data files, schemas, balance tables, JSON content, or other structured game data in this workspace."
+applyTo: "my-game/**/*.json, my-game/**/*.csv, my-game/**/*.tsv, my-game/**/*.cfg, my-game/**/*.ini, my-game/**/*.tres, my-game/**/*.res"
 ---
 
 # Data File Rules

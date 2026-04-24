@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/scripts/network/**", "my-game/scripts/multiplayer/**"]
+name: "network-code"
+description: "Use when editing multiplayer or network gameplay code: replication, authority, prediction, rollback, packet validation, or networking infrastructure."
+applyTo: "my-game/scripts/**, my-game/scenes/**"
 ---
 
 # Network Code Rules

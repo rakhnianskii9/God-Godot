@@ -5,6 +5,10 @@ argument-hint: "[duration: 30m | 1h | 2h | 4h] [focus: memory | stability | bala
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Soak Test
 
 A soak test (also called an endurance test) is an extended play session run

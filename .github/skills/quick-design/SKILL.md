@@ -5,6 +5,10 @@ argument-hint: "[brief description of the change]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Quick Design
 
 This is the **lightweight design path** for changes that don't need a full GDD.

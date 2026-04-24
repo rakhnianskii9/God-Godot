@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/scripts/**", "my-game/scenes/**"]
+name: "gameplay-code"
+description: "Use when editing gameplay code or scenes in my-game: mechanics, player systems, world interactions, state flow, or config-driven behavior."
+applyTo: "my-game/scripts/**, my-game/scenes/**"
 ---
 
 # Gameplay Code Rules

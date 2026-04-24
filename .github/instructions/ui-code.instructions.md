@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/scenes/ui/**", "my-game/scripts/ui/**", "**/ui/**"]
+name: "ui-code"
+description: "Use when editing UI scenes, HUD flows, menus, accessibility-facing UI behavior, or other presentation-layer interface code in Godot."
+applyTo: "my-game/scenes/**, my-game/scripts/**"
 ---
 
 # UI Code Rules

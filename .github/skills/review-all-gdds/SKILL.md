@@ -6,6 +6,10 @@ user-invocable: true
 model: GPT-5.4 xhigh (copilot)
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Review All GDDs
 
 This skill reads every system GDD simultaneously and performs two complementary
@@ -100,9 +104,9 @@ If fewer than 2 system GDDs exist, stop:
 ### Parallel Execution
 
 Phase 2 (Consistency) and Phase 3 (Design Theory) are independent — they read
-the same GDD inputs but produce separate reports. Spawn both as parallel Task
-agents simultaneously rather than waiting for Phase 2 to complete before
-starting Phase 3. Collect both results before writing the combined report.
+the same GDD inputs but produce separate reports. Spawn both as parallel
+subagents rather than waiting for Phase 2 to complete before starting Phase 3.
+Collect both results before writing the combined report.
 
 ---
 

@@ -6,6 +6,10 @@ user-invocable: true
 agent: game-designer
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Identify Balance Domain
 
 Determine the balance domain from `$ARGUMENTS[0]`:

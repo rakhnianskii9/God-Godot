@@ -1,5 +1,7 @@
 ---
-applyTo: ["prototypes/**", "my-game/prototypes/**"]
+name: "prototype-code"
+description: "Use when building or revising throwaway prototypes, mechanic experiments, or rapid-validation slices that are intentionally outside production standards."
+applyTo: "my-game/prototypes/**, prototypes/**"
 ---
 
 # Prototype Code Standards (Relaxed)

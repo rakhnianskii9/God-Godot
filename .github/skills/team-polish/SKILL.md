@@ -4,6 +4,10 @@ description: "Orchestrate the polish team: coordinates performance-analyst, tech
 argument-hint: "[feature or area to polish]"
 user-invocable: true
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 If no argument is provided, output usage guidance and exit without spawning any agents:
 > Usage: `/team-polish [feature or area]` — specify the feature or area to polish (e.g., `combat`, `main menu`, `inventory system`, `level-1`). Do not use `vscode_askQuestions` here; output the guidance directly.
 
@@ -24,7 +28,7 @@ The user must approve before moving to the next phase.
 
 ## How to Delegate
 
-Use the Task tool to spawn each team member as a subagent:
+Use subagents to delegate to each team member:
 - `subagent_type: performance-analyst` — Profiling, optimization, memory analysis
 - `subagent_type: godot-specialist` — Engine-level fixes for rendering, memory, resource loading
 - `subagent_type: technical-artist` — VFX polish, shader optimization, visual quality
@@ -90,7 +94,7 @@ Delegate to **qa-lead**:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned subagent returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -109,8 +113,9 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (performance reports, test results, evidence docs) are delegated to
-sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+the sub-agents used in this pipeline. Each sub-agent follows the workspace write
+policy and only asks before editing when scope or destination ambiguity makes
+approval materially necessary. This orchestrator does not write files directly.
 
 ## Output
 

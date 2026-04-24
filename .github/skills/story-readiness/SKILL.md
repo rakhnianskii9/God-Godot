@@ -6,6 +6,10 @@ user-invocable: true
 model: GPT-5.4 xhigh (copilot)
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Story Readiness
 
 This skill validates that a story file contains everything a developer needs
@@ -324,7 +328,7 @@ Apply the review mode resolved in Phase 0 before spawning QL-STORY-READY:
 - `lean` → skip. Note: "QL-STORY-READY skipped — Lean mode." Proceed to close.
 - `full` → spawn as normal.
 
-Spawn `qa-lead` via Task using gate **QL-STORY-READY**.
+Spawn `qa-lead` as a subagent using gate **QL-STORY-READY**.
 
 Pass the following context:
 - Story title

@@ -5,6 +5,10 @@ argument-hint: "[engine] | [engine version] | refresh | upgrade [old-version] [n
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 When this skill is invoked:
 
 ## 1. Parse Arguments
@@ -82,8 +86,7 @@ If the user wants to go deeper, answer concept-specific questions about Godot co
 Once the engine is chosen:
 
 - If version was provided, use it
-- If no version provided, use WebSearch to find the latest stable release:
-  - Search: `"[engine] latest stable version [current year]"`
+- If no version provided, use the official engine release page or release notes to find the latest stable release.
   - Confirm with the user: "The latest stable [engine] is [version]. Use this?"
 
 ---
@@ -299,7 +302,7 @@ The section should instruct the agent to:
 1. Read `.github/context/VERSION.md`
 2. Check deprecated APIs before suggesting code
 3. Check breaking changes for relevant version transitions
-4. Use WebSearch to verify uncertain APIs
+4. Use official docs or Context7 to verify uncertain APIs
 
 ---
 
@@ -309,7 +312,7 @@ If invoked as `/setup-engine refresh`:
 
 1. Read the existing `.github/context/VERSION.md` to get
    the current engine and version
-2. Use WebSearch to check for:
+2. Use official release notes, migration docs, or Context7 to check for:
    - New engine releases since last verification
    - Updated migration guides
    - Newly deprecated APIs
@@ -332,13 +335,12 @@ file.
 
 ### Step 2 — Fetch Migration Guide
 
-Use WebSearch and WebFetch to locate the official migration guide between
+Use the official migration guide, release notes, and breaking-change docs between
 `old-version` and `new-version`:
 
-- Search: `"[engine] [old-version] to [new-version] migration guide"`
-- Search: `"[engine] [new-version] breaking changes changelog"`
-- Fetch the migration guide URL from VERSION.md if one is already recorded,
-  or use the URL found via search.
+- Prefer the migration guide URL already recorded in VERSION.md when present.
+- Otherwise locate the guide from the engine's official docs or release pages.
+- Cross-check breaking changes and changelog notes before drafting the upgrade plan.
 
 Extract: renamed APIs, removed APIs, changed defaults, behavior changes, and
 any "must migrate" items.
@@ -454,11 +456,11 @@ Verdict: **COMPLETE** — engine configured and curated reference docs populated
 
 ## Guardrails
 
-- NEVER guess an engine version — always verify via WebSearch or user confirmation
+- NEVER guess an engine version — always verify via official docs/release pages or user confirmation
 - NEVER overwrite existing reference docs without asking — append or update
 - If reference docs already exist for a different engine, ask before replacing
 - Always show the user what you're about to change before making project-context edits
-- If WebSearch returns ambiguous results, show the user and let them decide
+- If the official sources are ambiguous, show the evidence to the user and let them decide
 - When the user chose **GDScript**: copy the GDScript workspace engine-record template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. If native extensions become necessary later, route that decision through `technical-director` — it still does not make C++ a primary project language.
 
 ---

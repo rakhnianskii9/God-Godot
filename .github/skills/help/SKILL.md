@@ -8,6 +8,10 @@ context: |
 model: GPT-5.4 xhigh (copilot)
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Studio Help — What Do I Do Next?
 
 This skill is read-only — it reports findings but writes no files.

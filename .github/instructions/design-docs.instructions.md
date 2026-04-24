@@ -1,5 +1,7 @@
 ---
-applyTo: ["design/gdd/**", "docs/design/**"]
+name: "design-docs"
+description: "Use when writing or revising game design documents, GDD sections, mechanics specs, tuning notes, formulas, or acceptance criteria."
+applyTo: "my-game/**/*.md, production/**/*.md, design/**/*.md, docs/**/*.md"
 ---
 
 # Design Document Rules

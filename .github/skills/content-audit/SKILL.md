@@ -6,6 +6,10 @@ user-invocable: true
 agent: producer
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 When this skill is invoked:
 
 Parse the argument:

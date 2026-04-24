@@ -6,6 +6,10 @@ user-invocable: true
 agent: technical-director
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Create Architecture
 
 This skill produces `docs/architecture/architecture.md` — the master architecture
@@ -343,7 +347,7 @@ Apply gate **TD-ARCHITECTURE** as a self-review. Check all four criteria from th
 - `lean` → skip (not a PHASE-GATE). Note: "TD-FEASIBILITY skipped — Lean mode." Proceed to Phase 8 handoff.
 - `full` → spawn as normal.
 
-**Step 2 — Spawn `technical-director` via Task using gate TD-FEASIBILITY:**
+**Step 2 — Spawn `technical-director` as a subagent using gate TD-FEASIBILITY:**
 
 Pass: architecture document path, technical requirements baseline summary, ADR list.
 

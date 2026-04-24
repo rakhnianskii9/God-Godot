@@ -7,6 +7,10 @@ context: |
   !git log --oneline --since="2 weeks ago" 2>/dev/null
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Parse Arguments
 
 Determine whether this is a sprint retrospective (`sprint-N`) or a milestone retrospective (`milestone-name`).

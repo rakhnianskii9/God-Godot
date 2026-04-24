@@ -5,6 +5,10 @@ argument-hint: "[system-name | all | scaffold]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Test Helpers
 
 Writing test cases is faster and more consistent when common setup, teardown,

@@ -5,6 +5,10 @@ argument-hint: "[full | since-last-review | entity:<name> | item:<name>]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Consistency Check
 
 Detects cross-document inconsistencies by comparing all GDDs against the

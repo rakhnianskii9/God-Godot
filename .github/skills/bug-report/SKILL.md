@@ -5,6 +5,10 @@ argument-hint: "[description] | analyze [path-to-file]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Parse Arguments
 
 Determine the mode from the argument:

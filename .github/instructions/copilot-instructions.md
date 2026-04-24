@@ -22,8 +22,8 @@
 ## Оркестрация
 
 - В `.github/agents/` присутствуют 30 custom agents для Godot/game-dev workflow.
-- User-facing surface намеренно сжата: в picker остаются только `game-orchestrator` и manager-агенты, а leaf-специалисты вызываются через их `agents:` graph.
-- Эти agent-файлы уже подключены в репо, но их body-тексты ещё не полностью нормализованы под нативный Copilot tool-contract; при правках считать код и реальный tool registry источником истины, а не legacy Claude-formулировки внутри agent markdown.
+- Текущий user-facing surface: `game-orchestrator`, `producer`, `technical-director`, `creative-director`, `game-designer`, `art-director`, `ux-designer` и `godot-specialist`. Leaf-специалисты и feature-агенты вызываются через их `agents:` graph.
+- Эти agent-файлы уже подключены в репо; при расхождении между markdown-прозой и реальным tool registry источником истины считать код и реальный tool registry.
 - Не ссылаться на удалённые custom agents, отсутствующие agent registry-файлы или несуществующие orchestration-режимы как на активные элементы репо.
 - Для code forensics и impact analysis — skill `octocode-code-forensics`.
 

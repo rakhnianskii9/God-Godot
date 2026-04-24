@@ -96,6 +96,73 @@
 Если задача уже узкая, можно не идти каждый раз через `game-orchestrator`.
 Но если запрос смешанный, это все еще лучший вход.
 
+## Как раскладывать `godot-lib-pazzle` по агентам
+
+Ниже уже не общая orchestration-схема, а практическая карта по локальному vendor set из [godot-lib-pazzle/README.md](./godot-lib-pazzle/README.md).
+
+Как это читать:
+
+- `Кого звать первым` — агент, с которого лучше начинать разговор о библиотеке.
+- `Кто обычно продолжает` — кто чаще всего подхватывает решение после первичного выбора.
+- `alternatives/` считать частью той же строки: локальная замена наследует того же владельца, что и основная библиотека.
+- Если вопрос не про конкретную библиотеку, а про смешанную фичу, все еще начинай с `game-orchestrator`.
+
+### Архитектура, gameplay и AI
+
+| Библиотека | Кого звать первым | Кто обычно продолжает | Когда это основная связка |
+|---|---|---|---|
+| `godot-statecharts` | `game-designer` | `technical-director`, `godot-specialist`, `gameplay-programmer`, `ai-programmer` | Когда нужно разложить player/enemy/UI flow по состояниям и потом встроить это в Godot-архитектуру |
+| `beehave` | `game-designer` | `ai-programmer`, `godot-specialist`, `performance-analyst` | Когда врагам или NPC уже мало FSM и нужен поведенческий выбор |
+| `godot-steering-ai-framework` | `ai-programmer` | `godot-specialist`, `performance-analyst` | Когда проблема уже не в выборе действия, а в пространственном движении, avoidance и pursuit |
+| `pandora` | `game-designer` | `systems-designer`, `technical-director`, `godot-specialist`, `gameplay-programmer` | Когда данные, баланс и сущности надо вытащить из кода в data-driven слой |
+| `gloot` | `game-designer` | `ux-designer`, `godot-specialist`, `gameplay-programmer` | Когда появляются предметы, слоты, стаки, сундуки и inventory UI |
+| `EventBus` | `technical-director` | `godot-specialist`, `tools-programmer`, `gameplay-programmer` | Когда нужно развязать UI, звук, квесты и gameplay-системы по событиям |
+| `Godot-Component-System` | `technical-director` | `godot-specialist`, `gameplay-programmer` | Когда проект реально уходит в component-heavy/data-driven архитектуру, а не просто в node tree |
+
+### Ввод и mobile
+
+| Библиотека | Кого звать первым | Кто обычно продолжает | Когда это основная связка |
+|---|---|---|---|
+| `godot_input_helper` | `ux-designer` | `accessibility-specialist`, `godot-specialist`, `gameplay-programmer` | Когда нужно унифицировать keyboard/gamepad/touch input и rebinding |
+| `godot-touch-input-manager` | `ux-designer` | `accessibility-specialist`, `godot-specialist`, `gameplay-programmer` | Когда игра реально идет в mobile и нужны жесты выше уровня сырых touch events |
+| `virtual-joystick-godot` | `ux-designer` | `accessibility-specialist`, `gameplay-programmer` | Когда нужен mobile movement/aim stick и важно не сломать player feel |
+| `godot-google-play-billing` | `producer` | `technical-director`, `devops-engineer`, `feature/godot-csharp-specialist` | Когда обсуждаются Android IAP, store constraints, release risk и platform integration |
+
+### Сохранения, переходы и runtime-скелет
+
+| Библиотека | Кого звать первым | Кто обычно продолжает | Когда это основная связка |
+|---|---|---|---|
+| `Godot-Save-System` | `technical-director` | `godot-specialist`, `gameplay-programmer`, `qa-lead` | Когда нужно быстро ввести persistence и сразу думать о versioning, restore и regression risk |
+| `scene_manager` | `technical-director` | `godot-specialist`, `ux-designer`, `gameplay-programmer` | Когда проект перестает быть одной сценой и появляется navigation flow между меню, уровнями и loading transitions |
+| `godot-game-template` | `technical-director` | `producer`, `godot-specialist` | Когда нужен architectural bootstrap или референс структуры проекта, а не точечный addon |
+
+### Камера, UI, диалоги и presentation
+
+| Библиотека | Кого звать первым | Кто обычно продолжает | Когда это основная связка |
+|---|---|---|---|
+| `phantom-camera` | `art-director` | `technical-artist`, `godot-specialist`, `gameplay-programmer` | Когда камера уже влияет на feel, staging, combat readability или cutscene presentation |
+| `godot_dialogue_manager` | `narrative-director` | `ux-designer`, `godot-specialist`, `gameplay-programmer` | Когда диалог уже не просто текст, а ветвления, переменные, UI и narrative flow |
+| `godot_sound_manager` | `audio-director` | `godot-specialist`, `gameplay-programmer`, `technical-artist` | Когда музыка и SFX надо централизовать, а не разбрасывать по сценам |
+| `GoTween` | `ux-designer` | `technical-artist`, `gameplay-programmer` | Когда нужен UI polish, feedback, tween chains и motion orchestration |
+| `godot-accessibility` | `ux-designer` | `accessibility-specialist`, `godot-specialist` | Когда вопрос в screen reader, accessible UI flow и специальных assistive patterns |
+| `scatter` | `level-designer` | `technical-artist`, `godot-specialist` | Когда уровни, декор или spawn layout начинают собираться полуавтоматически |
+
+### Тесты, debug и эксплуатация
+
+| Библиотека | Кого звать первым | Кто обычно продолжает | Когда это основная связка |
+|---|---|---|---|
+| `gut` | `qa-lead` | `technical-director`, `gameplay-programmer`, `godot-specialist` | Когда игровая логика доросла до regression suite и ручных проверок уже мало |
+| `PankuConsole` | `tools-programmer` | `qa-lead`, `gameplay-programmer` | Когда нужна внутриигровая dev-console для debug builds и быстрых ручных сценариев |
+| `godot-logger` | `tools-programmer` | `technical-director`, `qa-lead`, `performance-analyst` | Когда нужен нормальный trail runtime-событий, а `print` уже не хватает |
+
+### Короткое правило выбора
+
+- Если библиотека меняет правила игры, баланс или состав систем, первым почти всегда будет `game-designer`.
+- Если библиотека меняет архитектуру, интеграцию, scene tree, data flow или runtime contracts, первым почти всегда будет `technical-director` или `godot-specialist`.
+- Если библиотека меняет HUD, input, readability, диалоговый UX или accessibility, первым почти всегда будет `ux-designer`.
+- Если библиотека меняет подачу, камеру, звук или визуальный polish, первым почти всегда будет `art-director` или `audio-director`.
+- Если библиотека нужна для тестов, debug-инструментов, release или platform pipeline, первым почти всегда будет `qa-lead`, `tools-programmer`, `devops-engineer` или `producer`.
+
 ## Что входит в каждого верхнеуровнего
 
 Ниже уже не общая схема, а внутренняя декомпозиция: кто внутри кого живет и за что обычно отвечает.

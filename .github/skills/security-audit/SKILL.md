@@ -6,6 +6,10 @@ user-invocable: true
 agent: security-engineer
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Security Audit
 
 Security is not optional for any shipped game. Even single-player games have
@@ -43,7 +47,7 @@ Read the active workspace contract to determine:
 
 ## Phase 2: Spawn Security Engineer
 
-Spawn `security-engineer` via Task. Pass:
+Spawn `security-engineer` as a subagent. Pass:
 - The audit scope/mode
 - Engine and language from technical preferences
 - A manifest of all source directories: `src/`, `assets/data/`, any config files

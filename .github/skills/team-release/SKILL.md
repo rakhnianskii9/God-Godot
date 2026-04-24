@@ -4,6 +4,10 @@ description: "Orchestrate the release team: coordinates producer, qa-lead, and d
 argument-hint: "[version number or 'next']"
 user-invocable: true
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 **Argument check:** If no version number is provided:
 1. Read the most recent file in `production/milestones/` (if it exists) to infer the target version.
 2. If a version is found: report "No version argument provided — inferred [version] from milestone data. Proceeding." Then confirm with `vscode_askQuestions`: "Releasing [version]. Is this correct?"
@@ -25,7 +29,7 @@ The user must approve before moving to the next phase.
 
 ## How to Delegate
 
-Use the Task tool to spawn each team member as a subagent:
+Use subagents to delegate to each team member:
 - `subagent_type: qa-lead` — Test sign-off, regression suite, release quality gate
 - `subagent_type: devops-engineer` — Build pipeline, artifacts, deployment automation
 - `subagent_type: security-engineer` — Security audit for online/multiplayer/data features
@@ -105,7 +109,7 @@ Delegate to **producer** (in parallel with deployment):
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned subagent returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

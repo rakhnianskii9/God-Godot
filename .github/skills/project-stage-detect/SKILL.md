@@ -7,6 +7,10 @@ model: GPT-5.4 xhigh (copilot)
 # Read-only diagnostic skill — no specialist agent delegation needed
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Project Stage Detection
 
 This skill scans your project to determine its current development stage, completeness

@@ -6,6 +6,10 @@ user-invocable: true
 agent: technical-director
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Load Target Files
 
 Read the target file(s) in full. Read `.github/instructions/code-rules.instructions.md` and `.github/instructions/copilot-instructions.md` for project coding standards.
@@ -82,7 +86,7 @@ Identify the system category (engine, gameplay, AI, networking, UI, tools) and e
 
 ## Phase 7: Specialist Reviews (Parallel)
 
-Spawn all applicable specialists simultaneously via Task — do not wait for one before starting the next.
+Spawn all applicable specialists as subagents — do not wait for one before starting the next.
 
 ### Engine Specialists
 
@@ -97,7 +101,7 @@ Also spawn the **Primary Specialist** for any file touching engine architecture 
 
 ### QA Testability Review
 
-For Logic and Integration stories, also spawn `qa-lead` via Task in parallel with the engine specialists. Pass:
+For Logic and Integration stories, also spawn `qa-lead` as a subagent in parallel with the engine specialists. Pass:
 - The implementation files being reviewed
 - The story's `## QA Test Cases` section (the pre-written test specs from qa-lead)
 - The story's `## Acceptance Criteria`

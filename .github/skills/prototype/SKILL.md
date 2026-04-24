@@ -7,6 +7,10 @@ agent: prototyper
 isolation: worktree
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Define the Question
 
 Resolve the review mode (once, store for all gate spawns this run):
@@ -120,7 +124,7 @@ If yes, write the file.
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode." Proceed to Phase 7 summary with the prototyper's recommendation as the final verdict.
 - `full` → spawn as normal.
 
-Spawn `creative-director` via Task using gate **CD-PLAYTEST**.
+Spawn `creative-director` as a subagent using gate **CD-PLAYTEST**.
 
 Pass: the full REPORT.md content, the original design question, game pillars and core fantasy from `design/gdd/game-concept.md` (if it exists).
 

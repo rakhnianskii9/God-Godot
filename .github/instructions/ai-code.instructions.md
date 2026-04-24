@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/scripts/ai/**", "**/ai/**"]
+name: "ai-code"
+description: "Use when editing gameplay AI in Godot scripts or scenes: NPC behavior, behavior trees, steering, perception, squad logic, decision-making, or combat AI."
+applyTo: "my-game/scripts/**, my-game/scenes/**"
 ---
 
 # AI Code Rules

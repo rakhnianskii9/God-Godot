@@ -5,6 +5,10 @@ argument-hint: "[level name or area to design]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 When this skill is invoked:
 
 **Decision Points:** At each step transition, use `vscode_askQuestions` to present
@@ -24,7 +28,7 @@ The user must approve before moving to the next step.
 
 ## How to Delegate
 
-Use the Task tool to spawn each team member as a subagent:
+Use subagents to delegate to each team member:
 - `subagent_type: narrative-director` — Narrative purpose, characters, emotional arc, lore context, environmental storytelling, world rules
 - `subagent_type: level-designer` — Spatial layout, pacing, encounters, navigation
 - `subagent_type: systems-designer` — Enemy compositions, loot tables, difficulty balance
@@ -38,7 +42,7 @@ Always provide full context in each agent's prompt (game concept, pillars, exist
 
 ### Step 1: Narrative + Visual Direction (narrative-director + art-director, parallel)
 
-Spawn both agents simultaneously — issue both Task calls before waiting for any result.
+Spawn both agents simultaneously — launch both subagents before waiting for any result.
 
 Spawn the `narrative-director` agent to:
 - Define the narrative purpose of this area (what story beats happen here?)
@@ -140,8 +144,9 @@ Spawn the `qa-lead` agent to:
 ## File Write Protocol
 
 All file writes (level design docs, narrative docs, test checklists) are delegated
-to sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+to the sub-agents used in this pipeline. Each sub-agent follows the workspace
+write policy and only asks before editing when scope or destination ambiguity
+makes approval materially necessary. This orchestrator does not write files directly.
 
 Verdict: **COMPLETE** — level design document produced and all team outputs compiled.
 Verdict: **BLOCKED** — one or more agents blocked; partial report produced with unresolved items listed.
@@ -154,7 +159,7 @@ Verdict: **BLOCKED** — one or more agents blocked; partial report produced wit
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned subagent returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

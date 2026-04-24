@@ -1,5 +1,7 @@
 ---
-applyTo: ["my-game/**/*.gdshader", "my-game/assets/shaders/**"]
+name: "shader-code"
+description: "Use when editing Godot shader files, shader materials, render effects, or shader assets in my-game."
+applyTo: "my-game/**/*.gdshader"
 ---
 
 # Shader Code Standards

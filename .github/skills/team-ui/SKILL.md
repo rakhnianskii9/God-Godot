@@ -4,6 +4,10 @@ description: "Orchestrate the UI team through the full UX pipeline: from UX spec
 argument-hint: "[UI feature description]"
 user-invocable: true
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 When this skill is invoked, orchestrate the UI team through a structured pipeline.
 
 **Decision Points:** At each phase transition, use `vscode_askQuestions` to present
@@ -25,7 +29,7 @@ The user must approve before moving to the next phase.
 
 ## How to Delegate
 
-Use the Task tool to spawn each team member as a subagent:
+Use subagents to delegate to each team member:
 - `subagent_type: ux-designer` — User flows, wireframes, accessibility, input handling, UI framework, screens, widgets, data binding
 - `subagent_type: art-director` — Visual style, layout polish, art bible consistency
 - `subagent_type: [UI engine specialist]` — Engine-specific UI pattern validation for Godot screens, controls, and scene structure
@@ -131,7 +135,7 @@ All three review streams must report before proceeding to Phase 5.
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned subagent returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

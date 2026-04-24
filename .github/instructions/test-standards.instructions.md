@@ -1,5 +1,7 @@
 ---
-applyTo: ["tests/**", "my-game/tests/**"]
+name: "test-standards"
+description: "Use when writing or revising automated tests, test fixtures, regression coverage, or other test evidence in this workspace."
+applyTo: "my-game/tests/**, tests/**, my-game/**/*.test.*, my-game/**/*.spec.*"
 ---
 
 # Test Standards

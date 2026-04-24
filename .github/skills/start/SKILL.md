@@ -5,6 +5,10 @@ argument-hint: "[no arguments]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Guided Onboarding
 
 This skill writes one file: `production/review-mode.txt` (review mode config set in Phase 3b).

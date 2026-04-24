@@ -6,6 +6,10 @@ user-invocable: true
 # Read-only diagnostic skill — no specialist agent delegation needed
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Read Standards
 
 Read the art bible or asset standards from the relevant design docs and the workspace-contract naming conventions.

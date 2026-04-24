@@ -6,6 +6,10 @@ user-invocable: true
 agent: ux-designer
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Overview
 
 Validates UX design documents before they enter the implementation pipeline.

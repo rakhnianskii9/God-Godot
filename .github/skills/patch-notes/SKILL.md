@@ -7,6 +7,10 @@ model: GPT-5.4 xhigh (copilot)
 agent: producer
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 ## Phase 1: Parse Arguments
 
 - `version`: the release version to generate notes for (e.g., `1.2.0`)

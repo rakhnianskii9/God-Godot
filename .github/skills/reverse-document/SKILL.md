@@ -6,6 +6,10 @@ user-invocable: true
 # Read-only diagnostic skill — no specialist agent delegation needed
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Reverse Documentation
 
 This skill analyzes existing implementation (code, prototypes, systems) and generates

@@ -1,3 +1,8 @@
+---
+name: "code-rules"
+description: "Use when you need the workspace-wide cross-role source of truth for coding rules, validation policy, orchestration truthfulness, and project constraints in this repository."
+---
+
 # Инструкции проекта Gamedev — code-rules (ядро)
 
 Этот документ хранит только постоянные кросс-ролевые нормы для текущего workspace `/home/projects/gamedev`.
@@ -23,6 +28,7 @@
 
 - В `.agent.md` и `SKILL.md` нельзя писать `MUST` / `MANDATORY` / `ALWAYS use` для tool names, которых нет в реально доступном tool registry или в `tools:` allowlist конкретного агента.
 - Если инструмент недоступен, инструкция должна указывать на реально доступный fallback, а не на желаемый namespace.
+- Legacy-упоминания вроде `Task tool`, `WebSearch` и `WebFetch` нельзя трактовать как обязательные literal tool names; при нормализации control-plane их нужно заменять на реально доступную subagent/docs-research механику.
 - При редактировании `.github/*` код и конфиг имеют приоритет над markdown-описаниями. Нельзя сохранять ложные summary ради красоты документа.
 
 ## 1) Реальность проекта (источник истины)
@@ -80,7 +86,7 @@
 
 - Любые summary в `.github/*` должны описывать реальное состояние control plane, а не желаемую будущую схему.
 - Нельзя ссылаться на отсутствующие файлы, агенты, skills, hooks, MCP servers или registries как на уже существующие.
-- В `.github/agents/` реально лежат 30 custom agents. Пользовательский picker намеренно сжат до `game-orchestrator` и manager-слоя; leaf-специалисты и parked feature-агенты скрыты из picker и используются только через явную оркестрацию. При расхождении между markdown-описанием агента и реальным VS Code tool registry источником истины считать реальный tool registry.
+- В `.github/agents/` реально лежат 30 custom agents. Текущий user-facing surface состоит из `game-orchestrator`, `producer`, `technical-director`, `creative-director`, `game-designer`, `art-director`, `ux-designer` и `godot-specialist`; leaf-специалисты и feature-агенты остаются скрытыми из picker и достигаются через `agents:` graph. При расхождении между markdown-описанием агента и реальным VS Code tool registry источником истины считать реальный tool registry.
 - Hooks должны ссылаться только на реальные скрипты внутри `.github/hooks/`.
 - На текущий момент рабочие guardrails заданы через `.github/hooks/pretool-guard.sh`, `.github/hooks/posttool-quality.sh` и `.github/hooks/posttool-security.sh`; если инструкции описывают поведение hooks, оно должно совпадать с этими файлами.
 - При изменениях в `.github/instructions/*`, `.github/agents/*`, `.github/hooks/*`, `.github/mcp/*` нужно особенно внимательно проверять cross-file consistency и убирать legacy traces.
@@ -112,18 +118,17 @@
 
 - Актуальный workspace-source of truth для MCP в этом репо — `.vscode/mcp.json`, а не `.github/mcp/mcp.json`.
 - В `.vscode/settings.json` MCP действительно включён через `github.copilot.chat.mcp.enabled=true`, autostart включён через `chat.mcp.autostart=newAndOutdated`, и отдельно включён built-in GitHub MCP через `github.copilot.chat.githubMcpServer.enabled=true`.
-- После выравнивания конфигов `.github/mcp/mcp.json` синхронизирован с активным `.vscode/mcp.json` по одному и тому же набору project-local servers.
-- Реально объявленные в `.vscode/mcp.json` и `.github/mcp/mcp.json` servers: `crash`, `context7`, `octocode`, `filesystem`, `mcp-files`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server`.
+- `.github/mcp/mcp.json` сейчас зеркалит тот же project-local набор, что и активный `.vscode/mcp.json`, но источником истины для runtime остаётся именно `.vscode/mcp.json`.
+- Реально объявленные в `.vscode/mcp.json` и `.github/mcp/mcp.json` servers: `crash`, `context7`, `octocode`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server`.
 - Отдельно от `.vscode/mcp.json` через built-in GitHub MCP в `.vscode/settings.json` включены GitHub toolsets: `default`, `repos`, `issues`, `code_search`, `pull_requests`, `actions`, `code_security`, `secret_protection`, `security_advisories`, `copilot`, `copilot_spaces`, `github_support_docs_search`.
 - Базовая рабочая группировка для документации и маршрутизации:
 	- reasoning/state: `crash`
 	- code/docs research: `octocode`, `context7`, built-in GitHub MCP
 	- Godot/RPG MCP integrations: `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server`
-	- filesystem/utilities: `filesystem`, `mcp-files`
 	- browser/runtime evidence: встроенные browser tools VS Code, а не отдельные MCP servers
 - Для MCP в этом workspace обязательно различать три состояния, а не два: сервер объявлен в конфиге, сервер структурно валиден, сервер реально project-local.
 - По фактическому состоянию локальных привязок:
-	- `crash`, `octocode`, `filesystem`, `mcp-files`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server` — объявлены и project-local для текущего репо.
+	- `crash`, `octocode`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server` — объявлены и project-local для текущего репо.
 	- `context7` — объявлен, но зависит от `CONTEXT7_API_KEY`; без него сервер нужно считать environment-bound и потенциально деградированным.
 - Болванка под `memory` существует отдельно в `.vscode/mcp.memory.template.json`; пока локальный `memory-server` реально не добавлен в репо, она не должна подключаться в активный autostart MCP config.
 - Если agent-файлы требуют `postgres/*` или `pgtuner/*`, это truthfulness gap: такие servers не объявлены в актуальном `.vscode/mcp.json`, несмотря на упоминания в `serverSampling` и agent docs.

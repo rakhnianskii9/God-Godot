@@ -1,5 +1,7 @@
 ---
-applyTo: ["design/narrative/**", "docs/narrative/**"]
+name: "narrative"
+description: "Use when writing or revising narrative documents, lore, dialogue, factions, world rules, or other story content for the game."
+applyTo: "my-game/**/*.dialogue, my-game/**/*.md, production/**/*.md, design/**/*.md"
 ---
 
 # Narrative Rules

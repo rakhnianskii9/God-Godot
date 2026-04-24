@@ -6,6 +6,10 @@ user-invocable: true
 agent: technical-director
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Create Control Manifest
 
 The Control Manifest is a flat, actionable rules sheet for programmers. It
@@ -122,7 +126,7 @@ Ask: "Does this look complete? Any rules to add or remove before I write the man
 - `lean` → skip. Note: "TD-MANIFEST skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-Spawn `technical-director` via Task using gate **TD-MANIFEST**.
+Spawn `technical-director` as a subagent using gate **TD-MANIFEST**.
 
 Pass: the Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list), the list of ADRs covered, engine version, and any rules sourced from the workspace contract, any project technical preferences file, or engine reference docs.
 

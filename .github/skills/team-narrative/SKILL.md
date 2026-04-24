@@ -4,6 +4,10 @@ description: "Orchestrate the narrative team: coordinates narrative-director, ar
 argument-hint: "[narrative content description]"
 user-invocable: true
 ---
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 If no argument is provided, output usage guidance and exit without spawning any agents:
 > Usage: `/team-narrative [narrative content description]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`). Do not use `vscode_askQuestions` here; output the guidance directly.
 
@@ -21,7 +25,7 @@ The user must approve before moving to the next phase.
 
 ## How to Delegate
 
-Use the Task tool to spawn each team member as a subagent:
+Use subagents to delegate to each team member:
 - `subagent_type: narrative-director` — Story arcs, character design, narrative vision, world rules, faction design, history, geography, dialogue writing, lore entries, in-game text
 - `subagent_type: art-director` — Character visual profiles, environmental visual storytelling, cinematic tone
 - `subagent_type: level-designer` — Level layouts that serve the narrative, pacing
@@ -41,7 +45,7 @@ Delegate to **narrative-director**:
 - Output: narrative brief with story requirements
 
 ### Phase 2: World Foundation (parallel)
-Delegate in parallel — issue both Task calls simultaneously before waiting for any result:
+Delegate in parallel — launch both subagents before waiting for either result:
 - **narrative-director**: Draft character dialogue and lore-facing text using voice profiles. Ensure all lines are under 120 characters, use named placeholders for variables, and are localization-ready.
 - **art-director**: Define character visual design direction for key characters appearing in this content (silhouette, visual archetype, distinguishing features). Specify environmental visual storytelling elements for each key space (prop composition, lighting notes, spatial arrangement). Define tone palette and cinematic direction for any cutscenes or scripted sequences.
 
@@ -67,7 +71,7 @@ Delegate in parallel:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned subagent returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -86,8 +90,9 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (narrative docs, dialogue files, lore entries) are delegated to
-sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+the sub-agents used in this pipeline. Each sub-agent follows the workspace write
+policy and only asks before editing when scope or destination ambiguity makes
+approval materially necessary. This orchestrator does not write files directly.
 
 ## Output
 

@@ -5,6 +5,10 @@ argument-hint: "[skill-name]"
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 # Skill Improve
 
 Runs an improvement loop on a single skill:

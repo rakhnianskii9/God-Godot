@@ -5,6 +5,10 @@ argument-hint: "[system:<name> | level:<name> | character:<name>] [--review full
 user-invocable: true
 ---
 
+## Vendor Source Rule
+
+- If this task touches third-party addons, templates, examples, or integration choices in this workspace, start with `/home/projects/gamedev/godot-lib-pazzle/README.md` and follow `.github/instructions/vendor-sourcing.instructions.md`.
+
 If no argument is provided, check whether `design/assets/asset-manifest.md` exists:
 - If it exists: read it, find the first context (system/level/character) with any asset at status "Needed" but no spec file written yet, and use `vscode_askQuestions`:
   - Prompt: "The next unspecced context is **[target]**. Generate asset specs for it?"
@@ -90,15 +94,15 @@ Do NOT proceed to Phase 3 without user confirmation of the asset list.
 
 ## Phase 3: Spec Generation
 
-Spawn specialist agents based on review mode. **Issue all Task calls simultaneously — do not wait for one before starting the next.**
+Spawn specialist agents based on review mode. **Launch all subagents before waiting for the first result.**
 
 ### Full mode — spawn in parallel:
 
-**`art-director`** via Task:
+**`art-director`** as a subagent:
 - Provide: full asset list from Phase 2, art bible Visual Identity Statement, Color System, Shape Language, the source doc's visual requirements, and any reference games/art mentioned in the art bible Section 9
 - Ask: "For each asset in this list, produce: (1) a 2–3 sentence visual description anchored to the art bible's shape language and color system — be specific enough that two different artists would produce consistent results; (2) a generation prompt ready for use with AI image tools (Midjourney/Stable Diffusion style — include style keywords, composition, color palette anchors, negative prompts); (3) which art bible rules directly govern this asset (cite by section). For audio assets, describe the sonic character instead of a generation prompt."
 
-**`technical-artist`** via Task:
+**`technical-artist`** as a subagent:
 - Provide: full asset list, art bible Asset Standards (Section 8), any performance budgets from the active workspace contract or project technical preferences, engine name and version
 - Ask: "For each asset in this list, specify: (1) exact dimensions or polycount (match the art bible Asset Standards tiers — do not invent new sizes); (2) file format and export settings; (3) naming convention (from the active workspace contract or project technical preferences); (4) any engine-specific constraints this asset type must respect; (5) LOD requirements if applicable. Flag any asset type where the art bible's preferred standard conflicts with the engine's constraints."
 
