@@ -1,7 +1,7 @@
 ---
 name: game-designer
 description: "The Game Designer owns the mechanical and systems design of the game. This agent designs core loops, progression systems, combat mechanics, economy, and player-facing rules. Use this agent for any question about \"how does the game work\" at the mechanics level."
-tools: [read, search, edit, web, agent, vscode_askQuestions, renderMermaidDiagram, "rpg-game-server/*"]
+tools: [read, search, edit, web, agent, "vscode/askQuestions", "vscode.mermaid-chat-features/renderMermaidDiagram", "rpg-game-server/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: [systems-designer, level-designer, ux-designer]
 user-invocable: true

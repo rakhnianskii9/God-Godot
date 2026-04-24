@@ -1,7 +1,7 @@
 ---
 name: analytics-engineer
 description: "The Analytics Engineer designs telemetry systems, player behavior tracking, A/B test frameworks, and data analysis pipelines. Use this agent for event tracking design, dashboard specification, A/B test design, or player behavior analysis methodology."
-tools: [read, search, edit, execute, web, get_errors, create_new_jupyter_notebook, edit_notebook_file, copilot_getNotebookSummary, run_notebook_cell, read_notebook_cell_output, renderMermaidDiagram, activate_github_repository_inspection, activate_github_code_exploration_tools, "context7/*", "octocode/*"]
+tools: [read, search, edit, execute, web, get_errors, create_new_jupyter_notebook, edit_notebook_file, copilot_getNotebookSummary, run_notebook_cell, read_notebook_cell_output, "vscode.mermaid-chat-features/renderMermaidDiagram", activate_github_repository_inspection, activate_github_code_exploration_tools, "context7/*", "octocode/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

@@ -1,7 +1,7 @@
 ---
 name: ai-programmer
 description: "The AI Programmer implements game AI systems: behavior trees, state machines, pathfinding, perception systems, decision-making, and NPC behavior. Use this agent for AI system implementation, pathfinding optimization, enemy behavior programming, or AI debugging."
-tools: [read, search, edit, execute, web, get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
+tools: [read, search, edit, execute, web, godot-tomyud1/get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

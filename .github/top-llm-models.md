@@ -1,8 +1,42 @@
-# Сравнение топовых AI-моделей (март 2026)
+# Сравнение топовых AI-моделей (март-апрель 2026)
 
-> **Дата анализа:** 6 марта 2026  
-> **Источники:** Artificial Analysis Intelligence Index v4.0, LLM Stats, Chat Arena ELO, официальные бенчмарки вендоров  
+> **Дата базового анализа:** 6 марта 2026  
+> **Апдейт:** 24 апреля 2026  
+> **Источники:** Artificial Analysis Intelligence Index v4.0 + model pages, LLM Stats, Chat Arena ELO, официальные бенчмарки вендоров  
 > **Важно:** Независимо верифицированные данные — только Artificial Analysis (10 evaluations). Остальные бенчмарки — self-reported вендорами.
+> **Примечание:** Ниже добавлен инкрементальный апдейт по Claude Opus 4.7 и GPT-5.5. Мартовские сводные таблицы ниже пока не были полностью пересчитаны под новый срез.
+
+---
+
+## Апдейт: Claude Opus 4.7 и GPT-5.5
+
+### Быстрый срез (Artificial Analysis, 24 апреля 2026)
+
+| Модель | Релиз | Intelligence Index (AA) | Контекст (API) | Цена input/output ($/1M tok) | Скорость (tok/s) | TTFT | Примечание |
+|--------|-------|:-----------------------:|:--------------:|-------------------------------|------------------|------|------------|
+| **Claude Opus 4.7 (max)** | 16 апреля 2026 | **57.28** | **1M** | $5 / $25 | **45.8** | **18.6s** | Knowledge cutoff: January 2026 |
+| **GPT-5.5 (xhigh)** | 23 апреля 2026 | **60.24** | **922K** | $5 / $30 | н/д | н/д | В payload AA на 24 апреля 2026 speed/latency-поля ещё нулевые |
+
+### Детальные AA-метрики
+
+| Evaluation | Claude Opus 4.7 | GPT-5.5 |
+|------------|:---------------:|:-------:|
+| **GDPval-AA** | 1752.68 | **1781.81** |
+| **τ²-Bench Telecom** | 0.886 | **0.939** |
+| **Terminal-Bench Hard** | 51.5% | **60.6%** |
+| **SciCode** | 0.545 | **0.561** |
+| **AA-LCR** | 0.703 | **0.743** |
+| **AA-Omniscience** | **26.167** | 20.067 |
+| **IFBench** | 0.586 | **0.759** |
+| **Humanity's Last Exam** | 0.396 | **0.443** |
+| **GPQA Diamond** | 0.914 | **0.935** |
+| **CritPt** | 0.120 | **0.271** |
+
+### Что это меняет
+
+- **GPT-5.5** — новый лидер этого документа по независимому `Artificial Analysis Intelligence Index`: **60.24** против **57** у прежних лидеров из мартовского среза.
+- **Claude Opus 4.7** — фактически выходит на уровень верхней группы по общему intelligence, но не меняет тезис о высокой цене/медленной выдаче у Opus-линейки.
+- Для **GPT-5.5** пока нельзя честно сравнивать скорость и TTFT с мартовской пятёркой: в текущем payload Artificial Analysis эти поля ещё не заполнены.
 
 ---
 
@@ -292,3 +326,5 @@ Autonomous agent loops, tool use, multi-step task completion.
 12. [LLM Stats — GPT-5.3 Codex](https://llmstats.net/models/gpt-5.3-codex)
 13. [LMArena — Chat Arena Leaderboard](https://lmarena.ai/?leaderboard)
 14. [Anthropic — Claude 4.6 Model Card](https://docs.anthropic.com/en/docs/about-claude/models)
+15. [Artificial Analysis — Claude Opus 4.7](https://artificialanalysis.ai/models/claude-opus-4-7)
+16. [Artificial Analysis — GPT-5.5](https://artificialanalysis.ai/models/gpt-5-5)

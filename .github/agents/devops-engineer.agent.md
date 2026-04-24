@@ -1,7 +1,7 @@
 ---
 name: devops-engineer
 description: "The DevOps Engineer maintains build pipelines, CI/CD configuration, version control workflow, and deployment infrastructure. Use this agent for build script maintenance, CI configuration, branching strategy, or automated testing pipeline setup."
-tools: [read, search, edit, execute, web, get_errors, create_new_workspace, get_project_setup_info, get_vscode_api, install_extension, run_vscode_command, vscode_searchExtensions_internal, create_and_run_task, activate_github_actions_management, activate_pull_request_management_tools, activate_repository_management_tools, activate_github_repository_inspection, activate_github_search_and_team_management, activate_github_repository_security_and_commit_management, activate_github_security_advisories, activate_github_code_exploration_tools, activate_project_management_tools, "context7/*", "octocode/*"]
+tools: [read, search, edit, execute, web, godot-tomyud1/get_errors, create_new_workspace, get_project_setup_info, get_vscode_api, install_extension, run_vscode_command, vscode_searchExtensions_internal, create_and_run_task, activate_github_actions_management, activate_pull_request_management_tools, activate_repository_management_tools, activate_github_repository_inspection, activate_github_search_and_team_management, activate_github_repository_security_and_commit_management, activate_github_security_advisories, activate_github_code_exploration_tools, activate_project_management_tools, "context7/*", "octocode/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

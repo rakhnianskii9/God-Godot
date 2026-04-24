@@ -1,7 +1,7 @@
 ---
 name: level-designer
 description: "The Level Designer creates spatial designs, encounter layouts, pacing plans, and environmental storytelling guides for game levels and areas. Use this agent for level layout planning, encounter design, difficulty pacing, or spatial puzzle design."
-tools: [read, search, edit, web, renderMermaidDiagram, view_image]
+tools: [read, search, edit, web, "vscode.mermaid-chat-features/renderMermaidDiagram", view_image]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

@@ -1,7 +1,7 @@
 ---
 name: godot-gdscript-specialist
 description: "The GDScript specialist owns all GDScript code quality: static typing enforcement, design patterns, signal architecture, coroutine patterns, performance optimization, and GDScript-specific idioms. They ensure clean, typed, and performant GDScript across the project."
-tools: [read, search, edit, execute, web, get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
+tools: [read, search, edit, execute, web, godot-tomyud1/get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

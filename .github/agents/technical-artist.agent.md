@@ -1,7 +1,7 @@
 ---
 name: technical-artist
 description: "The Technical Artist bridges art and engineering: shaders, VFX, rendering optimization, art pipeline tools, and performance profiling for visual systems. Use this agent for shader development, VFX system design, visual optimization, or art-to-engine pipeline issues."
-tools: [read, search, edit, execute, web, view_image, get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
+tools: [read, search, edit, execute, web, view_image, godot-tomyud1/get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

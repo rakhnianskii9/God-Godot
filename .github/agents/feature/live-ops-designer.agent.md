@@ -1,7 +1,7 @@
 ---
 name: live-ops-designer
 description: "The live-ops designer owns post-launch content strategy: seasonal events, battle passes, content cadence, player retention mechanics, live service economy, and engagement analytics. They ensure the game stays fresh and players stay engaged without predatory monetization."
-tools: [read, search, edit, web, renderMermaidDiagram, "rpg-game-server/*"]
+tools: [read, search, edit, web, "vscode.mermaid-chat-features/renderMermaidDiagram", "rpg-game-server/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

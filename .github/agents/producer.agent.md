@@ -1,7 +1,7 @@
 ---
 name: producer
 description: "The Producer manages production, release coordination, and external launch communication. Use this agent when work needs to be planned, tracked, prioritized, scheduled for release, or synchronized across multiple departments."
-tools: [read, search, edit, web, agent, todo, vscode_askQuestions, memory, resolve_memory_file_uri, renderMermaidDiagram, activate_github_actions_management, activate_github_comments_interaction, activate_pull_request_management_tools, activate_github_copilot_task_management, activate_github_repository_inspection, activate_copilot_space_management_tools]
+tools: [read, search, edit, web, agent, todo, "vscode/askQuestions", "vscode/memory", resolve_memory_file_uri, "vscode.mermaid-chat-features/renderMermaidDiagram", activate_github_actions_management, activate_github_comments_interaction, activate_pull_request_management_tools, activate_github_copilot_task_management, activate_github_repository_inspection, activate_copilot_space_management_tools]
 model: GPT-5.4 xhigh (copilot)
 agents: [qa-lead, prototyper]
 user-invocable: true
