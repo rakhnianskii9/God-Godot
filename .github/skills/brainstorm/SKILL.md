@@ -25,13 +25,13 @@ When this skill is invoked:
    exploration** where the AI acts as a creative facilitator, not a replacement
    for the human's vision.
 
-   **Use `AskUserQuestion`** at key decision points throughout brainstorming:
+   **Use `vscode_askQuestions`** at key decision points throughout brainstorming:
    - Constrained taste questions (genre preferences, scope, team size)
    - Concept selection ("Which 2-3 concepts resonate?") after presenting options
    - Direction choices ("Develop further, explore more, or prototype?")
    - Pillar ranking after concepts are refined
    Write full creative analysis in conversation text first, then use
-   `AskUserQuestion` to capture the decision with concise labels.
+   `vscode_askQuestions` to capture the decision with concise labels.
 
    Professional studio brainstorming principles to follow:
    - Withhold judgment — no idea is bad during exploration
@@ -56,13 +56,13 @@ conversationally (not as a checklist):
 **Taste profile**:
 - What 3 games have you spent the most time with? What kept you coming back?
   *(Ask this as plain text — the user must be able to type specific game names freely.
-  Do NOT put this in an AskUserQuestion with preset options.)*
+  Do NOT put this in an vscode_askQuestions with preset options.)*
 - Are there genres you love? Genres you avoid? Why?
 - Do you prefer games that challenge you, relax you, tell you stories,
-  or let you express yourself? *(Use `AskUserQuestion` for this — constrained choice.)*
+  or let you express yourself? *(Use `vscode_askQuestions` for this — constrained choice.)*
 
 **Practical constraints** (shape the sandbox before brainstorming).
-Bundle these into a single multi-tab `AskUserQuestion` with these exact tab labels:
+Bundle these into a single multi-tab `vscode_askQuestions` with these exact tab labels:
 - Tab "Experience" — "What kind of experience do you most want players to have?" (Challenge & Mastery / Story & Discovery / Expression & Creativity / Relaxation & Flow)
 - Tab "Timeline" — "What's your realistic development timeline?" (Weeks / Months / 1-2 years / Multi-year)
 - Tab "Dev level" — "Where are you in your dev journey?" (First game / Shipped before / Professional background)
@@ -105,12 +105,12 @@ For each concept, present:
 - **Why It Could Work** (1 sentence on market/audience fit)
 - **Biggest Risk** (1 sentence on the hardest unanswered question)
 
-Present all three. Then use `AskUserQuestion` to capture the selection.
+Present all three. Then use `vscode_askQuestions` to capture the selection.
 
 **CRITICAL**: This MUST be a plain list call — no tabs, no form fields. Use exactly this structure:
 
 ```
-AskUserQuestion(
+vscode_askQuestions(
   prompt: "Which concept resonates with you? You can pick one, combine elements, or ask for fresh directions.",
   options: [
     "Concept 1 — [Title]",
@@ -136,7 +136,7 @@ isolation, no amount of content or polish will save the game.
 
 **30-Second Loop** (moment-to-moment):
 
-Ask these as `AskUserQuestion` calls — derive the options from the chosen concept, don't hardcode them:
+Ask these as `vscode_askQuestions` calls — derive the options from the chosen concept, don't hardcode them:
 
 1. **Core action feel** — prompt: "What's the primary feel of the core action?" Generate 3-4 options that fit the concept's genre and tone, plus a free-text escape (`I'll describe it`).
 
@@ -185,11 +185,11 @@ Then define **3+ anti-pillars** (what this game is NOT):
   be cool if..." features that don't serve the core vision
 - Frame as: "We will NOT do [thing] because it would compromise [pillar]"
 
-**Pillar confirmation**: After presenting the full pillar set, use `AskUserQuestion`:
+**Pillar confirmation**: After presenting the full pillar set, use `vscode_askQuestions`:
 - Prompt: "Do these pillars feel right for your game?"
 - Options: `[A] Lock these in` / `[B] Rename or reframe one` / `[C] Swap a pillar out` / `[D] Something else`
 
-If the user selects B, C, or D, make the revision, then use `AskUserQuestion` again:
+If the user selects B, C, or D, make the revision, then use `vscode_askQuestions` again:
 - Prompt: "Pillars updated. Ready to lock these in?"
 - Options: `[A] Lock these in` / `[B] Revise another pillar` / `[C] Something else`
 
@@ -208,7 +208,7 @@ Repeat until the user selects [A] Lock these in.
 - **`art-director`** — gate **AD-CONCEPT-VISUAL**
   Pass: game concept elevator pitch, full pillar set with design tests, target platform (if known), any reference games or visual touchstones the user mentioned.
 
-Collect both verdicts, then present them together using a two-tab `AskUserQuestion`:
+Collect both verdicts, then present them together using a two-tab `vscode_askQuestions`:
 - Tab **"Pillars"**: present creative-director feedback. Options mirror the standard CD-PILLARS handling — `Lock in as-is` / `Revise [specific pillar]` / `Discuss further`.
 - Tab **"Visual anchor"**: present the art-director's 2-3 named visual direction options. Options: each named direction (one per option) + `Combine elements across directions` + `Describe my own direction`.
 
@@ -237,12 +237,12 @@ who this game is actually for:
 
 Ground the concept in reality:
 
-- **Target platform**: Use `AskUserQuestion` — "What platforms are you targeting for this game?"
+- **Target platform**: Use `vscode_askQuestions` — "What platforms are you targeting for this game?"
   Options: `PC (Steam / Epic)` / `Mobile (iOS / Android)` / `Console` / `Web / Browser` / `Multiple platforms`
   Record the answer — it directly shapes the engine recommendation and will be passed to `/setup-engine`.
   Note platform implications if relevant (e.g., mobile may require tighter performance budgets and input simplification; console affects certification and gamepad-first UX; web constrains memory and shader complexity).
 
-- **Godot experience**: Use `AskUserQuestion` — "Do you already have a Godot workflow you want to keep?"
+- **Godot experience**: Use `vscode_askQuestions` — "Do you already have a Godot workflow you want to keep?"
   Options: `Yes — already using Godot` / `I have prior engine experience elsewhere — map it to Godot` / `No — help me set up Godot`
   - If they already use Godot → record it and move on. Do NOT second-guess it.
   - If they need help → tell them: "Run `/setup-engine` after this session — it will pin the Godot version, language, and defaults for this concept." Do not make a separate engine recommendation here.
@@ -291,13 +291,13 @@ Present the assessment to the user. If UNREALISTIC, offer to adjust the MVP defi
    This section is the seed of the art bible — it captures the "everything must
    move" decision before it can be forgotten between sessions.
 
-5. Use `AskUserQuestion` for write approval:
+5. Use `vscode_askQuestions` for write approval:
 - Prompt: "Game concept is ready. May I write it to `design/gdd/game-concept.md`?"
 - Options: `[A] Yes — write it` / `[B] Not yet — revise a section first`
 
-If [B]: ask which section to revise using `AskUserQuestion` with options: `Elevator Pitch` / `Core Fantasy & Unique Hook` / `Pillars` / `Core Loop` / `MVP Definition` / `Scope Tiers` / `Risks` / `Something else — I'll describe`
+If [B]: ask which section to revise using `vscode_askQuestions` with options: `Elevator Pitch` / `Core Fantasy & Unique Hook` / `Pillars` / `Core Loop` / `MVP Definition` / `Scope Tiers` / `Risks` / `Something else — I'll describe`
 
-After revising, show the updated section as a diff or clear before/after, then use `AskUserQuestion` — "Ready to write the updated concept document?"
+After revising, show the updated section as a diff or clear before/after, then use `vscode_askQuestions` — "Ready to write the updated concept document?"
 Options: `[A] Yes — write it` / `[B] Revise another section`
 Repeat until the user selects [A].
 

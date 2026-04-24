@@ -6,14 +6,13 @@ user-invocable: true
 ---
 When this skill is invoked, orchestrate the UI team through a structured pipeline.
 
-**Decision Points:** At each phase transition, use `AskUserQuestion` to present
+**Decision Points:** At each phase transition, use `vscode_askQuestions` to present
 the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
 
 ## Team Composition
-- **ux-designer** — User flows, wireframes, accessibility, input handling
-- **ui-programmer** — UI framework, screens, widgets, data binding, implementation
+- **ux-designer** — User flows, wireframes, accessibility, input handling, UI framework, screens, widgets, data binding, implementation
 - **art-director** — Visual style, layout polish, consistency with art bible
 - **engine UI specialist** — Validates UI implementation patterns against engine-specific best practices (use the current Godot specialist set in `.github/agents/`)
 - **accessibility-specialist** — Audits accessibility compliance at Phase 4
@@ -27,8 +26,7 @@ The user must approve before moving to the next phase.
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
-- `subagent_type: ux-designer` — User flows, wireframes, accessibility, input handling
-- `subagent_type: ui-programmer` — UI framework, screens, widgets, data binding
+- `subagent_type: ux-designer` — User flows, wireframes, accessibility, input handling, UI framework, screens, widgets, data binding
 - `subagent_type: art-director` — Visual style, layout polish, art bible consistency
 - `subagent_type: [UI engine specialist]` — Engine-specific UI pattern validation for Godot screens, controls, and scene structure
 - `subagent_type: accessibility-specialist` — Accessibility compliance audit
@@ -49,11 +47,11 @@ Before designing anything, read and synthesize:
 **If `design/ux/interaction-patterns.md` does not exist**, surface the gap immediately:
 > "interaction-patterns.md does not exist — no existing patterns to reuse."
 
-Then use `AskUserQuestion` with options:
+Then use `vscode_askQuestions` with options:
 - (a) Run `/ux-design patterns` first to establish the pattern library, then continue
-- (b) Proceed without the pattern library — ui-programmer will treat all patterns created as new and add each to a new `design/ux/interaction-patterns.md` at completion
+- (b) Proceed without the pattern library — ux-designer will treat all patterns created as new and add each to a new `design/ux/interaction-patterns.md` at completion
 
-Do NOT invent or assume patterns from the feature name or GDD alone. If the user chooses (b), explicitly instruct ui-programmer in Phase 3 to treat all patterns as new and document them in `design/ux/interaction-patterns.md` when implementation is complete. Note the pattern library status (created / absent / updated) in the final summary report.
+Do NOT invent or assume patterns from the feature name or GDD alone. If the user chooses (b), explicitly instruct ux-designer in Phase 3 to treat all patterns as new and document them in `design/ux/interaction-patterns.md` when implementation is complete. Note the pattern library status (created / absent / updated) in the final summary report.
 
 Summarize the context in a brief for the ux-designer: what the player is doing, what they need, what constraints apply, and which existing patterns are relevant.
 
@@ -73,7 +71,7 @@ Output: `design/ux/[feature-name].md` with all required spec sections filled.
 
 After the spec is complete, invoke `/ux-review design/ux/[feature-name].md`.
 
-**Gate**: Do not proceed to Phase 2 until the verdict is APPROVED. If the verdict is NEEDS REVISION, the ux-designer must address the flagged issues and re-run the review. The user may explicitly accept a NEEDS REVISION risk and proceed, but this must be a conscious decision — present the specific concerns via `AskUserQuestion` before asking whether to proceed.
+**Gate**: Do not proceed to Phase 2 until the verdict is APPROVED. If the verdict is NEEDS REVISION, the ux-designer must address the flagged issues and re-run the review. The user may explicitly accept a NEEDS REVISION risk and proceed, but this must be a conscious decision — present the specific concerns via `vscode_askQuestions` before asking whether to proceed.
 
 ### Phase 2: Visual Design
 
@@ -91,11 +89,11 @@ Before implementation begins, spawn the **engine UI specialist** from the curren
 - Which Godot UI approach should be used for this screen? (e.g., `Control` hierarchy, `CanvasLayer`, `Window`, `PopupPanel`, theme resources)
 - Any engine-specific gotchas for the proposed layout or interaction patterns?
 - Recommended widget/node structure for the engine?
-- Output: engine UI implementation notes to hand off to ui-programmer before they begin
+- Output: engine UI implementation notes to hand off to ux-designer before implementation begins
 
 If no engine is configured, skip this step.
 
-Delegate to **ui-programmer**:
+Delegate to **ux-designer**:
 - Implement the UI following the UX spec and visual design spec
 - **Use patterns from `design/ux/interaction-patterns.md`** — do not reinvent patterns that are already specified. If a pattern almost fits but needs modification, note the deviation and flag it for ux-designer review.
 - **UI NEVER owns or modifies game state** — display only; emit events for all player actions
@@ -137,7 +135,7 @@ If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
-3. **Offer options** via AskUserQuestion with choices:
+3. **Offer options** via vscode_askQuestions with choices:
    - Skip this agent and note the gap in the final report
    - Retry with narrower scope
    - Stop here and resolve the blocker first
@@ -152,7 +150,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (UX specs, interaction pattern library updates, implementation files) are
-delegated to sub-agents and sub-skills (`/ux-design`, `ui-programmer`). Each enforces the
+delegated to sub-agents and sub-skills (`/ux-design`, `ux-designer`). Each enforces the
 "May I write to [path]?" protocol. This orchestrator does not write files directly.
 
 ## Output

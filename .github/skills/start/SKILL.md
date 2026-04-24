@@ -31,7 +31,7 @@ Store these findings internally to validate the user's self-assessment and tailo
 
 ## Phase 2: Ask Where the User Is
 
-This is the first thing the user sees. Use `AskUserQuestion` with these exact options so the user can click rather than type:
+This is the first thing the user sees. Use `vscode_askQuestions` with these exact options so the user can click rather than type:
 
 - **Prompt**: "Welcome. Before I suggest anything, I'd like to understand where you're starting from. Where are you at with your game idea right now?"
 - **Options**:
@@ -106,8 +106,8 @@ The user needs creative exploration before anything else.
 
 #### If C: Clear concept
 
-1. Ask them to describe their concept in one sentence — genre and core mechanic. Use plain text, not AskUserQuestion (it's an open response).
-2. Acknowledge the concept, then use `AskUserQuestion` to offer two paths:
+1. Ask them to describe their concept in one sentence — genre and core mechanic. Use plain text, not vscode_askQuestions (it's an open response).
+2. Acknowledge the concept, then use `vscode_askQuestions` to offer two paths:
    - **Prompt**: "How would you like to proceed?"
    - **Options**:
      - `Formalize it first` — Run `/brainstorm [concept]` to structure it into a proper game concept document
@@ -168,7 +168,7 @@ Check if `production/review-mode.txt` already exists.
 
 **If it exists**: Read it and show the current mode — "Review mode is set to `[current]`." — then proceed to Phase 4. Do not ask again.
 
-**If it does not exist**: Use `AskUserQuestion`:
+**If it does not exist**: Use `vscode_askQuestions`:
 
 - **Prompt**: "One setup choice: how much design review would you want as you work through the workflow?"
 - **Options**:
@@ -189,7 +189,7 @@ Create the `production/` directory if it does not exist.
 
 ## Phase 4: Confirm Before Proceeding
 
-After presenting the recommended path, use `AskUserQuestion` to ask the user which step they'd like to take first. Never auto-run the next skill.
+After presenting the recommended path, use `vscode_askQuestions` to ask the user which step they'd like to take first. Never auto-run the next skill.
 
 - **Prompt**: "Would you like to start with [recommended first step]?"
 - **Options**:

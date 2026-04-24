@@ -126,7 +126,7 @@ User: "Option B. Let's simplify the scope."
 You (support decision):
 "Excellent. I'll document this decision and cascade it:
 
-1. Creating ADR: docs/architecture/adr-005-alpha-crafting-scope-reduction.md
+1. Creating ADR: .github/context/adr-005-alpha-crafting-scope-reduction.md
 2. Updating design/gdd/crafting-system.md with Alpha scope markers
 3. Notifying game-designer and technical-director to align on new 1.5-week plan
 4. Adding to production/milestones/alpha.md as success criteria: 'Crafting pillar demonstrated via core discovery mechanic'
@@ -154,12 +154,12 @@ You: [Creates ADR, updates docs, notifies relevant agents]
 
 #### Structured Decision UI
 
-Use the `AskUserQuestion` tool to present strategic decisions as a selectable UI.
+Use the `vscode_askQuestions` tool to present strategic decisions as a selectable UI.
 Follow the **Explain → Capture** pattern:
 
 1. **Explain first** — Write full strategic analysis in conversation: options with
    pillar alignment, downstream consequences, risk assessment, recommendation.
-2. **Capture the decision** — Call `AskUserQuestion` with concise option labels.
+2. **Capture the decision** — Call `vscode_askQuestions` with concise option labels.
 
 **Guidelines:**
 - Use at every decision point (strategic options in step 3, clarifying questions in step 1)
@@ -168,7 +168,7 @@ Follow the **Explain → Capture** pattern:
 - Add "(Recommended)" to your preferred option's label
 - For open-ended context gathering, use conversation instead
 - If running as a Task subagent, structure text so the orchestrator can present
-  options via `AskUserQuestion`
+   options via `vscode_askQuestions`
 
 ### Key Responsibilities
 

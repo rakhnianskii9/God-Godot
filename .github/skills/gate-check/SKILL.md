@@ -46,7 +46,7 @@ Note: in `solo` mode, director spawns (CD-PHASE-GATE, TD-PHASE-GATE, PR-PHASE-GA
 - **No argument**: Auto-detect current stage using the same heuristics as
   `/project-stage-detect`, then **confirm with the user before running**:
 
-  Use `AskUserQuestion`:
+  Use `vscode_askQuestions`:
   - Prompt: "Detected stage: **[current stage]**. Running gate for [Current] → [Next] transition. Is this correct?"
   - Options:
     - `[A] Yes — run this gate`
@@ -98,7 +98,7 @@ Note: in `solo` mode, director spawns (CD-PHASE-GATE, TD-PHASE-GATE, PR-PHASE-GA
 - [ ] Art bible exists at `design/art/art-bible.md` with at least Sections 1–4 (Visual Identity Foundation)
 - [ ] At least 3 Architecture Decision Records in `docs/architecture/` covering
       Foundation-layer systems (scene management, event architecture, save/load)
-- [ ] Engine reference docs exist in `docs/engine-reference/[engine]/`
+- [ ] Curated engine reference docs exist in `.github/context/`
 - [ ] Test framework initialized: `tests/unit/` and `tests/integration/` directories exist
 - [ ] CI/CD test workflow exists at `.github/workflows/tests.yml` (or equivalent)
 - [ ] At least one example test file exists to confirm the framework is functional
@@ -115,7 +115,7 @@ Note: in `solo` mode, director spawns (CD-PHASE-GATE, TD-PHASE-GATE, PR-PHASE-GA
 - [ ] At least one screen's UX spec started (often the main menu or core HUD is designed during Technical Setup)
 - [ ] All ADRs have an **Engine Compatibility section** with engine version stamped
 - [ ] All ADRs have a **GDD Requirements Addressed section** with explicit GDD linkage
-- [ ] No ADR references APIs listed in `docs/engine-reference/[engine]/deprecated-apis.md`
+- [ ] No ADR references APIs listed in `.github/context/deprecated-apis.md`
 - [ ] All HIGH RISK engine domains (per VERSION.md) have been explicitly addressed
       in the architecture document or flagged as open questions
 - [ ] Architecture traceability matrix has **zero Foundation layer gaps**
@@ -128,7 +128,7 @@ A depends on B). If any cycle is detected (e.g. A→B→A, or A→B→C→A):
   Neither can reach Accepted while the cycle exists. Remove one 'Depends On' edge to
   break the cycle."
 
-**Engine Validation** (read `docs/engine-reference/[engine]/VERSION.md` first):
+**Engine Validation** (read `.github/context/VERSION.md` first):
 - [ ] ADRs that touch post-cutoff engine APIs are flagged with Knowledge Risk: HIGH/MEDIUM
 - [ ] `/architecture-review` engine audit shows no deprecated API usage
 - [ ] All ADRs agree on the same engine version (no stale version references)
@@ -423,7 +423,7 @@ echo -n "Production" > production/stage.txt
 
 ## 7. Closing Next-Step Widget
 
-After the verdict is presented and any stage.txt update is complete, close with a structured next-step prompt using `AskUserQuestion`.
+After the verdict is presented and any stage.txt update is complete, close with a structured next-step prompt using `vscode_askQuestions`.
 
 **Tailor the options to the gate that just ran:**
 
@@ -461,10 +461,10 @@ Based on the verdict, suggest specific next steps:
 - **Small design change needed?** → `/quick-design` for changes under ~4 hours (bypasses full GDD pipeline)
 - **No UX specs?** → `/ux-design [screen name]` to author specs, or `/team-ui [feature]` for full pipeline
 - **UX specs not reviewed?** → `/ux-review [file]` or `/ux-review all` to validate
-- **No accessibility requirements doc?** → Use `AskUserQuestion` to offer to create it now:
+- **No accessibility requirements doc?** → Use `vscode_askQuestions` to offer to create it now:
   - Prompt: "The gate requires `design/accessibility-requirements.md`. Shall I create it from the template?"
   - Options: `Create it now — I'll choose an accessibility tier`, `I'll create it myself`, `Skip for now`
-  - If "Create it now": use a second `AskUserQuestion` to ask for the tier:
+  - If "Create it now": use a second `vscode_askQuestions` to ask for the tier:
     - Prompt: "Which accessibility tier fits this project?"
     - Options: `Basic — remapping + subtitles only (lowest effort)`, `Standard — Basic + colorblind modes + scalable UI`, `Comprehensive — Standard + motor accessibility + full settings menu`, `Exemplary — Comprehensive + external audit + full customization`
   - Then write `design/accessibility-requirements.md` with the chosen tier and a short summary of required accommodations. Confirm: "May I write `design/accessibility-requirements.md`?"

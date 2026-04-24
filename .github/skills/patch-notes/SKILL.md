@@ -4,7 +4,7 @@ description: "Generate player-facing patch notes from git history, sprint data, 
 argument-hint: "[version] [--style brief|detailed|full]"
 user-invocable: true
 model: GPT-5.4 xhigh (copilot)
-agent: community-manager
+agent: producer
 ---
 
 ## Phase 1: Parse Arguments
@@ -182,4 +182,4 @@ internal archive copy.
 Verdict: **COMPLETE** — patch notes generated and saved.
 
 - Run `/release-checklist` to verify all other release gates are met before publishing.
-- Share the patch notes draft with the community-manager for tone review before posting publicly.
+- Review the patch notes for player-facing tone before posting publicly.

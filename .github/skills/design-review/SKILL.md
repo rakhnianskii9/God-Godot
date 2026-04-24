@@ -78,12 +78,12 @@ Read the GDD and identify every domain present. A GDD can touch multiple domains
 
 | If the GDD contains... | Spawn these agents |
 |------------------------|-------------------|
-| Costs, prices, drops, rewards, economy | `economy-designer` |
+| Costs, prices, drops, rewards, economy | `game-designer`, `systems-designer` |
 | Combat stats, damage, health, DPS | `game-designer`, `systems-designer` |
 | AI behaviour, pathfinding, targeting | `ai-programmer` |
 | Level layout, spawning, wave structure | `level-designer` |
-| Player progression, XP, unlocks | `economy-designer`, `game-designer` |
-| UI, HUD, menus, player-facing displays | `ux-designer`, `ui-programmer` |
+| Player progression, XP, unlocks | `game-designer`, `systems-designer` |
+| UI, HUD, menus, player-facing displays | `ux-designer` |
 | Dialogue, quests, story, lore | `narrative-director` |
 | Animation, feel, timing, juice | `gameplay-programmer` |
 | Multiplayer, sync, replication | `network-programmer` |
@@ -131,7 +131,7 @@ After all specialists respond, spawn `creative-director` as the **senior reviewe
 
 If specialists disagree with each other or with the creative-director, do NOT silently pick one view. Present the disagreement explicitly in Phase 4 so the user can adjudicate.
 
-Mark every finding with its source: `[game-designer]`, `[economy-designer]`, `[creative-director]` etc.
+Mark every finding with its source: `[game-designer]`, `[systems-designer]`, `[creative-director]` etc.
 
 ---
 
@@ -184,7 +184,7 @@ This skill is read-only — no files are written during Phase 4.
 
 ## Phase 5: Next Steps
 
-Use `AskUserQuestion` for ALL closing interactions. Never plain text.
+Use `vscode_askQuestions` for ALL closing interactions. Never plain text.
 
 **First widget — what to do next:**
 
@@ -197,9 +197,9 @@ If NEEDS REVISION or MAJOR REVISION NEEDED, options:
 
 **If user selects [A] — Revise now:**
 
-Work through all blocking items, asking for design decisions only where you cannot resolve the issue from the GDD and existing docs alone. Group all design-decision questions into a single multi-tab `AskUserQuestion` before making any edits — do not interrupt mid-revision for each blocker individually.
+Work through all blocking items, asking for design decisions only where you cannot resolve the issue from the GDD and existing docs alone. Group all design-decision questions into a single multi-tab `vscode_askQuestions` before making any edits — do not interrupt mid-revision for each blocker individually.
 
-After all revisions are complete, show a summary table (blocker → fix applied) and use `AskUserQuestion` for a **post-revision closing widget**:
+After all revisions are complete, show a summary table (blocker → fix applied) and use `vscode_askQuestions` for a **post-revision closing widget**:
 
 - Prompt: "Revisions complete — [N] blockers resolved. What next?"
 - Note current context usage: if context is above ~50%, add: "(Recommended: /clear before re-review — this session has used X% context. A full re-review runs 5 agents and needs clean context.)"
@@ -213,13 +213,13 @@ Never end the revision flow with plain text. Always close with this widget.
 
 **Second widget — systems index update (always show this separately):**
 
-Use a second `AskUserQuestion`:
+Use a second `vscode_askQuestions`:
 - Prompt: "May I update `design/gdd/systems-index.md` to mark [system] as [In Review / Approved]?"
 - Options: `[A] Yes — update it` / `[B] No — leave it as-is`
 
 **Third widget — review log (always offer):**
 
-Use a third `AskUserQuestion`:
+Use a third `vscode_askQuestions`:
 - Prompt: "May I append this review summary to `design/gdd/reviews/[doc-name]-review-log.md`? This creates a revision history so future re-reviews can track what changed."
 - Options: `[A] Yes — append to review log` / `[B] No — skip`
 
@@ -237,7 +237,7 @@ Prior verdict resolved: [Yes / No / First review]
 
 **Final closing widget — always show after all file writes complete:**
 
-Once the systems-index and review-log widgets are answered, check project state and show one final `AskUserQuestion`:
+Once the systems-index and review-log widgets are answered, check project state and show one final `vscode_askQuestions`:
 
 Before building options, read:
 - `design/gdd/systems-index.md` — find any system with Status: In Review or NEEDS REVISION (other than the one just reviewed)

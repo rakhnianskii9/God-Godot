@@ -82,16 +82,17 @@ Before writing any code:
 ### Engine Version Safety
 
 **Engine Version Safety**: Before suggesting any engine-specific API, class, or node:
-1. Check `docs/engine-reference/[engine]/VERSION.md` for the project's pinned engine version
+1. Check `.github/context/VERSION.md` for the project's pinned engine version
 2. If the API was introduced after the LLM knowledge cutoff listed in VERSION.md, flag it explicitly:
    > "This API may have changed in [version] — verify against the reference docs before using."
-3. Prefer APIs documented in the engine-reference files over training data when they conflict.
+3. Prefer APIs documented in `.github/context/` over training data when they conflict.
 
-**ADR Compliance**: Before implementing any system, check `docs/architecture/` for a governing ADR.
-If an ADR exists for this system:
+**Architecture Compliance**: Before implementing any system, check story context,
+nearby project docs, and `.github/context/` for any governing architecture rules.
+If a governing architecture artifact exists for this system:
 - Follow its Implementation Guidelines exactly
-- If the ADR's guidelines conflict with what seems better, flag the discrepancy rather than silently deviating: "The ADR says X, but I think Y would be better — proceed with ADR or flag for architecture review?"
-- If no ADR exists for a new system, surface this: "No ADR found for [system]. Consider running /architecture-decision first."
+- If the guidance conflicts with what seems better, flag the discrepancy rather than silently deviating: "The current architecture guidance says X, but I think Y would be better — proceed with the guidance or flag for architecture review?"
+- If no architecture artifact exists for a new system, surface this explicitly instead of inventing one.
 
 ### Code Standards
 
@@ -126,7 +127,7 @@ If an ADR exists for this system:
 
 - `ai-programmer` for AI/gameplay integration (enemy behavior, NPC reactions)
 - `network-programmer` for multiplayer gameplay features (shared state, prediction)
-- `ui-programmer` for gameplay-to-UI event contracts (health bars, score displays)
+- `ux-designer` for gameplay-to-UI event contracts (health bars, score displays)
 - `godot-specialist` for engine API usage and performance-critical gameplay code
 
 **Conflict resolution**: If a design spec conflicts with technical constraints,

@@ -36,7 +36,7 @@ If no version is specified, run a Godot-first setup flow:
 
 ### Ask in this order:
 
-**Question 1 — Target platform** (ask first, always, via `AskUserQuestion`):
+**Question 1 — Target platform** (ask first, always, via `vscode_askQuestions`):
 - Prompt: "What platforms are you targeting for this game?"
 - Options: `PC (Steam / Epic)` / `Mobile (iOS / Android)` / `Console` / `Web / Browser` / `Multiple platforms`
 - Record the answer — it drives export presets, performance budgets, and input defaults.
@@ -66,7 +66,7 @@ Present:
 - The main platform constraints to keep in mind (mobile/web/console/performance)
 - A short note that this is a starting configuration, not an irreversible choice
 
-Use `AskUserQuestion` to confirm:
+Use `vscode_askQuestions` to confirm:
 - `[Recommended setup]`
 - `Adjust the version`
 - `Adjust the language`
@@ -163,7 +163,7 @@ Example filled section:
 ```
 
 ### Remaining Sections
-- **Performance Budgets**: Use `AskUserQuestion`:
+- **Performance Budgets**: Use `vscode_askQuestions`:
   - Prompt: "Should I set default performance budgets now, or leave them for later?"
   - Options: `[A] Set defaults now (60fps, 16.6ms frame budget, engine-appropriate draw call limit)` / `[B] Leave as [TO BE CONFIGURED] — I'll set these when I know my target hardware`
   - If [A]: populate with the suggested defaults. If [B]: leave as placeholder.
@@ -209,7 +209,7 @@ Inform the user which category they're in and why.
 
 ### If WITHIN training data (LOW RISK):
 
-Create a minimal `docs/engine-reference/<engine>/VERSION.md`:
+Create or refresh `.github/context/VERSION.md`:
 
 ```markdown
 # [Engine] — Version Reference
@@ -226,7 +226,7 @@ Create a minimal `docs/engine-reference/<engine>/VERSION.md`:
 This engine version is within the LLM's training data. Engine reference
 docs are optional but can be added later if agents suggest incorrect APIs.
 
-Run `/setup-engine refresh` to populate full reference docs at any time.
+Run `/setup-engine refresh` to populate the full `.github/context/` reference set at any time.
 ```
 
 Do NOT create breaking-changes.md, deprecated-apis.md, etc. — they would
@@ -247,18 +247,18 @@ Create the full reference doc set by searching the web:
    - Deprecated APIs with replacements
    - New features and best practices
 
-Ask: "May I create the engine reference docs under `docs/engine-reference/<engine>/`?"
+Ask: "May I create or refresh the engine reference docs under `.github/context/`?"
 
 Wait for confirmation before writing any files.
 
-3. **Create the full reference directory**:
+3. **Create or refresh the full reference directory**:
    ```
-   docs/engine-reference/<engine>/
-   ├── VERSION.md              # Version pin + knowledge gap analysis
-   ├── breaking-changes.md     # Version-by-version breaking changes
-   ├── deprecated-apis.md      # "Don't use X → Use Y" tables
+   .github/context/
+   ├── VERSION.md                 # Version pin + knowledge gap analysis
+   ├── breaking-changes.md        # Version-by-version breaking changes
+   ├── deprecated-apis.md         # "Don't use X → Use Y" tables
    ├── current-best-practices.md  # New practices since training cutoff
-   └── modules/                # Per-subsystem references (create as needed)
+   └── modules/                   # Per-subsystem references (create as needed)
    ```
 
 4. **Populate each file** using real data from the web searches, following
@@ -270,21 +270,20 @@ Wait for confirmation before writing any files.
 
 ---
 
-## 8. Update the Project-Context Import
+## 8. Update the Curated Reference Layer
 
-Ask: "May I update the relevant import in the chosen project-context file to point to the new engine reference?"
+Ask: "May I update any active engine-reference imports to point at `.github/context/VERSION.md`?"
 
 Wait for confirmation, then update the `@` import under "Engine Version Reference" to point to the
-correct engine:
+curated reference layer if such an import exists:
 
 ```markdown
 ## Engine Version Reference
 
-@docs/engine-reference/<engine>/VERSION.md
+@.github/context/VERSION.md
 ```
 
-If the previous import pointed to a different engine (e.g., switching from
-another reference path), update it.
+If the workspace already treats `.github/context/VERSION.md` as canonical, skip this step and report that no import change was needed.
 
 ---
 
@@ -297,7 +296,7 @@ For the chosen engine's specialist agents, verify they have a
 the existing Godot specialist agents.
 
 The section should instruct the agent to:
-1. Read `docs/engine-reference/<engine>/VERSION.md`
+1. Read `.github/context/VERSION.md`
 2. Check deprecated APIs before suggesting code
 3. Check breaking changes for relevant version transitions
 4. Use WebSearch to verify uncertain APIs
@@ -308,7 +307,7 @@ The section should instruct the agent to:
 
 If invoked as `/setup-engine refresh`:
 
-1. Read the existing `docs/engine-reference/<engine>/VERSION.md` to get
+1. Read the existing `.github/context/VERSION.md` to get
    the current engine and version
 2. Use WebSearch to check for:
    - New engine releases since last verification
@@ -326,7 +325,7 @@ If invoked as `/setup-engine upgrade [old-version] [new-version]`:
 
 ### Step 1 — Read Current Version State
 
-Read `docs/engine-reference/<engine>/VERSION.md` to confirm the current pinned
+Read `.github/context/VERSION.md` to confirm the current pinned
 version, risk level, and any migration note URLs already recorded. If
 `old-version` was not provided as an argument, use the pinned version from this
 file.
@@ -393,7 +392,7 @@ Wait for explicit confirmation before continuing.
 
 After confirmation:
 
-1. Update `docs/engine-reference/<engine>/VERSION.md`:
+1. Update `.github/context/VERSION.md`:
    - `Engine Version` → `[new-version]`
    - `Project Pinned` → today's date
    - `Last Docs Verified` → today's date
@@ -403,8 +402,8 @@ After confirmation:
      containing: migration guide URL, key breaking changes, deprecated APIs
      found in this project, and recommended migration order from the audit
 
-2. If `breaking-changes.md` or `deprecated-apis.md` exist in the engine
-   reference directory, append the new version's changes to those files.
+2. If `.github/context/breaking-changes.md` or `.github/context/deprecated-apis.md`
+   exist, append the new version's changes to those files.
 
 ### Step 6 — Post-Upgrade Reminder
 
@@ -441,7 +440,7 @@ Tech Prefs:      [created/updated]
 Agent Config:    [verified]
 
 Next Steps:
-1. Review docs/engine-reference/<engine>/VERSION.md
+1. Review .github/context/VERSION.md
 2. [If from /brainstorm] Run /map-systems to decompose your concept into individual systems
 3. [If from /brainstorm] Run /design-system to author per-system GDDs (guided, section-by-section)
 4. [If from /brainstorm] Run /prototype [core-mechanic] to test the core loop
@@ -451,7 +450,7 @@ Next Steps:
 
 ---
 
-Verdict: **COMPLETE** — engine configured and reference docs populated.
+Verdict: **COMPLETE** — engine configured and curated reference docs populated.
 
 ## Guardrails
 

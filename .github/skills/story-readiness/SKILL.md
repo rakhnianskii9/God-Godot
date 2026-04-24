@@ -34,7 +34,7 @@ Use the gate names below as review labels; there is no separate gate registry fi
 
 ## 1. Parse Arguments
 
-**Scope:** `$ARGUMENTS[0]` (blank = ask user via AskUserQuestion)
+**Scope:** `$ARGUMENTS[0]` (blank = ask user via vscode_askQuestions)
 
 - **Specific path** (e.g., `/story-readiness production/epics/combat/story-001-basic-attack.md`):
   validate that single story file.
@@ -44,7 +44,7 @@ Use the gate names below as review labels; there is no separate gate registry fi
   validate every story file found.
 - **No argument**: ask the user which scope to validate.
 
-If no argument is given, use `AskUserQuestion`:
+If no argument is given, use `vscode_askQuestions`:
 - "What would you like to validate?"
   - Options: "A specific story file", "All stories in the current sprint",
     "All stories in production/epics/", "Stories for a specific epic"
@@ -334,7 +334,7 @@ Pass the following context:
 
 Handle the verdict per the standard gate rules in this skill:
 - **ADEQUATE** → story is cleared. Proceed to close.
-- **GAPS [list]** → surface the specific gaps to the user via `AskUserQuestion`:
+- **GAPS [list]** → surface the specific gaps to the user via `vscode_askQuestions`:
   options: `Update story with suggested gaps` / `Accept and proceed anyway` / `Discuss further`.
 - **INADEQUATE** → surface the specific gaps; ask user whether to update the story or proceed anyway.
 

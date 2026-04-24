@@ -34,10 +34,10 @@ status. Re-run whenever new ADRs are accepted or existing ADRs are revised.
   forbidden patterns
 
 ### Engine Reference
-- Read `docs/engine-reference/[engine]/VERSION.md` for engine + version
-- Read `docs/engine-reference/[engine]/deprecated-apis.md` — these become
+- Read `.github/context/VERSION.md` for engine + version
+- Read `.github/context/deprecated-apis.md` — these become
   forbidden API entries
-- Read `docs/engine-reference/[engine]/current-best-practices.md` if it exists
+- Read `.github/context/current-best-practices.md` if it exists
 
 Report: "Loaded [N] Accepted ADRs, engine: [name + version]."
 
@@ -134,7 +134,7 @@ The technical-director reviews whether:
 
 Apply the verdict:
 - **APPROVE** → proceed to Phase 5
-- **CONCERNS** → surface via `AskUserQuestion` with options: `Revise flagged rules` / `Accept and proceed` / `Discuss further`
+- **CONCERNS** → surface via `vscode_askQuestions` with options: `Revise flagged rules` / `Accept and proceed` / `Discuss further`
 - **REJECT** → do not write the manifest; fix the flagged rules and re-present the summary
 
 ---
@@ -245,7 +245,7 @@ rule, see the referenced ADR.
 ### Forbidden APIs ([engine version])
 These APIs are deprecated or unverified for [engine + version]:
 - `[api name]` — deprecated since [version] / unverified post-cutoff
-- Source: `docs/engine-reference/[engine]/deprecated-apis.md`
+- Source: `.github/context/deprecated-apis.md`
 
 ### Cross-Cutting Constraints
 - [constraint that applies everywhere, regardless of layer]

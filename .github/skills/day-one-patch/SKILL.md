@@ -61,7 +61,7 @@ For each open bug, evaluate:
 
 ### Step 2b — Present patch scope to user
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - Prompt: "Based on open bugs and cert feedback, here is the proposed day-one patch scope. Does this look right?"
 - Show: table of included bugs (ID, severity, description, estimated effort)
 - Show: table of deferred bugs (ID, severity, reason deferred)
@@ -74,7 +74,7 @@ If [C]: output "No day-one patch required. Proceed to `/launch-checklist`." Stop
 Sum estimated effort. If total exceeds 1 day of work:
 > "⚠️ Patch scope is [N hours] — this exceeds a safe day-one window. Consider deferring lower-priority items to patch 1.1. A bloated day-one patch introduces more risk than it removes."
 
-Use `AskUserQuestion` to confirm proceeding or reduce scope.
+Use `vscode_askQuestions` to confirm proceeding or reduce scope.
 
 ---
 
@@ -82,7 +82,7 @@ Use `AskUserQuestion` to confirm proceeding or reduce scope.
 
 Before any code is written, define the rollback procedure. This is non-negotiable.
 
-Spawn `release-manager` via Task. Ask them to produce a rollback plan covering:
+Spawn `producer` via Task. Ask them to produce a rollback plan covering:
 - How to revert to the gold master build on each target platform
 - Platform-specific rollback constraints (some platforms cannot roll back cert builds)
 - Who is responsible for triggering the rollback
@@ -179,14 +179,13 @@ See: `production/releases/rollback-plan-[version].md`
 
 - [ ] technical-director: all fixes reviewed
 - [ ] qa-lead: QA gate PASS confirmed
-- [ ] producer: deployment timing approved
-- [ ] release-manager: platform submission confirmed
+- [ ] producer: deployment timing and platform submission confirmed
 
 ---
 
 ## Player-Facing Patch Notes
 
-[Draft for community-manager to review before publishing]
+[Draft for producer review before publishing]
 
 [list player-facing changes in plain language]
 ```

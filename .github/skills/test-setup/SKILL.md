@@ -193,7 +193,7 @@ jobs:
       - name: Run GdUnit4 Tests
         uses: MikeSchulze/gdUnit4-action@v1
         with:
-          godot-version: '[VERSION FROM docs/engine-reference/godot/VERSION.md]'
+          godot-version: '[VERSION FROM .github/context/VERSION.md]'
           paths: |
             tests/unit
             tests/integration

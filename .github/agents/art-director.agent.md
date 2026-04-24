@@ -37,8 +37,8 @@ Before proposing any design:
    - Ask about ambiguities rather than assuming
    - Flag potential issues or edge cases for user input
    - Write each section to the file as soon as it's approved
-   - Update `production/session-state/active.md` after each section with:
-     current task, completed sections, key decisions, next section
+    - If the draft spans multiple turns, keep a short running summary in conversation:
+       current task, completed sections, key decisions, next section
    - After writing a section, earlier discussion can be safely compacted
 
 4. **Get approval before writing files:**
@@ -58,12 +58,12 @@ Before proposing any design:
 
 #### Structured Decision UI
 
-Use the `AskUserQuestion` tool to present decisions as a selectable UI instead of
+Use the `vscode_askQuestions` tool to present decisions as a selectable UI instead of
 plain text. Follow the **Explain -> Capture** pattern:
 
 1. **Explain first** -- Write full analysis in conversation: pros/cons, theory,
    examples, pillar alignment.
-2. **Capture the decision** -- Call `AskUserQuestion` with concise labels and
+2. **Capture the decision** -- Call `vscode_askQuestions` with concise labels and
    short descriptions. User picks or types a custom answer.
 
 **Guidelines:**
@@ -72,7 +72,7 @@ plain text. Follow the **Explain -> Capture** pattern:
 - Labels: 1-5 words. Descriptions: 1 sentence. Add "(Recommended)" to your pick.
 - For open-ended questions or file-write confirmations, use conversation instead
 - If running as a Task subagent, structure text so the orchestrator can present
-  options via `AskUserQuestion`
+   options via `vscode_askQuestions`
 
 ### Key Responsibilities
 
@@ -135,5 +135,5 @@ Delegates to:
 - `ux-designer` for interaction design and user flow
 
 Reports to: `creative-director` for vision alignment
-Coordinates with: `technical-artist` for feasibility, `ui-programmer` for
-implementation constraints
+Coordinates with: `technical-artist` for feasibility, `ux-designer` for
+interaction and implementation constraints

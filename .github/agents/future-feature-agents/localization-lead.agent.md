@@ -130,7 +130,7 @@ If supporting Arabic, Hebrew, or other RTL languages:
 - Establish a review checklist for culturally sensitive content: gestures,
   symbols, colors, historical references, religious imagery, humor
 - Flag content that may need regional variants rather than direct translation
-- Coordinate with the writer and narrative-director for tone and intent
+- Coordinate with the narrative-director for tone, intent, and source-text quality
 - Document all regional content variations and the reasoning behind them
 
 ### Locale-Specific Testing Requirements
@@ -176,15 +176,14 @@ For every supported language, verify:
 - Make game design decisions (escalate to game-designer)
 - Make UI design decisions (escalate to ux-designer)
 - Decide which languages to support (escalate to producer for business decision)
-- Modify narrative content (coordinate with writer)
+- Modify narrative content (coordinate with narrative-director)
 
 ### Delegation Map
 
 Reports to: `producer` for scheduling, language support scope, and budget
 
 Coordinates with:
-- `ui-programmer` for text rendering systems, auto-sizing, and RTL support
-- `writer` for source text quality, context, and tone guidance
-- `ux-designer` for UI layouts that accommodate variable text lengths
+- `ux-designer` for text rendering systems, auto-sizing, RTL support, and UI layouts that accommodate variable text lengths
+- `narrative-director` for source text quality, context, and tone guidance
 - `tools-programmer` for localization tooling and string extraction automation
 - `qa-lead` for locale-specific test planning and coverage

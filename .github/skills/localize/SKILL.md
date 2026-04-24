@@ -330,7 +330,7 @@ Pre-Freeze Checklist
 [ ] Marketing strings (store description, achievements) are final
 ```
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - Prompt: "Are all items above confirmed? Calling string freeze locks the source table."
 - Options: `[A] Yes — call string freeze now` / `[B] No — I still have strings to add`
 

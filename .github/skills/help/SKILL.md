@@ -4,7 +4,7 @@ description: "Analyzes what is done and the users query and offers advice on wha
 argument-hint: "[optional: what you just finished, e.g. 'finished design-review' or 'stuck on ADRs']"
 user-invocable: true
 context: |
-  !echo "=== Live Project State ===" && echo "Stage: $(cat production/stage.txt 2>/dev/null | tr -d '[:space:]' || echo 'not set')" && echo "Latest sprint: $(ls -t production/sprints/*.md 2>/dev/null | head -1 || echo 'none')" && echo "Session state: $(head -5 production/session-state/active.md 2>/dev/null || echo 'none')"
+   !echo "=== Live Project State ===" && echo "Stage: $(cat production/stage.txt 2>/dev/null | tr -d '[:space:]' || echo 'not set')" && echo "Latest sprint: $(ls -t production/sprints/*.md 2>/dev/null | head -1 || echo 'none')"
 model: GPT-5.4 xhigh (copilot)
 ---
 
@@ -75,7 +75,7 @@ Check in this order:
 
 ## Step 3: Read Session Context
 
-Read `production/session-state/active.md` if it exists. Extract:
+Use the memory tool to view `/memories/session/`. If relevant session files exist, read the most relevant one for the user's last workflow. Extract:
 - What was most recently worked on
 - Any in-progress tasks or open questions
 - Current epic/feature/task from STATUS block (if present)

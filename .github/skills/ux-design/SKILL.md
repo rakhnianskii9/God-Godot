@@ -19,7 +19,7 @@ Three authoring modes exist based on the argument:
 | Any other value (e.g., `main-menu`, `inventory`) | UX spec for a screen or flow | `design/ux/[argument].md` |
 | No argument | Ask the user | (see below) |
 
-**If no argument is provided**, do not fail — ask instead. Use `AskUserQuestion`:
+**If no argument is provided**, do not fail — ask instead. Use `vscode_askQuestions`:
 - "What are we designing today?"
   - Options: "A specific screen or flow (I'll name it)", "The game HUD", "The interaction pattern library", "I'm not sure — help me figure it out"
 
@@ -391,10 +391,12 @@ Ask: "May I create the skeleton file at `design/ux/[filename].md`?"
 
 ---
 
-After writing the skeleton, update `production/session-state/active.md` with:
+After writing the skeleton, update `/memories/session/ux-design.md` with:
 - Task: Designing [screen/flow name] UX spec
 - Current section: Starting (skeleton created)
 - File: design/ux/[filename].md
+
+Use the memory tool: create the file if it does not exist; otherwise replace the current summary.
 
 ---
 
@@ -408,10 +410,10 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
 
 1. **Context**: State what this section needs to contain and surface any relevant
    constraints from context gathered in Phase 2.
-2. **Questions**: Ask what is needed to draft this section. Use `AskUserQuestion`
+2. **Questions**: Ask what is needed to draft this section. Use `vscode_askQuestions`
    for constrained choices, conversational text for open-ended exploration.
 3. **Options**: Where design choices exist, present 2-4 approaches with pros/cons.
-   Explain reasoning in conversation, then use `AskUserQuestion` to capture the decision.
+   Explain reasoning in conversation, then use `vscode_askQuestions` to capture the decision.
 4. **Decision**: User picks an approach or provides custom direction.
 5. **Draft**: Write the section content in conversation for review. Flag provisional
    assumptions explicitly.
@@ -419,7 +421,7 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
 7. **Write**: Use `Edit` to replace the `[To be designed]` placeholder with approved
    content. Confirm the write.
 
-After writing each section, update `production/session-state/active.md`.
+After writing each section, update `/memories/session/ux-design.md`.
 
 ---
 
@@ -512,7 +514,7 @@ This is the largest and most interactive section. Work through it in sub-section
 
 **Sub-section 4 — ASCII Wireframe**:
 - Offer to generate an ASCII wireframe based on the zone layout and component list.
-- Use `AskUserQuestion`: "Want an ASCII wireframe as part of this spec?"
+- Use `vscode_askQuestions`: "Want an ASCII wireframe as part of this spec?"
   - Options: "Yes, include one", "No, I'll attach a separate file"
 - If yes, produce the wireframe in conversation first. Ask for feedback before
   writing it to file.
@@ -630,7 +632,7 @@ Walk through the ux-designer agent's standard checklist for this screen:
 - Screen reader considerations for any non-text elements
 - Any motion or animation that needs a reduced-motion alternative
 
-Use `AskUserQuestion` to surface any open questions on accessibility tier:
+Use `vscode_askQuestions` to surface any open questions on accessibility tier:
 - "Has the accessibility tier been committed to for this project?"
   - Options: "Yes, read from requirements doc", "Not yet — let's flag it as a question", "Skip accessibility section for now"
 
@@ -715,7 +717,7 @@ For each item, ask the user to categorize it:
 | **On Demand** | Player must actively request it (toggle, hold button) |
 | **Hidden** | Communicated through world/audio, never on-screen text |
 
-Use `AskUserQuestion` to step through items in groups of 3-4, not all at once.
+Use `vscode_askQuestions` to step through items in groups of 3-4, not all at once.
 This is the most consequential design decision in the HUD — do not rush it.
 
 **Conflict check**: If the information philosophy (Section A) says "nearly HUD-free"
@@ -864,9 +866,9 @@ Present the check results:
 
 When all sections are approved and written:
 
-### 6a: Update Session State
+### 6a: Update Session Memory
 
-Update `production/session-state/active.md` with:
+Update `/memories/session/ux-design.md` with:
 - Task: [screen-name] UX spec
 - Status: Complete (or In Review)
 - File: design/ux/[filename].md
@@ -881,7 +883,7 @@ Before presenting options, state clearly:
 > implementation pipeline. The Pre-Production gate requires all key screen specs
 > to have a review verdict."
 
-Then use `AskUserQuestion`:
+Then use `vscode_askQuestions`:
 - "Run `/ux-review [filename]` now, or do something else first?"
   - Options:
     - "Run `/ux-review` now — validate this spec"
@@ -903,11 +905,13 @@ this spec. Do not edit those files without asking — just name them.
 
 If the session is interrupted (compaction, crash, new session):
 
-1. Read `production/session-state/active.md` — it records the current screen
+1. Read `/memories/session/ux-design.md` — it records the current screen
    and which sections are complete.
 2. Read `design/ux/[filename].md` — sections with real content are done;
    sections with `[To be designed]` still need work.
 3. Resume from the next incomplete section — no need to re-discuss completed ones.
+
+If `/memories/session/ux-design.md` does not exist, skip straight to the file read.
 
 This is why incremental writing matters: every approved section survives any
 disruption.
@@ -922,7 +926,7 @@ specific sub-topics, additional context or coordination may be needed:
 | Topic | Coordinate with |
 |-------|----------------|
 | Visual aesthetics, color, layout feel | `art-director` — UX spec defines zones; art defines how they look |
-| Implementation feasibility (engine constraints) | `ui-programmer` — before finalizing component inventory |
+| Implementation feasibility (engine constraints) | `ux-designer` — before finalizing component inventory |
 | Gameplay data requirements | `game-designer` — when data ownership is unclear |
 | Narrative/lore visible in the UI | `narrative-director` — for flavor text, item names, lore panels |
 | Accessibility tier decisions | Handled by this session — owned by ux-designer |
@@ -941,7 +945,7 @@ When delegating to another agent via the Task tool:
 This skill follows the collaborative design principle at every step:
 
 1. **Question -> Options -> Decision -> Draft -> Approval** for every section
-2. **AskUserQuestion** at every decision point (Explain -> Capture pattern):
+2. **vscode_askQuestions** at every decision point (Explain -> Capture pattern):
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): design questions, approach options, draft approval

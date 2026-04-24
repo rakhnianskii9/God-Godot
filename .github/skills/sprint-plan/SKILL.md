@@ -199,7 +199,7 @@ Use `Glob` to look for `production/qa/qa-plan-sprint-[N].md` or any file in `pro
 >
 > Run `/qa-plan sprint` now, before starting any implementation. It takes one session and produces the test case requirements each story needs."
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - Prompt: "No QA plan found for this sprint. How do you want to proceed?"
 - Options:
   - `[A] Run /qa-plan sprint now — I'll do that before starting implementation (Recommended)`

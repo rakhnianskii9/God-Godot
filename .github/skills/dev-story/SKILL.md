@@ -30,7 +30,7 @@ drives implementation to completion — including writing the test.
 
 **If a path is provided**: read that file directly.
 
-**If no argument**: check `production/session-state/active.md` for the active
+**If no argument**: check `/memories/session/active-story.md` for the active
 story. If found, confirm: "Continuing work on [story title] — is that correct?"
 If not found, ask: "Which story are we implementing?" Glob
 `production/epics/**/*.md` and list stories with Status: Ready.
@@ -47,7 +47,7 @@ If not found, ask: "Which story are we implementing?" Glob
 | Governing ADR | path from story's ADR field | **STOP** — "ADR file [path] not found. Run `/architecture-decision` to create it, or correct the filename in the story's ADR field." |
 | Control manifest | `docs/architecture/control-manifest.md` | **WARN and continue** — "Control manifest not found — layer rules cannot be checked. Run `/create-control-manifest`." |
 
-If the TR registry or governing ADR is missing, set the story status to **BLOCKED** in the session state and do not spawn any programmer agent.
+If the TR registry or governing ADR is missing, set the story status to **BLOCKED** in `/memories/session/active-story.md` and do not spawn any programmer agent.
 
 Read all of the following simultaneously — these are independent reads. Do not start implementation until all context is loaded:
 
@@ -82,7 +82,7 @@ Read `docs/architecture/control-manifest.md`. Extract the rules for this story's
 - Performance guardrails
 
 Check: does the story's embedded Manifest Version match the current manifest header date?
-If they differ, use `AskUserQuestion` before proceeding:
+If they differ, use `vscode_askQuestions` before proceeding:
 - Prompt: "Story was written against manifest v[story-date]. Current manifest is v[current-date]. New rules may apply. How do you want to proceed?"
 - Options:
   - `[A] Update story manifest version and implement with current rules (Recommended)`
@@ -100,13 +100,13 @@ After extracting the **Dependencies** list from the story file, validate each:
 1. Glob `production/epics/**/*.md` to find each dependency story file.
 2. Read its `Status:` field.
 3. If any dependency has Status other than `Complete` or `Done`:
-   - Use `AskUserQuestion`:
+   - Use `vscode_askQuestions`:
      - Prompt: "Story '[current story]' depends on '[dependency title]' which is currently [status], not Complete. How do you want to proceed?"
      - Options:
        - `[A] Proceed anyway — I accept the dependency risk`
        - `[B] Stop — I'll complete the dependency first`
        - `[C] The dependency is done but status wasn't updated — mark it Complete and continue`
-   - If [B]: set story status to **BLOCKED** in session state and stop. Do not spawn any programmer agent.
+  - If [B]: set story status to **BLOCKED** in `/memories/session/active-story.md` and stop. Do not spawn any programmer agent.
    - If [C]: ask "May I update [dependency path] Status to Complete?" before continuing.
    - If [A]: note in Phase 6 summary under "Deviations": "Implemented with incomplete dependency: [dependency title] — [status]."
 
@@ -136,7 +136,7 @@ If the story's Type is `Config/Data`, no programmer agent or engine specialist i
 | Story context | Primary agent |
 |---|---|
 | Foundation layer — any type | `godot-specialist` |
-| Any layer — Type: UI | `ui-programmer` |
+| Any layer — Type: UI | `ux-designer` |
 | Any layer — Type: Visual/Feel | `gameplay-programmer` (implements) |
 | Core or Feature — gameplay mechanics | `gameplay-programmer` |
 | Core or Feature — AI behaviour, pathfinding | `ai-programmer` |
@@ -254,9 +254,9 @@ Ready for: `/code-review [file1] [file2]` then `/story-done [story-path]`
 
 ---
 
-## Phase 7: Update Session State
+## Phase 7: Update Session Memory
 
-Silently append to `production/session-state/active.md`:
+Silently append to `/memories/session/active-story.md`:
 
 ```
 ## Session Extract — /dev-story [date]
@@ -267,7 +267,7 @@ Silently append to `production/session-state/active.md`:
 - Next: /code-review [files] then /story-done [story-path]
 ```
 
-Create `active.md` if it does not exist. Confirm: "Session state updated."
+Create `/memories/session/active-story.md` if it does not exist. Confirm: "Session memory updated."
 
 ---
 
@@ -277,7 +277,7 @@ If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
-3. **Offer options** via AskUserQuestion with choices:
+3. **Offer options** via vscode_askQuestions with choices:
    - Skip this agent and note the gap in the final report
    - Retry with narrower scope
    - Stop here and resolve the blocker first

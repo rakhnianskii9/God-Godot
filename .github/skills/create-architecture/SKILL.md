@@ -39,15 +39,15 @@ Before anything else, load the full project context in this order:
 
 Read the engine reference library completely:
 
-1. `docs/engine-reference/[engine]/VERSION.md`
+1. `.github/context/VERSION.md`
    → Extract: engine name, version, LLM cutoff, post-cutoff risk levels
-2. `docs/engine-reference/[engine]/breaking-changes.md`
+2. `.github/context/breaking-changes.md`
    → Extract: all HIGH and MEDIUM risk changes
-3. `docs/engine-reference/[engine]/deprecated-apis.md`
+3. `.github/context/deprecated-apis.md`
    → Extract: APIs to avoid
-4. `docs/engine-reference/[engine]/current-best-practices.md`
+4. `.github/context/current-best-practices.md`
    → Extract: post-cutoff best practices that differ from training data
-5. All files in `docs/engine-reference/[engine]/modules/`
+5. All files in `.github/context/modules/`
    → Extract: current API patterns per domain
 
 If no engine is configured, stop and prompt:
@@ -172,7 +172,7 @@ relevant module reference doc. If an API is post-cutoff, flag it:
 
 ```
 ⚠️  [ClassName.method()] — Godot 4.6 (post-cutoff, HIGH risk)
-    Verified against: docs/engine-reference/godot/modules/[domain].md
+   Verified against: .github/context/modules/[domain].md
     Behaviour confirmed: [yes / NEEDS VERIFICATION]
 ```
 
@@ -351,7 +351,7 @@ Pass: architecture document path, technical requirements baseline summary, ADR l
 
 Show the Technical Director assessment and Technical Director feasibility verdict side by side.
 
-Use `AskUserQuestion` — "Technical Director and Lead Programmer have reviewed the architecture. How would you like to proceed?"
+Use `vscode_askQuestions` — "Technical Director and Lead Programmer have reviewed the architecture. How would you like to proceed?"
 Options: `Accept — proceed to handoff` / `Revise flagged items first` / `Discuss specific concerns`
 
 **Step 4 — Record sign-off in the architecture document:**
@@ -373,7 +373,7 @@ After writing the document, provide a clear handoff:
 1. **Run these ADRs next** (from Phase 6, prioritised): list the top 3
 2. **Gate check**: "The master architecture document is complete. Run `/gate-check
    pre-production` when all required ADRs are also written."
-3. **Update session state**: Write a summary to `production/session-state/active.md`
+3. **Update session memory**: Write a summary to `/memories/session/create-architecture.md`
 
 ---
 

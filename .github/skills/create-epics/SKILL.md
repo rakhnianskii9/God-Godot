@@ -69,7 +69,7 @@ Read for in-scope systems:
 - Accepted ADRs **whose domains cover in-scope systems only** — read the "GDD Requirements Addressed", "Decision", and "Engine Compatibility" sections; skip ADRs for unrelated domains
 - `docs/architecture/control-manifest.md` — manifest version date from header
 - `docs/architecture/tr-registry.yaml` — for tracing requirements to ADR coverage
-- `docs/engine-reference/[engine]/VERSION.md` — engine name, version, risk levels
+- `.github/context/VERSION.md` — engine name, version, risk levels
 
 Report: "Loaded [N] GDDs, [M] ADRs, engine: [name + version]."
 

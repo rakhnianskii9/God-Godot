@@ -31,10 +31,10 @@ read that file directly.
 
 **If no argument is provided:**
 
-1. Check `production/session-state/active.md` for the currently active story.
+1. Check `/memories/session/active-story.md` for the currently active story.
 2. If not found there, read the most recent file in `production/sprints/` and
    look for stories marked IN PROGRESS.
-3. If multiple in-progress stories are found, use `AskUserQuestion`:
+3. If multiple in-progress stories are found, use `vscode_askQuestions`:
    - "Which story are we completing?"
    - Options: list the in-progress story file names.
 4. If no story can be found, ask the user to provide the path.
@@ -84,13 +84,13 @@ three methods:
   that should be in localization files.
 - **Dependency check**: if a criterion says "depends on X", check that X exists.
 
-### Manual verification with confirmation (use `AskUserQuestion`)
+### Manual verification with confirmation (use `vscode_askQuestions`)
 
 - Criteria about subjective qualities ("feels responsive", "animations play correctly")
 - Criteria about gameplay behaviour ("player takes damage when...", "enemy responds to...")
 - Performance criteria ("completes within Xms") — ask if profiled or accept as assumed
 
-Batch up to 4 manual verification questions into a single `AskUserQuestion` call:
+Batch up to 4 manual verification questions into a single `vscode_askQuestions` call:
 
 ```
 question: "Does [criterion]?"
@@ -114,7 +114,7 @@ For each acceptance criterion in the story:
    - **Unit test**: check `tests/unit/` for a test file or function name that
      matches the criterion's subject (use `Glob` and `Grep`)
    - **Integration test**: check `tests/integration/` similarly
-   - **Manual confirmation**: if the criterion was verified via `AskUserQuestion`
+   - **Manual confirmation**: if the criterion was verified via `vscode_askQuestions`
      above with a "Yes — passes" answer, count that as a manual test
 
 2. Produce a traceability table:
@@ -261,7 +261,7 @@ Spawn `technical-director` via Task using gate **TD-CODE-REVIEW**.
 
 Pass: implementation file paths, story file path, relevant GDD section, governing ADR.
 
-Present the verdict to the user. If CONCERNS, surface them via `AskUserQuestion`:
+Present the verdict to the user. If CONCERNS, surface them via `vscode_askQuestions`:
 - Options: `Revise flagged issues` / `Accept and proceed` / `Discuss further`
 If REJECT, do not proceed to Phase 6 verdict until the issues are resolved.
 
@@ -346,10 +346,10 @@ If yes, edit the story file:
    - Update the top-level `updated` field
    - This is a silent update — no extra approval needed (already approved in step above)
 
-### Session State Update
+### Session Memory Update
 
 After updating the story file, silently append to
-`production/session-state/active.md`:
+`/memories/session/active-story.md`:
 
     ## Session Extract — /story-done [date]
     - Verdict: [COMPLETE / COMPLETE WITH NOTES / BLOCKED]
@@ -357,7 +357,7 @@ After updating the story file, silently append to
     - Tech debt logged: [N items, or "None"]
     - Next recommended: [next ready story title and path, or "None identified"]
 
-If `active.md` does not exist, create it with this block as the initial content.
+If `/memories/session/active-story.md` does not exist, create it with this block as the initial content.
 Confirm in conversation: "Session state updated."
 
 ---
@@ -415,7 +415,7 @@ If no more stories are ready but Must Have stories are still In Progress (not Co
   decides if they are acceptable.
 - **BLOCKED verdict is advisory** — the user can override and mark complete
   anyway; document the risk explicitly if they do.
-- Use `AskUserQuestion` for the code review prompt and for batching manual
+- Use `vscode_askQuestions` for the code review prompt and for batching manual
   criteria confirmations.
 
 ---

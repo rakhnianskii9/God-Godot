@@ -19,7 +19,7 @@ Use the gate names below as review labels; there is no separate gate registry fi
 A system name or retrofit path is **required**. If missing:
 
 1. Check if `design/gdd/systems-index.md` exists.
-2. If it exists: read it, find the highest-priority system with status "Not Started" or equivalent, and use `AskUserQuestion`:
+2. If it exists: read it, find the highest-priority system with status "Not Started" or equivalent, and use `vscode_askQuestions`:
    - Prompt: "The next system in your design order is **[system-name]** ([priority] | [layer]). Start designing it?"
    - Options: `[A] Yes — design [system-name]` / `[B] Pick a different system` / `[C] Stop here`
    - If [A]: proceed with that system name. If [B]: ask which system to design (plain text). If [C]: exit.
@@ -160,9 +160,9 @@ Map the system's category (from systems-index.md) to an engine domain:
 
 **Step 2 — Read engine context (if available):**
 - Read the active workspace contract to identify the engine and version
-- If engine is configured, read `docs/engine-reference/[engine]/VERSION.md`
-- Read `docs/engine-reference/[engine]/modules/[domain].md` if it exists
-- Read `docs/engine-reference/[engine]/breaking-changes.md` for domain-relevant entries
+- If engine is configured, read `.github/context/VERSION.md`
+- Read `.github/context/modules/[domain].md` if it exists
+- Read `.github/context/breaking-changes.md` for domain-relevant entries
 - Glob `docs/architecture/adr-*.md` and read any ADRs whose domain matches
   (check the Engine Compatibility table's "Domain" field)
 
@@ -196,13 +196,13 @@ If no engine reference docs exist (engine not yet configured), show a short note
 
 **Step 4 — Ask before proceeding:**
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - "Any constraints to add before we begin, or shall we proceed with these noted?"
   - Options: "Proceed with these noted", "Add a constraint first", "I need to check the engine docs — pause here"
 
 ---
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - "Ready to start designing [system-name]?"
   - Options: "Yes, let's go", "Show me more context first", "Design a dependency first"
 
@@ -280,10 +280,10 @@ Use the GDD section structure defined in this skill:
 
 Ask: "May I create the skeleton file at `design/gdd/[system-name].md`?"
 
-After writing, update `production/session-state/active.md`:
-- Use Glob to check if the file exists.
-- If it **does not exist**: use the **Write** tool to create it. Never attempt Edit on a file that may not exist.
-- If it **already exists**: use the **Edit** tool to update the relevant fields.
+After writing, update `/memories/session/design-system.md`:
+- Use the memory tool.
+- If it **does not exist**: create it.
+- If it **already exists**: update the relevant fields.
 
 File content:
 - Task: Designing [system-name] GDD
@@ -306,12 +306,12 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    decisions from dependency GDDs that constrain it.
 
 2. **Questions**: Ask clarifying questions specific to this section. Use
-   `AskUserQuestion` for constrained questions, conversational text for open-ended
+   `vscode_askQuestions` for constrained questions, conversational text for open-ended
    exploration.
 
 3. **Options**: Where the section involves design choices (not just documentation),
    present 2-4 approaches with pros/cons. Explain reasoning in conversation text,
-   then use `AskUserQuestion` to capture the decision.
+   then use `vscode_askQuestions` to capture the decision.
 
 4. **Decision**: User picks an approach or provides custom direction.
 
@@ -319,7 +319,7 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    provisional assumptions about undesigned dependencies.
 
 6. **Approval**: Immediately after the draft — in the SAME response — use
-   `AskUserQuestion`. **NEVER use plain text. NEVER skip this step.**
+   `vscode_askQuestions`. **NEVER use plain text. NEVER skip this step.**
    - Prompt: "Approve the [Section Name] section?"
    - Options: `[A] Approve — write it to file` / `[B] Make changes — describe what to fix` / `[C] Start over`
 
@@ -348,9 +348,8 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    - If new (not in registry): flag it as a candidate for registry registration
      (will be handled in Phase 5).
 
-After writing each section, update `production/session-state/active.md` with the
-completed section name. Use Glob to check if the file exists — use Write to create
-it if absent, Edit to update it if present.
+After writing each section, update `/memories/session/design-system.md` with the
+completed section name. Use the memory tool — create the file if absent, otherwise update it.
 
 ### Section-Specific Guidance
 
@@ -369,7 +368,7 @@ Each section has unique design considerations and may benefit from specialist ag
 
 Append `(Recommended)` to the appropriate option text in each tab.
 
-**Framing questions (ask BEFORE drafting)**: Use `AskUserQuestion` with a multi-tab widget:
+**Framing questions (ask BEFORE drafting)**: Use `vscode_askQuestions` with a multi-tab widget:
 - Tab "Framing" — "How should the overview frame this system?" Options: `[A] As a data/infrastructure layer (technical framing)` / `[B] Through its player-facing effect (design framing)` / `[C] Both — describe the data layer and its player impact`
 - Tab "ADR ref" — "Should the overview reference the existing ADR for this system?" Options: `[A] Yes — cite the ADR for implementation details` / `[B] No — keep the GDD at pure design level`
 - Tab "Fantasy" — "Does this system have a player fantasy worth stating?" Options: `[A] Yes — players feel it directly` / `[B] No — pure infrastructure, players feel what it enables`
@@ -404,7 +403,7 @@ describes the technical approach used to achieve it.
 
 Append `(Recommended)` to the appropriate option text.
 
-**Framing question (ask BEFORE drafting)**: Use `AskUserQuestion`:
+**Framing question (ask BEFORE drafting)**: Use `vscode_askQuestions`:
 - Prompt: "Is this system something the player engages with directly, or infrastructure they experience indirectly?"
 - Options: `[A] Direct — player actively uses or feels this system` / `[B] Indirect — player experiences the effects, not the system` / `[C] Both — has a direct interaction layer and infrastructure beneath it`
 
@@ -453,7 +452,7 @@ This is usually the largest section. Break it into sub-sections:
 - Spawn the Primary Agent AND Supporting Agent(s) listed for this category
 - Provide each agent: system name, game concept summary, pillar set, dependency GDD excerpts, the specific section being worked on
 - Collect their findings before drafting
-- Surface any disagreements between agents to the user via `AskUserQuestion`
+- Surface any disagreements between agents to the user via `vscode_askQuestions`
 - Draft only after receiving specialist input
 
 **Do NOT draft Section C without first consulting the appropriate specialists.** A `systems-designer` reviewing rules and mechanics will catch design gaps the main session cannot.
@@ -495,8 +494,8 @@ table. A formula without defined variables cannot be implemented without guesswo
 
 **Agent delegation (MANDATORY)**: Before proposing any formulas or balance values, spawn specialist agents via Task in parallel:
 - **Always spawn `systems-designer`**: provide Core Rules from Section C, tuning goals from user, balance context from dependency GDDs. Ask them to propose formulas with variable tables and output ranges.
-- **For economy/cost systems, also spawn `economy-designer`**: provide placement costs, upgrade cost intent, and progression goals. Ask them to validate cost curves and ratios.
-- Present the specialists' proposals to the user for review via `AskUserQuestion`
+- **For economy/cost systems, also spawn `game-designer`**: provide placement costs, upgrade cost intent, and progression goals. Ask them to validate reward pacing, sink/faucet balance, and player-facing cost logic.
+- Present the specialists' proposals to the user for review via `vscode_askQuestions`
 - The user decides; the main session writes to file
 - **Do NOT invent formula values or balance numbers without specialist input.** A user without balance design expertise cannot evaluate raw numbers — they need the specialists' reasoning.
 
@@ -610,7 +609,7 @@ For required systems: **spawn `art-director` via Task** before drafting this sec
 
 For **all other system categories** (Foundation/Infrastructure, Economy, AI/pathfinding, Camera/input), offer the optional sections after the required sections:
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - "The 8 required sections are complete. Do you want to also define Visual/Audio
   requirements, UI requirements, or capture open questions?"
   - Options: "Yes, all three", "Just open questions", "Skip — I'll add these later"
@@ -730,9 +729,9 @@ After the GDD is complete (and optionally reviewed):
 
 Ask: "May I update the systems index at `design/gdd/systems-index.md`?"
 
-### 5d: Update Session State
+### 5d: Update Session Memory
 
-Update `production/session-state/active.md` with:
+Update `/memories/session/design-system.md` with:
 - Task: [system-name] GDD
 - Status: Complete (or In Review if design-review was run)
 - File: design/gdd/[system-name].md
@@ -741,7 +740,7 @@ Update `production/session-state/active.md` with:
 
 ### 5e: Suggest Next Steps
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - "What's next?"
   - Options:
     - "Run `/consistency-check` — verify this GDD's values don't conflict with existing GDDs (recommended before designing the next system)"
@@ -761,10 +760,10 @@ orchestrates the overall flow; agents provide expert content.
 |----------------|---------------|---------------------|
 | **Foundation/Infrastructure** (event bus, save/load, scene mgmt, service locator) | `systems-designer` | `gameplay-programmer` (feasibility), `godot-specialist` (engine integration) |
 | Combat, damage, health | `game-designer` | `systems-designer` (formulas), `ai-programmer` (enemy AI), `art-director` (hit feedback visual direction, VFX intent) |
-| Economy, loot, crafting | `economy-designer` | `systems-designer` (curves), `game-designer` (loops) |
-| Progression, XP, skills | `game-designer` | `systems-designer` (curves), `economy-designer` (sinks) |
-| Dialogue, quests, lore | `game-designer` | `narrative-director` (story), `writer` (content), `art-director` (character visual profiles, cinematic tone) |
-| UI systems (HUD, menus) | `game-designer` | `ux-designer` (flows), `ui-programmer` (feasibility), `art-director` (visual style direction), `technical-artist` (render/shader constraints) |
+| Economy, loot, crafting | `game-designer` | `systems-designer` (curves, ratios) |
+| Progression, XP, skills | `game-designer` | `systems-designer` (curves, sinks) |
+| Dialogue, quests, lore | `game-designer` | `narrative-director` (story + content), `art-director` (character visual profiles, cinematic tone) |
+| UI systems (HUD, menus) | `game-designer` | `ux-designer` (flows + feasibility + implementation), `art-director` (visual style direction), `technical-artist` (render/shader constraints) |
 | Audio systems | `game-designer` | `audio-director` (direction, specs) |
 | AI, pathfinding, behavior | `game-designer` | `ai-programmer` (implementation), `systems-designer` (scoring) |
 | Level/world systems | `game-designer` | `level-designer` (spatial), `narrative-director` (lore) |
@@ -777,7 +776,7 @@ orchestrates the overall flow; agents provide expert content.
 - Provide: system name, game concept summary, dependency GDD excerpts, the specific
   section being worked on, and what question needs expert input
 - The agent returns analysis/proposals to the main session
-- The main session presents the agent's output to the user via `AskUserQuestion`
+- The main session presents the agent's output to the user via `vscode_askQuestions`
 - The user decides; the main session writes to file
 - Agents do NOT write to files directly — the main session owns all file writes
 
@@ -787,7 +786,7 @@ orchestrates the overall flow; agents provide expert content.
 
 If the session is interrupted (compaction, crash, new session):
 
-1. Read `production/session-state/active.md` — it records the current system and
+1. Read `/memories/session/design-system.md` — it records the current system and
    which sections are complete
 2. Read `design/gdd/[system-name].md` — sections with real content are done;
    sections with `[To be designed]` still need work
@@ -803,7 +802,7 @@ disruption.
 This skill follows the collaborative design principle at every step:
 
 1. **Question -> Options -> Decision -> Draft -> Approval** for every section
-2. **AskUserQuestion** at every decision point (Explain -> Capture pattern):
+2. **vscode_askQuestions** at every decision point (Explain -> Capture pattern):
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): Design questions, approach options, draft approval

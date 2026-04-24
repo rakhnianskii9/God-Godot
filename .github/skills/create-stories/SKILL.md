@@ -156,7 +156,7 @@ Story 003: [title] — Visual/Feel — ADR-NNNN
 [N stories total: N Logic, N Integration, N Visual/Feel, N UI, N Config/Data]
 ```
 
-Use `AskUserQuestion`:
+Use `vscode_askQuestions`:
 - Prompt: "May I write these [N] stories to `production/epics/[epic-slug]/`?"
 - Options: `[A] Yes — write all [N] stories` / `[B] Not yet — I want to review or adjust first`
 
@@ -279,7 +279,7 @@ Replace the "Stories: Not yet created" line with a populated table:
 
 ## 7. After Writing
 
-Use `AskUserQuestion` to close with context-aware next steps:
+Use `vscode_askQuestions` to close with context-aware next steps:
 
 Check:
 - Are there other epics in `production/epics/` without stories yet? List them.

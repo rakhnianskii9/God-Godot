@@ -1,6 +1,6 @@
 ---
 name: team-live-ops
-description: "Orchestrate the live-ops team for post-launch content planning: coordinates live-ops-designer, economy-designer, analytics-engineer, community-manager, writer, and narrative-director to design and plan a season, event, or live content update."
+description: "Orchestrate the live-ops team for post-launch content planning: coordinates live-ops-designer, game-designer, analytics-engineer, producer, and narrative-director to design and plan a season, event, or live content update."
 argument-hint: "[season name or event description]"
 user-invocable: true
 ---
@@ -10,28 +10,26 @@ Then stop immediately without spawning any subagents or reading any files.
 
 When this skill is invoked with a valid argument, orchestrate the live-ops team through a structured planning pipeline.
 
-**Decision Points:** At each phase transition, use `AskUserQuestion` to present
+**Decision Points:** At each phase transition, use `vscode_askQuestions` to present
 the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
 
 ## Team Composition
 - **live-ops-designer** — Season structure, event cadence, retention mechanics, battle pass
-- **economy-designer** — Live economy balance, store rotation, currency pricing, pity timers
+- **game-designer** — Live economy balance, store rotation, currency pricing, pity timers
 - **analytics-engineer** — Success metrics, A/B test design, event tracking, dashboard specs
-- **community-manager** — Player-facing announcements, event descriptions, seasonal messaging
-- **narrative-director** — Seasonal narrative theme, story arc, world event framing
-- **writer** — Event descriptions, reward item names, seasonal flavor text, announcement copy
+- **producer** — Player-facing announcements, event timing, seasonal messaging
+- **narrative-director** — Seasonal narrative theme, story arc, world event framing, event descriptions, reward item names, seasonal flavor text, announcement copy
 
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
 - `subagent_type: live-ops-designer` — Season/event structure and retention mechanics
-- `subagent_type: economy-designer` — Live economy balance and reward pricing
+- `subagent_type: game-designer` — Live economy balance and reward pricing
 - `subagent_type: analytics-engineer` — Success metrics, A/B tests, event instrumentation
-- `subagent_type: community-manager` — Player-facing communication and messaging
-- `subagent_type: narrative-director` — Seasonal theme and narrative framing
-- `subagent_type: writer` — All player-facing text: event descriptions, item names, copy
+- `subagent_type: producer` — Player-facing communication and messaging
+- `subagent_type: narrative-director` — Seasonal theme, narrative framing, and all player-facing event text
 
 Always provide full context in each agent's prompt (game concept path, existing season docs, ethics policy path, current economy state). Launch independent agents in parallel where the pipeline allows it (Phases 3 and 4 can run simultaneously).
 
@@ -54,7 +52,7 @@ Delegate to **narrative-director**:
 - Output: narrative framing document (theme, story hook, lore connections)
 
 ### Phase 3: Economy Design (parallel with Phase 2 if theme is clear)
-Delegate to **economy-designer**:
+Delegate to **game-designer**:
 - Read the season brief and existing economy rules from `design/live-ops/economy-rules.md`
 - Design the reward track: free tier progression, premium tier value proposition
 - Plan the in-season economy: seasonal currency, store rotation, pricing
@@ -73,11 +71,11 @@ Delegate to **analytics-engineer**:
 ### Phase 5: Content Writing (parallel)
 Delegate in parallel:
 - **narrative-director** (if needed): Write any in-game narrative text (cutscene scripts, NPC dialogue, world event descriptions) for the season
-- **writer**: Write all player-facing text — event names, reward item descriptions, challenge objective text, seasonal flavor text
+- **producer**: Refine launch-facing announcement copy and communication packaging from the approved season framing
 - Both should read the narrative framing doc from Phase 2
 
 ### Phase 6: Player Communication Plan
-Delegate to **community-manager**:
+Delegate to **producer**:
 - Read the season brief, economy design, and narrative framing
 - Draft the season launch announcement (tone, key highlights, platform-specific versions)
 - Plan the communication cadence: pre-launch teaser, launch day post, mid-season reminder, final week FOMO push
@@ -99,7 +97,7 @@ Present a summary to the user with:
 - **Analytics readiness**: are success criteria defined and instrumented?
 - **Ethics review**: check the Phase 3 economy design against `design/live-ops/ethics-policy.md`
   - If the file does not exist: flag "ETHICS REVIEW SKIPPED: `design/live-ops/ethics-policy.md` not found. Economy design was not reviewed against an ethics policy. Recommend creating one before production begins." Include this flag in the season design output document. Add to next steps: create `design/live-ops/ethics-policy.md`.
-  - If the file exists and a violation is found: flag "ETHICS FLAG: [element] in Phase 3 economy design violates [policy rule]. Approval is blocked until this is resolved." Do NOT issue a COMPLETE verdict or write output documents. Use `AskUserQuestion` with options: revise economy design / override with documented rationale / cancel. If user chooses to revise: re-spawn economy-designer to produce a corrected design, then return to Phase 7 review.
+  - If the file exists and a violation is found: flag "ETHICS FLAG: [element] in Phase 3 economy design violates [policy rule]. Approval is blocked until this is resolved." Do NOT issue a COMPLETE verdict or write output documents. Use `vscode_askQuestions` with options: revise economy design / override with documented rationale / cancel. If user chooses to revise: re-spawn game-designer to produce a corrected design, then return to Phase 7 review.
 - **Open questions**: decisions still needed before production begins
 
 Ask the user to approve the season plan before delegating to production teams. Issue the COMPLETE verdict only after the user approves and no unresolved ethics violations remain. If an ethics violation is unresolved, end with Verdict: **BLOCKED**.
@@ -117,7 +115,7 @@ If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
-3. **Offer options** via AskUserQuestion with choices:
+3. **Offer options** via vscode_askQuestions with choices:
    - Skip this agent and note the gap in the final report
    - Retry with narrower scope
    - Stop here and resolve the blocker first

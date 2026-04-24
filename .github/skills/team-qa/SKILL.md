@@ -8,7 +8,7 @@ agent: qa-lead
 
 When this skill is invoked, orchestrate the QA team through a structured testing cycle.
 
-**Decision Points:** At each phase transition, use `AskUserQuestion` to present
+**Decision Points:** At each phase transition, use `vscode_askQuestions` to present
 the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
@@ -33,7 +33,7 @@ Before doing anything else, gather the full scope:
 1. Detect the current sprint or feature scope from the argument:
    - If argument is a sprint identifier (e.g., `sprint-03`): read all story files in `production/sprints/[sprint]/`
    - If argument is `feature: [system-name]`: glob story files tagged for that system
-   - If no argument: read `production/session-state/active.md` and `production/sprint-status.yaml` (if present) to infer the active sprint
+  - If no argument: read `/memories/session/team-qa.md` if it exists, plus `production/sprint-status.yaml` (if present), to infer the active sprint
 
 2. Read `production/stage.txt` to confirm the current project phase.
 
@@ -60,7 +60,7 @@ Prompt the qa-lead to:
 
 If the smoke check result is **FAIL**, the qa-lead must list the failures prominently. QA cannot proceed past the strategy phase with a failed smoke check.
 
-Present the qa-lead's full strategy to the user, then use `AskUserQuestion`:
+Present the qa-lead's full strategy to the user, then use `vscode_askQuestions`:
 
 ```
 question: "QA Strategy Review"
@@ -114,7 +114,7 @@ Each test case set should include:
 
 Present the test cases to the user for review before execution. Group by story.
 
-Use `AskUserQuestion` per story group (batched 3-4 at a time):
+Use `vscode_askQuestions` per story group (batched 3-4 at a time):
 
 ```
 question: "Test cases ready for [Story Group]. Review before manual QA begins?"
@@ -128,7 +128,7 @@ options:
 
 Walk through each story in the approved manual QA list.
 
-Batch stories into groups of 3-4 and use `AskUserQuestion` for each:
+Batch stories into groups of 3-4 and use `vscode_askQuestions` for each:
 
 ```
 question: "Manual QA — [Story Title]\n[brief description of what to test]"
@@ -139,7 +139,7 @@ options:
   - "BLOCKED — cannot test yet (reason)"
 ```
 
-After each FAIL result: use `AskUserQuestion` to collect the failure description, then spawn `qa-lead` via Task to write a formal bug report in `production/qa/bugs/`.
+After each FAIL result: use `vscode_askQuestions` to collect the failure description, then spawn `qa-lead` via Task to write a formal bug report in `production/qa/bugs/`.
 
 Bug report naming: `BUG-[NNN]-[short-slug].md` (increment NNN from existing bugs in the directory).
 
@@ -199,7 +199,7 @@ If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
-3. **Offer options** via AskUserQuestion with choices:
+3. **Offer options** via vscode_askQuestions with choices:
    - Skip this agent and note the gap in the final report
    - Retry with narrower scope
    - Stop here and resolve the blocker first

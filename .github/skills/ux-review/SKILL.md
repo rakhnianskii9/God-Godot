@@ -14,7 +14,7 @@ the `/team-ui` pipeline.
 
 **Run this skill:**
 - After completing a UX spec with `/ux-design`
-- Before handing off to `ui-programmer` or `art-director`
+- Before handing off to `ux-designer` for implementation or `art-director`
 - Before the Pre-Production to Production gate check (which requires key screens
   to have reviewed UX specs)
 - After major revisions to a UX spec
