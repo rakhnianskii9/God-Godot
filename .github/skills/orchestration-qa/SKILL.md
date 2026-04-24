@@ -7,7 +7,7 @@ disable-model-invocation: false
 # Orchestration QA Skill
 
 Use this skill when validating that agent orchestration is configured and functioning in the workspace.
-Trigger: changes to `.github/agents/*`, `.github/skills/*`, `.github/mcp/*`, `.github/hooks/*`, `.github/instructions/*`, `.github/bin/*`, `.github/context/*`, `.github/tasks.md`, `.github/agents/AGENTS.md`.
+Trigger: changes to `.github/agents/*`, `.github/skills/*`, `.github/mcp/*`, `.github/hooks/*`, `.github/instructions/*`, `.github/bin/*`, `.github/context/*`, `.github/tasks.md`.
 
 Goal: validate the whole orchestration control plane, not just syntax. The skill must catch structural breakage, stale paths, false summaries, doctrine drift, retired-mechanism traces, and script/artifact mismatches across `.github`.
 

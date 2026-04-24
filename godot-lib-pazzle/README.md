@@ -1,303 +1,98 @@
-# Godot Pazzle Vendor Set
+# Godot Pazzle Vendor Set for my-game
 
-Локальные копии репозиториев из `Godot-pazzle.md`. Вложенные `.git` удалены, чтобы файлы оставались частью основного дерева проекта.
+`godot-lib-pazzle/` в этом workspace не является отдельной игрой. Это локальный вендор-набор и каталог референсов для текущего проекта в [../my-game/](../my-game/).
 
-Для каждой библиотеки ниже указаны:
-- **Что делает** — короткое описание назначения.
-- **Компоненты** — ключевые узлы/классы/ресурсы (технические имена) + человеческое объяснение (деревья, мобы, машины, инвентарь и т.д.).
-- **Где лежит** — путь к коду и точкам входа внутри этого вендор-сета.
+Сейчас `my-game/` минимален: там есть базовый проект Godot, одна сцена и один стартовый скрипт. Поэтому смысл этой папки простой: здесь собраны готовые системы, которые можно быстро изучать, сравнивать и точечно переносить в текущую игру по мере роста проекта.
 
----
+## Что здесь где
 
-## 🧠 Архитектура и логика (база для ИИ)
+| Путь | Роль в workspace |
+|---|---|
+| [../my-game/](../my-game/) | текущий игровой проект |
+| [./](./) | локальный набор аддонов, шаблонов и референсных репозиториев |
+| [alternatives/](alternatives/) | локальные замены для источников, которые не удалось взять по исходной ссылке |
 
-### 1. godot-state-charts — конечные автоматы (FSM/HSM) на узлах
-- **Что делает:** иерархические state-машины как дерево узлов сцены. Состояния, переходы, охранные условия, история — всё через инспектор.
-- **Компоненты:**
-  - `StateChart`, `State`, `CompoundState`, `ParallelState`, `HistoryState` — состояния персонажа/двери/босса/UI-экрана.
-  - `Transition`, `AllOfGuard`, `AnyOfGuard`, `ExpressionGuard` — условные переходы (например, «если HP < 0 → state Dead»).
-  - `AnimationPlayerState`, `AnimationTreeState` — синхронизация состояний с анимациями.
-- **Где лежит:**
-  - Аддон: [alternatives/derkork__godot-statecharts/addons/godot_state_charts/](alternatives/derkork__godot-statecharts/addons/godot_state_charts/)
-  - Примеры: [alternatives/derkork__godot-statecharts/godot_state_charts_examples/](alternatives/derkork__godot-statecharts/godot_state_charts_examples/)
-  - Доки: [alternatives/derkork__godot-statecharts/docs/](alternatives/derkork__godot-statecharts/docs/)
+## Как пользоваться этим каталогом
 
-### 2. beehave — деревья поведения (Behavior Trees) для врагов и NPC
-- **Что делает:** AI мобов, боссов, питомцев и патрулей через визуальное дерево узлов.
-- **Компоненты:**
-  - `BeehaveTree`, `Blackboard` — корень AI и общая «память» моба.
-  - Composites: `Sequence`, `Selector`, `SimpleParallel`, `SequenceRandom`, `SelectorRandom`, `SequenceReactive`, `SequenceStar` — порядок принятия решений (атаковать → перезарядиться → отступить).
-  - Decorators: `Inverter`, `Repeater`, `Cooldown`, `Delayer`, `Limiter`, `TimeLimiter`, `UntilFail`, `Failer`, `Succeeder` — модификаторы (кулдаун способности, повтор патруля, задержка реакции).
-  - Leaves: `ActionLeaf`, `ConditionLeaf`, `BlackboardSet/Has/Erase/Compare` — действия моба (выстрелить, идти к игроку) и проверки (видит ли цель).
-  - Debug: панель отладки и метрики дерева.
-- **Где лежит:**
-  - Аддон: [beehave/addons/beehave/](beehave/addons/beehave/) (узлы — [beehave/addons/beehave/nodes/](beehave/addons/beehave/nodes/))
-  - Примеры мобов: [beehave/examples/](beehave/examples/)
-  - Тесты: [beehave/test/](beehave/test/)
+1. Начинай не с библиотеки, а с задачи в `my-game`: инвентарь, AI, камера, диалоги, мобильный ввод, сохранения.
+2. Для выбранной задачи открывай у нужной библиотеки в первую очередь `addons/`, `examples/`, `docs/` и тесты, если они есть.
+3. Не пытайся интегрировать весь набор сразу. Бери один основной инструмент на одну зону ответственности: одну FSM, одну систему инвентаря, одну систему диалогов и так далее.
+4. `alternatives/` используй как источник кода и сравнения API, а не как место для бездумного копирования всего подряд.
+5. Если библиотека решает ту же задачу, что уже покрыта другой библиотекой из списка, сначала выбирай одну основную, а вторую держи как fallback или источник идей.
 
-### 3. godot-steering-ai-framework — стиринг-поведение (движение, погоня, избегание)
-- **Что делает:** плавное перемещение агентов: преследование, бегство, обход препятствий, следование за лидером, формации.
-- **Компоненты:** `GSAIAgent`, `GSAISteeringBehavior` (Seek, Flee, Pursue, Evade, Arrive, Wander, Separation, Cohesion, Alignment, ObstacleAvoidance, FollowPath, LookWhereYouGo).
-- **Человеческими словами:** «бот гонится за игроком, но обходит коробки», «стая мобов держит строй», «машина едет по точкам пути».
-- **Где лежит:**
-  - Аддон: [godot-steering-ai-framework/godot/addons/com.gdquest.godot-steering-ai-framework/](godot-steering-ai-framework/godot/addons/com.gdquest.godot-steering-ai-framework/)
-  - Демки: [godot-steering-ai-framework/godot/Demos/](godot-steering-ai-framework/godot/Demos/)
-  - Референс API: [godot-steering-ai-framework/reference.json](godot-steering-ai-framework/reference.json)
+## Рекомендуемый стартовый стек для текущего проекта
 
-### 4. pandora — менеджер игровых данных (RPG-статы, предметы, категории)
-- **Что делает:** редактор данных в Godot для предметов, врагов, оружия, скиллов; хранит данные отдельно от кода.
-- **Компоненты:**
-  - `Pandora` (autoload API), `PandoraEntity`, `PandoraCategory`, `PandoraProperty` — сущности (меч, зелье, монстр) и их свойства (урон, цена, вес).
-  - Backend/Storage — сохранение базы данных в `.json`/ресурсы.
-  - UI редактора в Godot — таблицы предметов, дерево категорий, импорт/экспорт.
-- **Где лежит:**
-  - Аддон: [pandora/addons/pandora/](pandora/addons/pandora/) (API — [pandora/addons/pandora/api.gd](pandora/addons/pandora/api.gd), модель — [pandora/addons/pandora/model/](pandora/addons/pandora/model/), UI — [pandora/addons/pandora/ui/](pandora/addons/pandora/ui/))
+| Зона | Что брать первым | Зачем |
+|---|---|---|
+| Состояния и flow | `godot-statecharts` | игрок, враги, двери, UI-экраны, фазы босса |
+| AI врагов | `beehave` + `godot-steering-ai-framework` | решения + движение |
+| Данные и предметы | `pandora` + `gloot` | игровые данные отдельно от кода + инвентарь |
+| Диалоги и подача | `godot_dialogue_manager`, `phantom-camera`, `godot_sound_manager`, `GoTween` | быстрый прирост качества презентации |
+| Управление и mobile | `godot_input_helper`, `virtual-joystick-godot`, `godot-touch-input-manager` | единый ввод и мобильные жесты |
+| Сохранения и онлайн | `Godot-Save-System`, `GodotFirebase`, `nakama-godot` | локальный прогресс, облако, мультиплеер |
+| Тесты и дебаг | `gut`, `panku-console`, `godot-logger` | быстрая диагностика и регресс-контроль |
 
-### 5. gloot — система инвентаря (сетка как в Diablo и слоты)
-- **Что делает:** инвентарь, экипировка, сундуки, drag-n-drop, стек предметов, ограничения по весу/размеру.
-- **Компоненты:**
-  - Core: `Inventory`, `InventoryItem`, `ItemSlot`, `ItemCount`, `StackManager`, `ProtoTree` — модели «рюкзак», «слот шлема», «стопка стрел».
-  - Constraints: ограничения веса/размера/совместимости.
-  - UI: `CtrlInventory`, `CtrlInventoryGrid`, `CtrlInventoryGridBasic`, `CtrlInventoryUniversal`, `CtrlItemSlot`, `CtrlDraggableInventoryItem`, `CtrlInventoryCapacity` — готовые виджеты Diablo-сетки и слотов экипировки.
-- **Где лежит:**
-  - Аддон: [gloot/addons/gloot/](gloot/addons/gloot/) (core — [gloot/addons/gloot/core/](gloot/addons/gloot/core/), UI — [gloot/addons/gloot/ui/](gloot/addons/gloot/ui/))
-  - Примеры: [gloot/examples/](gloot/examples/)
-  - Тесты: [gloot/tests/](gloot/tests/)
+## Карта библиотек
 
-### 6. EventBus — глобальная шина событий (паттерн Event Bus)
-- **Что делает:** связывает системы (UI ↔ здоровье ↔ звуки) без жёстких зависимостей.
-- **Компоненты:** автозагрузка `EventBus`, файл `Events.gd` со списком сигналов, паттерн `EventBus.emit("on_player_died", ...)` / `EventBus.connect(...)`.
-- **Человеческими словами:** «моб умер → одной строкой узнают UI, звук, статистика и квесты».
-- **Где лежит:**
-  - Код: [alternatives/mikica1986vee__EventBus_for_Godot_engine/EventBus/](alternatives/mikica1986vee__EventBus_for_Godot_engine/EventBus/)
-  - Каталог сигналов: [alternatives/mikica1986vee__EventBus_for_Godot_engine/Events.gd](alternatives/mikica1986vee__EventBus_for_Godot_engine/Events.gd)
-  - Примеры: [alternatives/mikica1986vee__EventBus_for_Godot_engine/Examples/](alternatives/mikica1986vee__EventBus_for_Godot_engine/Examples/)
+### Архитектура, gameplay и AI
 
----
+- `godot-statecharts` — конечные автоматы и иерархические состояния. Для текущего проекта это первая точка входа для поведения игрока, врагов, интерактивных объектов и UI flow. Смотреть: [alternatives/derkork__godot-statecharts/addons/godot_state_charts/](alternatives/derkork__godot-statecharts/addons/godot_state_charts/), [alternatives/derkork__godot-statecharts/godot_state_charts_examples/](alternatives/derkork__godot-statecharts/godot_state_charts_examples/), [alternatives/derkork__godot-statecharts/docs/](alternatives/derkork__godot-statecharts/docs/).
+- `beehave` — behavior trees для врагов, NPC и scripted encounters. Полезен там, где простого FSM уже мало и нужен выбор из нескольких тактик. Смотреть: [beehave/addons/beehave/](beehave/addons/beehave/), [beehave/examples/](beehave/examples/), [beehave/test/](beehave/test/).
+- `godot-steering-ai-framework` — стиринг для преследования, избегания, wander и движения по траектории. Хорошо дополняет `beehave`, когда у врага есть и решение, и сложная моторика. Смотреть: [godot-steering-ai-framework/godot/addons/com.gdquest.godot-steering-ai-framework/](godot-steering-ai-framework/godot/addons/com.gdquest.godot-steering-ai-framework/), [godot-steering-ai-framework/godot/Demos/](godot-steering-ai-framework/godot/Demos/), [godot-steering-ai-framework/reference.json](godot-steering-ai-framework/reference.json).
+- `pandora` — база игровых сущностей и свойств: предметы, оружие, враги, скиллы. Подходит, если хочется держать баланс и контент отдельно от скриптов `my-game`. Смотреть: [pandora/addons/pandora/](pandora/addons/pandora/), [pandora/addons/pandora/model/](pandora/addons/pandora/model/), [pandora/addons/pandora/ui/](pandora/addons/pandora/ui/).
+- `gloot` — инвентарь, экипировка, гриды, слоты, стаки и ограничения. Бери, если в `my-game` появляются предметы, рюкзак, сундуки или экипировка. Смотреть: [gloot/addons/gloot/](gloot/addons/gloot/), [gloot/addons/gloot/core/](gloot/addons/gloot/core/), [gloot/addons/gloot/ui/](gloot/addons/gloot/ui/), [gloot/examples/](gloot/examples/).
+- `EventBus` — простая шина событий для развязки систем. Полезна, если UI, звук, квесты и статистика не должны знать друг о друге напрямую. Смотреть: [alternatives/mikica1986vee__EventBus_for_Godot_engine/EventBus/](alternatives/mikica1986vee__EventBus_for_Godot_engine/EventBus/), [alternatives/mikica1986vee__EventBus_for_Godot_engine/Events.gd](alternatives/mikica1986vee__EventBus_for_Godot_engine/Events.gd), [alternatives/mikica1986vee__EventBus_for_Godot_engine/Examples/](alternatives/mikica1986vee__EventBus_for_Godot_engine/Examples/).
 
-## 📱 Мобильная специфика и управление
+### Ввод и мобильная специфика
 
-### 7. GodotTouchInputManager — жесты для мобильных (свайп, пинч, двойной тап)
-- **Что делает:** превращает сырые touch-события в высокоуровневые жесты.
-- **Компоненты:**
-  - Autoload `InputManager.gd`, утилиты `RawGesture.gd`, `Util.gd`.
-  - События в [godot-touch-input-manager/CustomInputEvents/](godot-touch-input-manager/CustomInputEvents/): `InputEventScreenSwipe`, `InputEventScreenPinch`, `InputEventScreenTwist`, `InputEventMultiScreenDrag`, `InputEventSingleScreenTap`, `InputEventSingleScreenLongPress`, `InputEventSingleScreenDrag` и т.д.
-- **Человеческими словами:** свайпы по карте, pinch-to-zoom камеры, двойной тап для прицеливания, long-press для контекстного меню.
-- **Где лежит:** [godot-touch-input-manager/](godot-touch-input-manager/)
+- `godot-touch-input-manager` — высокоуровневые touch-жесты: swipe, pinch, twist, tap, long-press. Нужен, если `my-game` целится в mobile и обычных `InputEventScreenTouch` уже мало. Смотреть: [godot-touch-input-manager/](godot-touch-input-manager/), [godot-touch-input-manager/CustomInputEvents/](godot-touch-input-manager/CustomInputEvents/).
+- `virtual-joystick-godot` — виртуальный джойстик для экрана. Подходит для мобильного управления персонажем, камерой или прицелом. Смотреть: [virtual-joystick-godot/addons/virtual_joystick/](virtual-joystick-godot/addons/virtual_joystick/).
+- `godot-google-play-billing` — Android IAP через Google Play Billing. Нужен только если в проекте действительно будут покупки или подписки. Смотреть: [godot-google-play-billing/godot-google-play-billing/](godot-google-play-billing/godot-google-play-billing/), [godot-google-play-billing/demo/](godot-google-play-billing/demo/), [godot-google-play-billing/docs/](godot-google-play-billing/docs/).
+- `godot_input_helper` — единый слой ввода для клавиатуры, геймпада и тача, плюс rebinding и UI-подсказки. Хорошая базовая библиотека, если хочется нормализовать управление на раннем этапе. Смотреть: [godot_input_helper/addons/input_helper/](godot_input_helper/addons/input_helper/), [godot_input_helper/addons/input_helper/components/](godot_input_helper/addons/input_helper/components/), [godot_input_helper/addons/input_helper/views/](godot_input_helper/addons/input_helper/views/).
 
-### 8. virtual-joystick-godot — наэкранный джойстик
-- **Что делает:** готовый виртуальный стик для управления персонажем/машиной/прицелом на телефоне.
-- **Компоненты:** `virtual_joystick.gd`, `virtual_joystick_scene.tscn`, `virtual_joystick_instantiator.gd`, текстуры стика.
-- **Где лежит:** [virtual-joystick-godot/addons/virtual_joystick/](virtual-joystick-godot/addons/virtual_joystick/)
+### Сохранения, сервисы и онлайн
 
-### 9. godot-google-play-billing — внутриигровые покупки на Android (IAP)
-- **Что делает:** Google Play Billing Library для покупок монет, премиума, подписок.
-- **Компоненты:** Android-плагин (Gradle модуль `godot-google-play-billing/`), демо-проект, документация по интеграции.
-- **Где лежит:**
-  - Плагин: [godot-google-play-billing/godot-google-play-billing/](godot-google-play-billing/godot-google-play-billing/)
-  - Демо: [godot-google-play-billing/demo/](godot-google-play-billing/demo/)
-  - Доки: [godot-google-play-billing/docs/](godot-google-play-billing/docs/)
+- `Godot-Save-System` — простая локальная система сохранений. Подходит как быстрый старт до появления более сложного persistence-слоя. Смотреть: [alternatives/erdavids__Godot-Save-System/SaveSystem.tscn](alternatives/erdavids__Godot-Save-System/SaveSystem.tscn), [alternatives/erdavids__Godot-Save-System/Scenes/](alternatives/erdavids__Godot-Save-System/Scenes/).
+- `GodotFirebase` — Firebase для авторизации, облачных данных, аналитики, storage, remote config и прочих сервисов. Подходит, если проекту нужны облачные фичи без собственного backend. Смотреть: [GodotFirebase/addons/godot-firebase/](GodotFirebase/addons/godot-firebase/), [GodotFirebase/addons/http-sse-client/](GodotFirebase/addons/http-sse-client/), [GodotFirebase/ios_plugins/](GodotFirebase/ios_plugins/).
+- `nakama-godot` — клиент Heroic Labs Nakama для матчей, чата, лидербордов и realtime-сокетов. Имеет смысл, если проект идёт в мультиплеер или social features. Смотреть: [nakama-godot/addons/com.heroiclabs.nakama/](nakama-godot/addons/com.heroiclabs.nakama/).
 
-### 10. godot_input_helper — универсальный ввод (геймпад/клавиатура/тач)
-- **Что делает:** автоопределяет устройство ввода, удобные ребайнды клавиш, подсказки иконок кнопок.
-- **Компоненты:**
-  - Autoload `InputHelper` (`input_helper.gd`), C#-вариант `InputHelper.cs`.
-  - [godot_input_helper/addons/input_helper/components/](godot_input_helper/addons/input_helper/components/) — UI-компоненты (rebind row и пр.).
-  - [godot_input_helper/addons/input_helper/views/](godot_input_helper/addons/input_helper/views/) — экраны настройки управления.
-  - Иконки кнопок в [godot_input_helper/addons/input_helper/assets/](godot_input_helper/addons/input_helper/assets/).
-- **Где лежит:** [godot_input_helper/addons/input_helper/](godot_input_helper/addons/input_helper/)
+### Камера, UI, диалоги и подача
 
----
+- `phantom-camera` — виртуальные камеры, приоритеты, follow, look-at, shake и кинематографичная подача. Это один из самых полезных источников качества для боёв, катсцен и exploration-сцен. Смотреть: [phantom-camera/addons/phantom_camera/](phantom-camera/addons/phantom_camera/), [phantom-camera/addons/phantom_camera/scripts/phantom_camera/](phantom-camera/addons/phantom_camera/scripts/phantom_camera/), [phantom-camera/addons/phantom_camera/scripts/phantom_camera_host/](phantom-camera/addons/phantom_camera/scripts/phantom_camera_host/).
+- `godot_dialogue_manager` — текстовые ветвящиеся диалоги с переменными, выборами и локализацией. Хороший кандидат, если в `my-game` будут NPC, квестовые разговоры или story flow. Смотреть: [godot_dialogue_manager/addons/dialogue_manager/](godot_dialogue_manager/addons/dialogue_manager/), [godot_dialogue_manager/addons/dialogue_manager/compiler/](godot_dialogue_manager/addons/dialogue_manager/compiler/), [godot_dialogue_manager/addons/dialogue_manager/components/](godot_dialogue_manager/addons/dialogue_manager/components/).
+- `godot_sound_manager` — централизованный менеджер музыки, SFX и ambience. Подходит, если нужно быстро навести порядок в аудио и избежать ручного спавна `AudioStreamPlayer` по всему проекту. Смотреть: [godot_sound_manager/addons/sound_manager/](godot_sound_manager/addons/sound_manager/).
+- `scene_manager` — менеджер переходов между сценами с готовыми эффектами. Полезен, когда проект перестаёт быть одной сценой и появляются уровни, меню и загрузочные переходы. Смотреть: [scene_manager/addons/scene_manager/](scene_manager/addons/scene_manager/), [scene_manager/addons/scene_manager/shader_patterns/](scene_manager/addons/scene_manager/shader_patterns/).
+- `godot-tween-sequence` через `GoTween` — удобный API для tween-цепочек и grouped animations. Хорошо подходит для UI-реакций, подсказок, combat feedback и motion polish. Смотреть: [alternatives/okefonok__GoTween/](alternatives/okefonok__GoTween/), [alternatives/okefonok__GoTween/GoTween/](alternatives/okefonok__GoTween/GoTween/).
 
-## 💾 Сохранения, данные и бэкенд
+### Тесты, отладка и эксплуатация
 
-### 11. Godot-Save-System — система сохранений
-- **Что делает:** сохранение/загрузка прогресса игрока через словари и `ConfigFile`.
-- **Компоненты:** `SaveSystem.gd` (API сохранения), `SaveSystem.tscn`, демонстрационная сцена `Game.gd`/`Game.tscn`, файл сохранения `save-file.cfg`.
-- **Где лежит:**
-  - Код: [alternatives/erdavids__Godot-Save-System/SaveSystem.tscn](alternatives/erdavids__Godot-Save-System/SaveSystem.tscn), [alternatives/erdavids__Godot-Save-System/Scenes/](alternatives/erdavids__Godot-Save-System/Scenes/)
+- `gut` — главный кандидат для unit и integration тестов в Godot. Если появится реальная логика в `my-game`, это базовый инструмент для регрессий. Смотреть: [gut/addons/gut/](gut/addons/gut/).
+- `panku-console` — внутриигровая консоль разработчика и REPL. Удобна для debug-сборок, когда нужно быстро дёргать функции и смотреть состояние мира. Смотреть: [alternatives/Ark2000__PankuConsole/addons/panku_console/](alternatives/Ark2000__PankuConsole/addons/panku_console/), [alternatives/Ark2000__PankuConsole/addons/panku_console/modules/](alternatives/Ark2000__PankuConsole/addons/panku_console/modules/).
+- `godot-logger` — логирование с уровнями и выводом в файл. Полезно, если проект идёт на Android или нужен стабильный crash trail. Смотреть: [alternatives/KOBUGE-Games__godot-logger/](alternatives/KOBUGE-Games__godot-logger/), [alternatives/KOBUGE-Games__godot-logger/logger.gd](alternatives/KOBUGE-Games__godot-logger/logger.gd).
+- `godot-ci` — шаблоны CI/CD для автосборки Godot-проектов. Это не геймплейная библиотека, а инфраструктурный референс. Смотреть: [godot-ci/](godot-ci/).
 
-### 12. GodotFirebase — Firebase для Godot (auth, firestore, storage, аналитика)
-- **Что делает:** облачные сохранения, авторизация, аналитика, Remote Config, push-уведомления.
-- **Компоненты:**
-  - `firebase/` — базовая точка входа и общий клиент Firebase.
-  - `auth/` + `auth/providers/` — email/social авторизация.
-  - `firestore/` + `field_transforms/` — документная база данных.
-  - `database/` — Realtime Database.
-  - `storage/` — файлы и облачные ассеты.
-  - `functions/`, `dynamiclinks/`, `remote_config/`, `queues/` — serverless-функции, deep links, Remote Config и фоновые задачи.
-  - `http-sse-client/` — HTTP SSE-клиент для стриминга событий.
-- **Где лежит:**
-  - Firebase аддон: [GodotFirebase/addons/godot-firebase/](GodotFirebase/addons/godot-firebase/)
-  - SSE клиент: [GodotFirebase/addons/http-sse-client/](GodotFirebase/addons/http-sse-client/)
-  - iOS-плагин: [GodotFirebase/ios_plugins/](GodotFirebase/ios_plugins/)
+### Физика и производительность
 
-### 13. nakama-godot — мультиплеер, лидерборды, кланы (Heroic Labs Nakama)
-- **Что делает:** клиент к Nakama-серверу: матчмейкинг, чат, дружбы, лидерборды, турниры, RT-сокет, Satori (A/B и эксперименты).
-- **Компоненты:**
-  - `Nakama.gd` — точка входа клиента.
-  - `client/` — REST API; `socket/` — realtime (матчи, чат, статусы).
-  - `api/` — DTO; `utils/` — вспомогательные.
-  - `Satori.gd` + `Satori/` — экспериментирование/фиче-флаги.
-- **Где лежит:** [nakama-godot/addons/com.heroiclabs.nakama/](nakama-godot/addons/com.heroiclabs.nakama/)
+- `godot-rapier-physics` — альтернатива встроенной физике Godot для 2D и 3D через Rapier. Имеет смысл исследовать при большом количестве тел или если штатная физика упрётся в стабильность/производительность. Смотреть: [alternatives/appsinacup__godot-rapier-physics/](alternatives/appsinacup__godot-rapier-physics/), [alternatives/appsinacup__godot-rapier-physics/docs/](alternatives/appsinacup__godot-rapier-physics/docs/).
+- `godot-jolt` — 3D-физика на Jolt. Актуально, если проект уходит в сложный 3D, транспорт, ragdoll или тяжёлую физику сцены. Смотреть: [godot-jolt/](godot-jolt/), [godot-jolt/docs/](godot-jolt/docs/), [godot-jolt/examples/](godot-jolt/examples/).
 
----
+### Шаблоны, генерация и специальные плагины
 
-## 🎨 UI, диалоги и «сок» (juice)
+- `godot-game-template` — каркас игры с переходами, меню и debug-shortcuts. Используй как источник архитектурных решений, а не как обязательную базу. Смотреть: [godot-game-template/](godot-game-template/), [godot-game-template/addons/ggt-core/scenes/](godot-game-template/addons/ggt-core/scenes/), [godot-game-template/addons/ggt-core/transitions/](godot-game-template/addons/ggt-core/transitions/).
+- `scatter` — процедурная расстановка объектов, декора, растительности и spawn-паттернов. Полезен, если уровни начнут собираться полуавтоматически. Смотреть: [scatter/addons/proton_scatter/](scatter/addons/proton_scatter/), [scatter/addons/proton_scatter/src/](scatter/addons/proton_scatter/src/), [scatter/addons/proton_scatter/demos/](scatter/addons/proton_scatter/demos/).
+- `godot-accessibility` — экранный диктор и accessibility-поддержка интерфейса. Важен, если хочется строить UI не только для обычного desktop/mobile потока. Смотреть: [godot-accessibility/](godot-accessibility/).
+- `Godot-Component-System` — ECS-подход для сущностей, компонентов и систем. Подходит, если проект пойдёт в сторону data-driven архитектуры и большого количества переиспользуемых компонент. Смотреть: [alternatives/Beliar83__godot-component-system-asset/](alternatives/Beliar83__godot-component-system-asset/), [alternatives/Beliar83__godot-component-system-asset/addons/gcs/](alternatives/Beliar83__godot-component-system-asset/addons/gcs/), [alternatives/Beliar83__godot-component-system-asset/addons/uuid/](alternatives/Beliar83__godot-component-system-asset/addons/uuid/).
 
-### 14. phantom-camera — кинематографичная камера (2D/3D)
-- **Что делает:** виртуальные камеры с приоритетами, плавный follow, look-at, тряска экрана, dead-zone, цели по нескольким объектам.
-- **Компоненты:**
-  - `PhantomCamera2D`, `PhantomCamera3D`, `PhantomCameraHost` — узлы виртуальных камер и хост.
-  - Скрипты: [phantom-camera/addons/phantom_camera/scripts/phantom_camera/](phantom-camera/addons/phantom_camera/scripts/phantom_camera/), [phantom-camera/addons/phantom_camera/scripts/phantom_camera_host/](phantom-camera/addons/phantom_camera/scripts/phantom_camera_host/), `managers/`, `resources/`, `gizmos/`.
-  - Inspector-панель и темы для редактора.
-- **Человеческими словами:** «камера тряхнётся при взрыве», «плавно зумится при прицеливании», «переключилась на катсцену».
-- **Где лежит:** [phantom-camera/addons/phantom_camera/](phantom-camera/addons/phantom_camera/)
+## Что важно помнить
 
-### 15. godot_dialogue_manager — система диалогов на текстовых файлах
-- **Что делает:** ветвящиеся диалоги, выборы, переменные, локализация; формат удобен Copilot для генерации.
-- **Компоненты:**
-  - Ядро: `dialogue_manager.gd`/`DialogueManager.cs`, `dialogue_resource.gd`, `dialogue_line.gd`, `dialogue_response.gd`, `dialogue_processor.gd`.
-  - Компилятор `.dialogue`-файлов: [godot_dialogue_manager/addons/dialogue_manager/compiler/](godot_dialogue_manager/addons/dialogue_manager/compiler/)
-  - UI компоненты: [godot_dialogue_manager/addons/dialogue_manager/components/](godot_dialogue_manager/addons/dialogue_manager/components/) и пример воздушного шарика [godot_dialogue_manager/addons/dialogue_manager/example_balloon/](godot_dialogue_manager/addons/dialogue_manager/example_balloon/).
-  - Импорт/экспорт/локализация (`import_plugin.gd`, `export_plugin.gd`, `editor_translation_parser_plugin.gd`, `l10n/`).
-- **Где лежит:** [godot_dialogue_manager/addons/dialogue_manager/](godot_dialogue_manager/addons/dialogue_manager/)
+- Это каталог кандидатов, а не утверждённый техстек. Не нужно тащить всё в `my-game`.
+- Часть библиотек — самостоятельные демо-проекты или большие репозитории. Чаще всего нужен не весь репозиторий, а конкретный аддон, пример или паттерн интеграции.
+- Некоторые библиотеки ориентированы на C# или расширенную сборочную инфраструктуру. Их стоит подключать только если у проекта реально появляется такая потребность.
+- Если две библиотеки решают одну и ту же задачу, приоритет у той, у которой проще точка входа и чище путь интеграции в текущий `my-game`.
 
-### 16. godot_sound_manager — пул звуков, музыка, эмбиент
-- **Что делает:** менеджеры звуковых эффектов и музыки с пулом плееров и кроссфейдами.
-- **Компоненты:**
-  - Autoload `SoundManager` (`sound_manager.gd` / `SoundManager.cs`).
-  - `sound_effects.gd` — пул SFX (выстрелы, шаги, удары).
-  - `music.gd` — кроссфейд между треками.
-  - `ambient_sounds.gd` — окружение (ветер, дождь, толпа).
-  - `abstract_audio_player_pool.gd` — базовый пул `AudioStreamPlayer`.
-- **Где лежит:** [godot_sound_manager/addons/sound_manager/](godot_sound_manager/addons/sound_manager/)
+## Карта замен в `alternatives/`
 
-### 17. scene_manager — переходы между сценами (затемнение, пиксели, шторки)
-- **Что делает:** анимированные переходы при загрузке уровней + менеджер списка сцен.
-- **Компоненты:**
-  - Autoload `SceneManager` (`scene_manager.gd`, сцена `scene_manager.tscn`).
-  - Шейдер переходов `scene_manager.gdshader` + 12 паттернов в [scene_manager/addons/scene_manager/shader_patterns/](scene_manager/addons/scene_manager/shader_patterns/) (circle, curtains, diagonal, dirt, horizontal, pixel, radial, scribbles, splashed_dirt, squares, vertical, crooked_tiles).
-  - Редактор списка сцен: `scene_list.gd/tscn`, `scene_item.gd/tscn`, `sub_section.gd/tscn`.
-- **Человеческими словами:** «затемнение перед боссом», «пиксельный переход в меню», «шторки между уровнями».
-- **Где лежит:** [scene_manager/addons/scene_manager/](scene_manager/addons/scene_manager/)
-
-### 18. godot-tween-sequence — упрощение Tween-анимаций
-- **Что делает:** удобный API для последовательных и параллельных Tween-цепочек (всплывающий урон, дрожание UI, анимации меню).
-- **Компоненты:**
-  - `TweenSequence.cs` — последовательные и параллельные цепочки анимаций.
-  - `TweenBuilder.cs`, `TweenBuilderBase.cs`, `VirtualBuilder.cs` — fluent builder для tween-сценариев.
-  - `PathBuilder.cs` — анимации вдоль пути.
-  - `GoTween.cs`, `GoTweenExtensions.cs`, `GoTween.TweenGroups.cs`, `GoTween.Queries.cs` — ядро API, группировка и запросы к активным tween'ам.
-- **Где лежит:**
-  - Загруженная замена: [alternatives/okefonok__GoTween/](alternatives/okefonok__GoTween/)
-  - Исходники: [alternatives/okefonok__GoTween/GoTween/](alternatives/okefonok__GoTween/GoTween/)
-
----
-
-## ⚙️ Инструменты для работы с ИИ (тесты и дебаг)
-
-### 19. Gut (Godot Unit Test) — фреймворк юнит-тестов
-- **Что делает:** unit/integration тесты, моки и стабы (doubles), параметризированные тесты, CLI-раннер.
-- **Компоненты:**
-  - Раннер `GutScene.tscn`, `cli/`, `awaiter.gd`.
-  - `doubler.gd`, `double_tools.gd`, `double_templates/` — моки.
-  - `comparator.gd`, `compare_result.gd`, `diff_tool.gd`, `diff_formatter.gd` — ассерты и сравнения.
-  - `collected_test.gd`, `collected_script.gd` — сбор тестов.
-  - `UserFileViewer.tscn` — просмотр файлов пользователя при отладке.
-- **Где лежит:** [gut/addons/gut/](gut/addons/gut/)
-
-### 20. panku-console — внутриигровая консоль разработчика
-- **Что делает:** REPL прямо в работающей игре: выполнять GDScript, читерить, дёргать функции, смотреть переменные на телефоне.
-- **Компоненты:**
-  - Autoload `PankuConsole` (`console.gd` / `console.tscn`).
-  - Модули: [alternatives/Ark2000__PankuConsole/addons/panku_console/modules/](alternatives/Ark2000__PankuConsole/addons/panku_console/modules/) (логи, виджеты, REPL, отладка переменных, перформанс).
-  - Конфиг по умолчанию: `default_panku_config.cfg`.
-- **Где лежит:** [alternatives/Ark2000__PankuConsole/addons/panku_console/](alternatives/Ark2000__PankuConsole/addons/panku_console/)
-
-### 21. godot-logger — продвинутое логирование
-- **Что делает:** уровни логов (DEBUG/INFO/WARN/ERROR/FATAL), модули, формат, запись в файл — для краш-логов на Android.
-- **Компоненты:** autoload `Logger` (`logger.gd`), `plugin.gd`/`plugin.cfg`.
-- **Где лежит:** [alternatives/KOBUGE-Games__godot-logger/](alternatives/KOBUGE-Games__godot-logger/) (основной файл — [alternatives/KOBUGE-Games__godot-logger/logger.gd](alternatives/KOBUGE-Games__godot-logger/logger.gd))
-
-### 22. godot-ci — CI/CD шаблоны (GitHub Actions, Docker, Gitea)
-- **Что делает:** контейнеры с Godot для автосборки `.apk`/Web/desktop в CI.
-- **Компоненты:**
-  - `Dockerfile` (стандарт), `mono.Dockerfile` (C#), `action.yml` (GitHub Action).
-  - `getbutler.sh` — деплой в itch.io через Butler.
-  - `get_dotnet_version.sh`, `gitea-godot-ci.yml`, `test-project/`.
-- **Где лежит:** [godot-ci/](godot-ci/)
-
----
-
-## 🚀 Физика и производительность
-
-### 23. godot-rapier-physics — Rust-физика 2D/3D на движке Rapier
-- **Что делает:** замена встроенной физики Godot. Стабильнее и быстрее на сценах с тысячами тел (бульки, частицы, Vampire-Survivors-стиль).
-- **Компоненты:**
-  - Rust-исходники: [alternatives/appsinacup__godot-rapier-physics/src/](alternatives/appsinacup__godot-rapier-physics/src/).
-  - Сборки 2D: [alternatives/appsinacup__godot-rapier-physics/bin2d/](alternatives/appsinacup__godot-rapier-physics/bin2d/), 3D: [alternatives/appsinacup__godot-rapier-physics/bin3d/](alternatives/appsinacup__godot-rapier-physics/bin3d/).
-  - Доки: [alternatives/appsinacup__godot-rapier-physics/docs/](alternatives/appsinacup__godot-rapier-physics/docs/).
-  - В Godot задаётся через Project Settings → Physics → 2D/3D Physics Engine = Rapier.
-- **Где лежит:** [alternatives/appsinacup__godot-rapier-physics/](alternatives/appsinacup__godot-rapier-physics/)
-
-### 24. godot-jolt — 3D-физика на движке Jolt
-- **Что делает:** замена 3D-физики Godot движком Jolt (быстрее, стабильнее для машин, рэгдоллов, толпы).
-- **Компоненты:**
-  - C++ исходники модуля: [godot-jolt/src/](godot-jolt/src/).
-  - Сборка через CMake (`CMakeLists.txt`, `CMakePresets.json`, `cmake/`, `tools/`).
-  - Примеры/доки: [godot-jolt/examples/](godot-jolt/examples/), [godot-jolt/docs/](godot-jolt/docs/).
-- **Где лежит:** [godot-jolt/](godot-jolt/)
-
----
-
-## 🏗 Шаблоны и генерация
-
-### 25. godot-game-template — каркас игры (меню, настройки, пауза, переходы)
-- **Что делает:** готовый скелет: главное меню, экран настроек звука, пауза, навигация по сценам, отладочные хоткеи.
-- **Компоненты:**
-  - `ggt-core` — менеджер сцен и переходов:
-    - [godot-game-template/addons/ggt-core/scenes/](godot-game-template/addons/ggt-core/scenes/) (`scene-data.gd`, `scenes-history.gd`).
-    - [godot-game-template/addons/ggt-core/transitions/](godot-game-template/addons/ggt-core/transitions/) (`transitions.gd/tscn`, `progress.gd`).
-    - `config.tres` (главные настройки шаблона), `utils/`.
-  - `ggt-debug-shortcuts` — отладочные клавиши:
-    - [godot-game-template/addons/ggt-debug-shortcuts/autoload/](godot-game-template/addons/ggt-debug-shortcuts/autoload/) (`debug_shortcuts.gd/tscn`).
-- **Где лежит:** [godot-game-template/](godot-game-template/)
-
-### 26. scatter — процедурная расстановка объектов (деревья, камни, враги)
-- **Что делает:** правила раскидывания префабов по форме (растительность, разрушаемые ящики, спавн-точки мобов).
-- **Компоненты:**
-  - Узлы: `ProtonScatter`, `ScatterItem`, `ScatterShape` (исходники — [scatter/addons/proton_scatter/src/](scatter/addons/proton_scatter/src/)).
-  - `shapes/` — формы зон (бокс, сфера, путь, mesh).
-  - `modifiers/` — модификаторы расстановки (плотность, вращение, отбраковка).
-  - `particles/` — рендер через MultiMesh/частицы.
-  - `presets/` — готовые пресеты (леса, города, разброс врагов).
-  - Демо: [scatter/addons/proton_scatter/demos/](scatter/addons/proton_scatter/demos/).
-- **Где лежит:** [scatter/addons/proton_scatter/](scatter/addons/proton_scatter/)
-
-### 27. godot-accessibility — экранный диктор и доступность
-- **Что делает:** озвучивание UI экранным диктором; буст видимости в Google Play за accessibility.
-- **Компоненты:** autoload `Accessible.gd`, `Plugin.gd`, `ScreenReader.gd`.
-- **Где лежит:** [godot-accessibility/](godot-accessibility/)
-
-### 28. Godot-Component-System (ECS) — паттерн Entity-Component
-- **Что делает:** строит сущности из компонентов (HealthComponent, DamageComponent, MovementComponent) — чистый и переиспользуемый код.
-- **Компоненты:**
-  - `gameObject.gd`, `baseGameObject.gd` — сущности/объекты игры.
-  - `component.gd` — базовый класс компонента.
-  - `gameSystem.gd`, `baseGameSystem.gd` — системы обработки компонентов.
-  - `gameWorld.gd`, `baseGameWorld.gd` — игровой мир и жизненный цикл ECS.
-  - `uuid.gd` — генерация уникальных идентификаторов сущностей.
-- **Где лежит:**
-  - Загруженная замена: [alternatives/Beliar83__godot-component-system-asset/](alternatives/Beliar83__godot-component-system-asset/)
-  - Аддон ECS: [alternatives/Beliar83__godot-component-system-asset/addons/gcs/](alternatives/Beliar83__godot-component-system-asset/addons/gcs/)
-  - UUID helper: [alternatives/Beliar83__godot-component-system-asset/addons/uuid/](alternatives/Beliar83__godot-component-system-asset/addons/uuid/)
-
----
-
-## Карта замен (alternatives/)
-
-Эти библиотеки скачаны под другим именем, потому что оригинальные ссылки не открывались:
+Эти библиотеки представлены локальными заменами, потому что исходные ссылки из заметки были недоступны или неудобны для прямого импорта:
 
 | Из заметки | Использовано вместо | Папка |
 |---|---|---|
@@ -310,4 +105,4 @@
 | `awesomemau/godot-tween-sequence` | `okefonok/GoTween` | [alternatives/okefonok__GoTween/](alternatives/okefonok__GoTween/) |
 | `baconandgames/godot-component-system` | `Beliar83/godot-component-system-asset` | [alternatives/Beliar83__godot-component-system-asset/](alternatives/Beliar83__godot-component-system-asset/) |
 
-Сейчас все 28 пунктов из списка представлены в дереве: либо точным репозиторием, либо локальной заменой в `alternatives/`.
+Сейчас все 28 пунктов из исходного списка представлены в дереве: либо точным репозиторием, либо локальной заменой в `alternatives/`.

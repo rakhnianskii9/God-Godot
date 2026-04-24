@@ -38,8 +38,8 @@ resolve_dotnet_target() {
 }
 
 readarray -t files < <(
-  printf '%s' "$payload" | python3 - <<'PY'
-import json, sys
+  PAYLOAD="$payload" python3 - <<'PY'
+import json, os, sys
 
 def emit(path):
     if isinstance(path, str) and path.strip():
@@ -55,7 +55,7 @@ def emit_from_patch(patch_text):
       emit(path)
 
 try:
-    data = json.load(sys.stdin)
+  data = json.loads(os.environ["PAYLOAD"])
 except Exception:
     sys.exit(0)
 

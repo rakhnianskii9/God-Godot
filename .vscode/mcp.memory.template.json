@@ -1,0 +1,16 @@
+{
+  "inputs": [],
+  "servers": {
+    "memory": {
+      "command": "/home/projects/gamedev/.github/mcp/venv-memory/bin/memory-server",
+      "args": [],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec",
+        "MCP_MEMORY_SQLITE_PATH": "/home/projects/gamedev/.github/mcp/data/sqlite_vec.db",
+        "MCP_MEMORY_CHROMA_PATH": "/home/projects/gamedev/.github/mcp/data/chroma",
+        "MCP_MEMORY_BACKUPS_PATH": "/home/projects/gamedev/.github/mcp/data/backups"
+      },
+      "type": "stdio"
+    }
+  }
+}
