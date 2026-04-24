@@ -20,7 +20,7 @@ The user must approve before moving to the next phase.
 - **qa-lead** — Test sign-off, regression suite, release quality gate
 - **devops-engineer** — Build pipeline, artifacts, deployment automation
 - **security-engineer** — Pre-release security audit (invoke if game has online/multiplayer features or player data)
-- **analytics-engineer** — Verify telemetry events fire correctly and dashboards are live
+- **technical-director** — Release-critical technical sign-off for telemetry readiness, multiplayer stability, and deployment-sensitive risks
 - **producer** — Release branch, versioning, go/no-go decision, stakeholder communication, scheduling, patch notes, launch messaging
 
 ## How to Delegate
@@ -29,9 +29,8 @@ Use the Task tool to spawn each team member as a subagent:
 - `subagent_type: qa-lead` — Test sign-off, regression suite, release quality gate
 - `subagent_type: devops-engineer` — Build pipeline, artifacts, deployment automation
 - `subagent_type: security-engineer` — Security audit for online/multiplayer/data features
-- `subagent_type: analytics-engineer` — Telemetry event verification and dashboard readiness
+- `subagent_type: technical-director` — Telemetry readiness, multiplayer stability, and cross-system release-risk sign-off
 - `subagent_type: producer` — Release branch, versioning, go/no-go decision, stakeholder communication, patch notes, launch communication
-- `subagent_type: network-programmer` — Netcode stability sign-off (invoke if game has multiplayer)
 
 Always provide full context in each agent's prompt (version number, milestone status, known issues). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -57,18 +56,18 @@ Delegate in parallel:
 - **qa-lead**: Execute full regression test suite. Test all critical paths. Verify no S1/S2 bugs. Sign off on quality.
 - **devops-engineer**: Build release artifacts for all target platforms. Verify builds are clean and reproducible. Run automated tests in CI.
 - **security-engineer** *(if game has online features, multiplayer, or player data)*: Conduct pre-release security audit. Review authentication, anti-cheat, data privacy compliance. Sign off on security posture.
-- **network-programmer** *(if game has multiplayer)*: Sign off on netcode stability. Verify lag compensation, reconnect handling, and bandwidth usage under load.
+- **technical-director** *(if the release includes multiplayer, telemetry, or high-risk integration work)*: Sign off on netcode stability, telemetry readiness, deployment-sensitive technical risks, and any cross-system release blockers.
 
 ### Phase 4: Localization, Performance, and Analytics
 Delegate (can run in parallel with Phase 3 if resources available):
-- Verify all strings are translated (delegate to **localization-lead** if available)
+- Verify every shipped locale has current `/localize qa` evidence or a producer-approved scope note explaining why localization QA is out of scope for this release
 - Run performance benchmarks against targets (delegate to **performance-analyst** if available)
-- **analytics-engineer**: Verify all telemetry events fire correctly on release build. Confirm dashboards are receiving data. Check that critical funnels (onboarding, progression, monetization if applicable) are instrumented.
+- **technical-director**: Verify telemetry events fire correctly on the release build. Confirm dashboards or logs have a named owner, and check that critical funnels (onboarding, progression, monetization if applicable) are instrumented.
 - Output: localization, performance, and analytics sign-off
 
 ### Phase 5: Go/No-Go
 Delegate to **producer**:
-- Collect sign-off from: qa-lead, devops-engineer, security-engineer (if spawned in Phase 3), network-programmer (if spawned in Phase 3), and technical-director
+- Collect sign-off from: qa-lead, devops-engineer, security-engineer (if spawned in Phase 3), technical-director (if spawned in Phase 3 or 4), and performance-analyst (if performance review was requested)
 - Evaluate any open issues — are they blocking or can they ship?
 - Make the go/no-go call
 - Output: release decision with rationale
@@ -101,7 +100,7 @@ Delegate to **producer** (in parallel with deployment):
 - **producer**: Generate release report, update milestone tracking, and communicate to stakeholders
 - **qa-lead**: Monitor incoming bug reports for regressions
 - **producer**: Publish all player-facing communication and monitor community sentiment
-- **analytics-engineer**: Confirm live dashboards are healthy; alert if any critical events are missing
+- **technical-director**: Confirm live telemetry is healthy when the release depends on dashboards, logs, or multiplayer monitoring
 - Schedule post-release retrospective if issues occurred
 
 ## Error Recovery Protocol

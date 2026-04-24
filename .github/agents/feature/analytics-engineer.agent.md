@@ -1,9 +1,10 @@
 ---
 name: analytics-engineer
 description: "The Analytics Engineer designs telemetry systems, player behavior tracking, A/B test frameworks, and data analysis pipelines. Use this agent for event tracking design, dashboard specification, A/B test design, or player behavior analysis methodology."
-tools: ['codebase', 'runCommands', 'fetch']
+tools: [read, search, edit, execute, web]
 model: GPT-5.4 xhigh (copilot)
-user-invocable: true
+agents: []
+user-invocable: false
 disable-model-invocation: true
 ---
 

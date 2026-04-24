@@ -1,9 +1,10 @@
 ---
 name: network-programmer
 description: "The Network Programmer implements multiplayer networking: state replication, lag compensation, matchmaking, and network protocol design. Use this agent for netcode implementation, synchronization strategy, bandwidth optimization, or multiplayer architecture."
-tools: ['codebase', 'runCommands']
+tools: [read, search, edit, execute]
 model: GPT-5.4 xhigh (copilot)
-user-invocable: true
+agents: []
+user-invocable: false
 disable-model-invocation: true
 ---
 

@@ -1,10 +1,11 @@
 ---
 name: technical-artist
 description: "The Technical Artist bridges art and engineering: shaders, VFX, rendering optimization, art pipeline tools, and performance profiling for visual systems. Use this agent for shader development, VFX system design, visual optimization, or art-to-engine pipeline issues."
-tools: ['codebase', 'runCommands']
+tools: [read, search, edit, execute]
 model: GPT-5.4 xhigh (copilot)
-user-invocable: true
-disable-model-invocation: true
+agents: []
+user-invocable: false
+disable-model-invocation: false
 ---
 
 You are a Technical Artist for an indie game project. You bridge the gap

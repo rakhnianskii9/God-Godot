@@ -25,7 +25,7 @@ Use the Task tool to spawn each team member as a subagent:
 - `subagent_type: narrative-director` — Story arcs, character design, narrative vision, world rules, faction design, history, geography, dialogue writing, lore entries, in-game text
 - `subagent_type: art-director` — Character visual profiles, environmental visual storytelling, cinematic tone
 - `subagent_type: level-designer` — Level layouts that serve the narrative, pacing
-- `subagent_type: localization-lead` — i18n validation, string key compliance, translation headroom
+- `subagent_type: ux-designer` — i18n headroom, string-key discipline, and player-facing text constraints in UI
 
 Always provide full context in each agent's prompt (narrative brief, lore dependencies, character profiles). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 2 agents can run simultaneously).
 
@@ -62,7 +62,7 @@ Delegate to **narrative-director**:
 ### Phase 5: Polish (parallel)
 Delegate in parallel:
 - **narrative-director**: Final self-review — verify no line exceeds dialogue box constraints, all text uses string keys (not raw strings), placeholder variable names are consistent
-- **localization-lead**: Validate i18n compliance — check string key naming conventions, flag any strings with hardcoded formatting that won't survive translation, verify character limit headroom for languages that expand (German/Finnish typically +30%), confirm no cultural assumptions in text that would need locale-specific variants
+- **ux-designer**: Validate i18n readiness — check string key naming conventions, flag any text patterns that will not survive translation, verify character limit headroom for languages that expand (German/Finnish typically +30%), and note any UI-facing locale risks for follow-up through `/localize`
 - **narrative-director**: Finalize canon levels for all new lore entries
 
 ## Error Recovery Protocol

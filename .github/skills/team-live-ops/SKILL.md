@@ -1,6 +1,6 @@
 ---
 name: team-live-ops
-description: "Orchestrate the live-ops team for post-launch content planning: coordinates live-ops-designer, game-designer, analytics-engineer, producer, and narrative-director to design and plan a season, event, or live content update."
+description: "Orchestrate the live update planning team for a solo workflow: coordinates producer, game-designer, narrative-director, technical-director, and qa-lead to plan a season, event, or post-launch content update without relying on parked specialty roles."
 argument-hint: "[season name or event description]"
 user-invocable: true
 ---
@@ -16,27 +16,27 @@ full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
 
 ## Team Composition
-- **live-ops-designer** — Season structure, event cadence, retention mechanics, battle pass
+- **producer** — Season scope, event timing, player-facing messaging, and cross-team rollout ownership
 - **game-designer** — Live economy balance, store rotation, currency pricing, pity timers
-- **analytics-engineer** — Success metrics, A/B test design, event tracking, dashboard specs
-- **producer** — Player-facing announcements, event timing, seasonal messaging
 - **narrative-director** — Seasonal narrative theme, story arc, world event framing, event descriptions, reward item names, seasonal flavor text, announcement copy
+- **technical-director** — Telemetry requirements, feature-flag risk, and release-side technical constraints for the event
+- **qa-lead** — Validation checklist, success evidence requirements, and live-event QA coverage
 
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
-- `subagent_type: live-ops-designer` — Season/event structure and retention mechanics
+- `subagent_type: producer` — Season/event scope, timing, communications, and rollout ownership
 - `subagent_type: game-designer` — Live economy balance and reward pricing
-- `subagent_type: analytics-engineer` — Success metrics, A/B tests, event instrumentation
-- `subagent_type: producer` — Player-facing communication and messaging
 - `subagent_type: narrative-director` — Seasonal theme, narrative framing, and all player-facing event text
+- `subagent_type: technical-director` — Instrumentation requirements, feature flags, and technical release risks
+- `subagent_type: qa-lead` — Validation checklist, test evidence, and launch-readiness verification
 
 Always provide full context in each agent's prompt (game concept path, existing season docs, ethics policy path, current economy state). Launch independent agents in parallel where the pipeline allows it (Phases 3 and 4 can run simultaneously).
 
 ## Pipeline
 
 ### Phase 1: Season/Event Scoping
-Delegate to **live-ops-designer**:
+Delegate to **producer**:
 - Define the season or event: type (seasonal, limited-time event, challenge), duration, theme direction
 - Outline the content list: what's new (modes, items, challenges, story beats)
 - Define the retention hook: what brings players back daily/weekly during this season
@@ -60,13 +60,17 @@ Delegate to **game-designer**:
 - Verify no pay-to-win items in premium track
 - Output: economy design doc with reward tables, pricing, and currency flow
 
-### Phase 4: Analytics and Success Metrics (parallel with Phase 3)
-Delegate to **analytics-engineer**:
-- Read the season brief
-- Define success metrics: participation rate target, retention lift target, battle pass completion rate
-- Design any A/B tests to run during the season (e.g., different reward cadences)
-- Specify new telemetry events needed for this season's content
-- Output: analytics plan with success criteria and instrumentation requirements
+### Phase 4: Success Metrics and Release Readiness (parallel with Phase 3)
+Delegate in parallel:
+- **technical-director**:
+  - Read the season brief
+  - Define telemetry and feature-flag requirements for this season's content
+  - Specify any rollout risks, kill switches, or instrumentation gaps
+  - Output: instrumentation and release-risk plan
+- **qa-lead**:
+  - Define success evidence requirements: participation targets, retention checkpoints, validation checklist, and post-launch observation needs
+  - Flag which parts of the season require manual verification before ship
+  - Output: live-event QA and evidence plan
 
 ### Phase 5: Content Writing (parallel)
 Delegate in parallel:
@@ -87,14 +91,14 @@ Collect outputs from all phases and present a consolidated season plan:
 - Season brief (Phase 1)
 - Narrative framing (Phase 2)
 - Economy design and reward tables (Phase 3)
-- Analytics plan and success metrics (Phase 4)
+- Instrumentation plan and success evidence requirements (Phase 4)
 - Written content inventory (Phase 5)
 - Communication calendar (Phase 6)
 
 Present a summary to the user with:
 - **Content scope**: what is being created
 - **Economy health check**: does the reward track feel fair and non-predatory?
-- **Analytics readiness**: are success criteria defined and instrumented?
+- **Operational readiness**: are success criteria, instrumentation owners, and QA evidence requirements defined?
 - **Ethics review**: check the Phase 3 economy design against `design/live-ops/ethics-policy.md`
   - If the file does not exist: flag "ETHICS REVIEW SKIPPED: `design/live-ops/ethics-policy.md` not found. Economy design was not reviewed against an ethics policy. Recommend creating one before production begins." Include this flag in the season design output document. Add to next steps: create `design/live-ops/ethics-policy.md`.
   - If the file exists and a violation is found: flag "ETHICS FLAG: [element] in Phase 3 economy design violates [policy rule]. Approval is blocked until this is resolved." Do NOT issue a COMPLETE verdict or write output documents. Use `vscode_askQuestions` with options: revise economy design / override with documented rationale / cancel. If user chooses to revise: re-spawn game-designer to produce a corrected design, then return to Phase 7 review.
@@ -106,7 +110,7 @@ Ask the user to approve the season plan before delegating to production teams. I
 
 All documents save to `design/live-ops/`:
 - `seasons/S[N]_[name].md` — Season design document (from Phase 1-3)
-- `seasons/S[N]_[name]_analytics.md` — Analytics plan (from Phase 4)
+- `seasons/S[N]_[name]_operations.md` — Instrumentation and live-readiness plan (from Phase 4)
 - `seasons/S[N]_[name]_comms.md` — Communication calendar (from Phase 6)
 
 ## Error Recovery Protocol

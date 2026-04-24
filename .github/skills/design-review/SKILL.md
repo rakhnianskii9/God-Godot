@@ -86,7 +86,7 @@ Read the GDD and identify every domain present. A GDD can touch multiple domains
 | UI, HUD, menus, player-facing displays | `ux-designer` |
 | Dialogue, quests, story, lore | `narrative-director` |
 | Animation, feel, timing, juice | `gameplay-programmer` |
-| Multiplayer, sync, replication | `network-programmer` |
+| Multiplayer, sync, replication | `technical-director` |
 | Audio cues, music triggers | `audio-director` |
 | Performance, draw calls, memory | `performance-analyst` |
 | Engine-specific patterns or APIs | Primary engine specialist (from the current Godot specialist set in `.github/agents/`) |

@@ -1,10 +1,11 @@
 ---
 name: level-designer
 description: "The Level Designer creates spatial designs, encounter layouts, pacing plans, and environmental storytelling guides for game levels and areas. Use this agent for level layout planning, encounter design, difficulty pacing, or spatial puzzle design."
-tools: ['codebase']
+tools: [read, search, edit, web]
 model: GPT-5.4 xhigh (copilot)
-user-invocable: true
-disable-model-invocation: true
+agents: []
+user-invocable: false
+disable-model-invocation: false
 ---
 
 You are a Level Designer for an indie game project. You design spaces that

@@ -459,7 +459,7 @@ Verdict: **COMPLETE** — engine configured and curated reference docs populated
 - If reference docs already exist for a different engine, ask before replacing
 - Always show the user what you're about to change before making project-context edits
 - If WebSearch returns ambiguous results, show the user and let them decide
-- When the user chose **GDScript**: copy the GDScript workspace engine-record template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
+- When the user chose **GDScript**: copy the GDScript workspace engine-record template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. If native extensions become necessary later, route that decision through `technical-director` — it still does not make C++ a primary project language.
 
 ---
 
@@ -533,8 +533,8 @@ Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mix
 - **Language/Code Specialist**: godot-gdscript-specialist (all .gd files)
 - **Shader Specialist**: godot-shader-specialist (.gdshader files, VisualShader resources)
 - **UI Specialist**: godot-specialist (no dedicated UI specialist — primary covers all UI)
-- **Additional Specialists**: godot-gdextension-specialist (GDExtension / native C++ bindings only)
-- **Routing Notes**: Invoke primary for architecture decisions, ADR validation, and cross-cutting code review. Invoke GDScript specialist for code quality, signal architecture, static typing enforcement, and GDScript idioms. Invoke shader specialist for material design and shader code. Invoke GDExtension specialist only when native extensions are involved.
+- **Additional Specialists**: none in the active graph
+- **Routing Notes**: Invoke primary for architecture decisions, ADR validation, and cross-cutting code review. Invoke GDScript specialist for code quality, signal architecture, static typing enforcement, and GDScript idioms. Invoke shader specialist for material design and shader code. If native extensions become necessary, escalate through technical-director before widening the active graph.
 
 ### File Extension Routing
 
@@ -544,7 +544,7 @@ Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mix
 | Shader / material files (.gdshader, VisualShader) | godot-shader-specialist |
 | UI / screen files (Control nodes, CanvasLayer) | godot-specialist |
 | Scene / resource / level files (.tscn, .tres) | godot-specialist |
-| Native extension / plugin files (.gdextension, C++) | godot-gdextension-specialist |
+| Native extension / plugin files (.gdextension, C++) | technical-director |
 | General architecture review | godot-specialist |
 ```
 
@@ -552,22 +552,22 @@ Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mix
 ```markdown
 ## Engine Specialists
 - **Primary**: godot-specialist
-- **Language/Code Specialist**: godot-csharp-specialist (all .cs files)
+- **Language/Code Specialist**: technical-director (C# specialist is currently parked outside the active graph)
 - **Shader Specialist**: godot-shader-specialist (.gdshader files, VisualShader resources)
 - **UI Specialist**: godot-specialist (no dedicated UI specialist — primary covers all UI)
-- **Additional Specialists**: godot-gdextension-specialist (GDExtension / native C++ bindings only)
-- **Routing Notes**: Invoke primary for architecture decisions, ADR validation, and cross-cutting code review. Invoke C# specialist for code quality, [Signal] delegate patterns, [Export] attributes, .csproj management, and C#-specific Godot idioms. Invoke shader specialist for material design and shader code. Invoke GDExtension specialist only when native C++ plugins are involved.
+- **Additional Specialists**: none in the active graph
+- **Routing Notes**: Invoke primary for architecture decisions, ADR validation, and cross-cutting code review. Route all C# and `.csproj` work through technical-director until the parked C# specialist is explicitly re-enabled. Invoke shader specialist for material design and shader code. Route native C++ plugin work through technical-director as well.
 
 ### File Extension Routing
 
 | File Extension / Type | Specialist to Spawn |
 |-----------------------|---------------------|
-| Game code (.cs files) | godot-csharp-specialist |
+| Game code (.cs files) | technical-director |
 | Shader / material files (.gdshader, VisualShader) | godot-shader-specialist |
 | UI / screen files (Control nodes, CanvasLayer) | godot-specialist |
 | Scene / resource / level files (.tscn, .tres) | godot-specialist |
-| Project config (.csproj, NuGet) | godot-csharp-specialist |
-| Native extension / plugin files (.gdextension, C++) | godot-gdextension-specialist |
+| Project config (.csproj, NuGet) | technical-director |
+| Native extension / plugin files (.gdextension, C++) | technical-director |
 | General architecture review | godot-specialist |
 ```
 
@@ -576,23 +576,23 @@ Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mix
 ## Engine Specialists
 - **Primary**: godot-specialist
 - **GDScript Specialist**: godot-gdscript-specialist (.gd files — gameplay/UI scripts)
-- **C# Specialist**: godot-csharp-specialist (.cs files — performance-critical systems)
+- **C# Specialist**: technical-director (.cs files — active fallback while the dedicated C# specialist is parked)
 - **Shader Specialist**: godot-shader-specialist (.gdshader files, VisualShader resources)
 - **UI Specialist**: godot-specialist (no dedicated UI specialist — primary covers all UI)
-- **Additional Specialists**: godot-gdextension-specialist (GDExtension / native C++ bindings only)
-- **Routing Notes**: Invoke primary for cross-language architecture decisions and which systems belong in which language. Invoke GDScript specialist for .gd files. Invoke C# specialist for .cs files and .csproj management. Prefer signals over direct cross-language method calls at the boundary.
+- **Additional Specialists**: none in the active graph
+- **Routing Notes**: Invoke primary for cross-language architecture decisions and which systems belong in which language. Invoke GDScript specialist for .gd files. Route `.cs` files, `.csproj` management, and native-extension decisions through technical-director until the parked specialists are explicitly re-enabled. Prefer signals over direct cross-language method calls at the boundary.
 
 ### File Extension Routing
 
 | File Extension / Type | Specialist to Spawn |
 |-----------------------|---------------------|
 | Game code (.gd files) | godot-gdscript-specialist |
-| Game code (.cs files) | godot-csharp-specialist |
+| Game code (.cs files) | technical-director |
 | Cross-language boundary decisions | godot-specialist |
 | Shader / material files (.gdshader, VisualShader) | godot-shader-specialist |
 | UI / screen files (Control nodes, CanvasLayer) | godot-specialist |
 | Scene / resource / level files (.tscn, .tres) | godot-specialist |
-| Project config (.csproj, NuGet) | godot-csharp-specialist |
-| Native extension / plugin files (.gdextension, C++) | godot-gdextension-specialist |
+| Project config (.csproj, NuGet) | technical-director |
+| Native extension / plugin files (.gdextension, C++) | technical-director |
 | General architecture review | godot-specialist |
 ```

@@ -3,7 +3,7 @@ name: localize
 description: "Full localization pipeline: scan for hardcoded strings, extract and manage string tables, validate translations, generate translator briefings, run cultural/sensitivity review, manage VO localization, test RTL/platform requirements, enforce string freeze, and report coverage."
 argument-hint: "[scan|extract|validate|status|brief|cultural-review|vo-pipeline|rtl-check|freeze|qa]"
 user-invocable: true
-agent: localization-lead
+agent: producer
 ---
 
 # Localization Pipeline
@@ -13,6 +13,10 @@ feel native in every language and region. Poor localization breaks immersion,
 confuses players, and blocks platform certification. This skill covers the
 complete pipeline from string extraction through cultural review, VO recording,
 RTL layout testing, and localization QA sign-off.
+
+Within the active agent graph, localization orchestration is owned by `producer`.
+When deeper review is needed, route text and cultural framing to `narrative-director`,
+UI/RTL concerns to `ux-designer`, and final ship-readiness checks to `qa-lead`.
 
 **Modes:**
 - `scan` — Find hardcoded strings and localization anti-patterns (read-only)
@@ -178,7 +182,7 @@ Ask: "May I write this translator brief to `production/localization/translator-b
 
 ## Phase 2F: Cultural Review Mode
 
-Spawn `localization-lead` via Task. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
+Spawn `narrative-director` via Task. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
 
 ### Content Areas to Review
 
@@ -365,13 +369,13 @@ Localization QA is a dedicated pass that runs after translations are delivered b
 before any locale ships. This is not the same as `/validate` (which checks completeness)
 — this is a structured playthrough-based quality check.
 
-Spawn `localization-lead` via Task with:
+Spawn `qa-lead` via Task with:
 - The target locale(s) to QA
 - The list of all screens/flows in the game (from `design/gdd/` or `/content-audit` output)
 - The current `/localize validate` report
 - The cultural review report (if it exists)
 
-Ask the localization-lead to produce a QA plan covering:
+Ask the qa-lead to produce a QA plan covering:
 
 1. **Functional string check** — every string displays in-game without truncation, placeholder errors, or encoding corruption
 2. **UI overflow check** — translated strings that exceed UI bounds (even if within character limits, some languages expand)
@@ -386,7 +390,7 @@ Output a QA verdict per locale:
 ## Localization QA Verdict — [Locale]
 
 **Status**: PASS / PASS WITH CONDITIONS / FAIL
-**Reviewed by**: localization-lead
+**Reviewed by**: qa-lead
 **Date**: [date]
 
 ### Findings

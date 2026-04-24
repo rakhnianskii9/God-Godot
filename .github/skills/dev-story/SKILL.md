@@ -140,7 +140,7 @@ If the story's Type is `Config/Data`, no programmer agent or engine specialist i
 | Any layer — Type: Visual/Feel | `gameplay-programmer` (implements) |
 | Core or Feature — gameplay mechanics | `gameplay-programmer` |
 | Core or Feature — AI behaviour, pathfinding | `ai-programmer` |
-| Core or Feature — networking, replication | `network-programmer` |
+| Core or Feature — networking, replication | `technical-director` |
 | Config/Data — no code | No agent needed (see Phase 4 Config note) |
 
 ### Engine specialist — always spawn as secondary for code stories
@@ -152,7 +152,9 @@ engine risk.
 
 | Engine | Specialist agents available |
 |--------|----------------------------|
-| Godot 4 | `godot-specialist`, `godot-gdscript-specialist`, `godot-csharp-specialist`, `godot-shader-specialist`, `godot-gdextension-specialist` |
+| Godot 4 | `godot-specialist`, `godot-gdscript-specialist`, `godot-shader-specialist` |
+
+If a story truly requires C# or GDExtension work, route through `technical-director` first. Those deeper specialists are currently parked outside the active graph and must not be spawned directly by this skill.
 
 **When engine risk is HIGH** (from the ADR or VERSION.md): always spawn the engine
 specialist, even for non-engine-facing stories. High risk means the ADR records

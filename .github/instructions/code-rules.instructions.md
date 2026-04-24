@@ -3,7 +3,7 @@
 Этот документ хранит только постоянные кросс-ролевые нормы для текущего workspace `/home/projects/gamedev`.
 Дефолтное поведение для всех сессий задаётся в `.github/instructions/copilot-instructions.md`.
 
-В `.github/agents/` присутствуют 39 custom agents. Активный orchestration-контур этого workspace состоит из agents, instructions, skills, hooks, prompts и MCP-конфигурации.
+В `.github/agents/` присутствуют 30 custom agents. Активный orchestration-контур этого workspace состоит из agents, instructions, skills, hooks, prompts и MCP-конфигурации.
 
 ### Поведение при анализе и ревью (НОРМАТИВНО)
 
@@ -80,7 +80,7 @@
 
 - Любые summary в `.github/*` должны описывать реальное состояние control plane, а не желаемую будущую схему.
 - Нельзя ссылаться на отсутствующие файлы, агенты, skills, hooks, MCP servers или registries как на уже существующие.
-- В `.github/agents/` реально лежат 39 custom agents, но их body-тексты ещё частично содержат legacy Claude-era tool references. При расхождении между markdown-описанием агента и реальным VS Code tool registry источником истины считать реальный tool registry.
+- В `.github/agents/` реально лежат 30 custom agents. Пользовательский picker намеренно сжат до `game-orchestrator` и manager-слоя; leaf-специалисты и parked feature-агенты скрыты из picker и используются только через явную оркестрацию. При расхождении между markdown-описанием агента и реальным VS Code tool registry источником истины считать реальный tool registry.
 - Hooks должны ссылаться только на реальные скрипты внутри `.github/hooks/`.
 - На текущий момент рабочие guardrails заданы через `.github/hooks/pretool-guard.sh`, `.github/hooks/posttool-quality.sh` и `.github/hooks/posttool-security.sh`; если инструкции описывают поведение hooks, оно должно совпадать с этими файлами.
 - При изменениях в `.github/instructions/*`, `.github/agents/*`, `.github/hooks/*`, `.github/mcp/*` нужно особенно внимательно проверять cross-file consistency и убирать legacy traces.
