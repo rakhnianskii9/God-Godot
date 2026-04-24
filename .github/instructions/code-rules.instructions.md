@@ -3,7 +3,7 @@
 Этот документ хранит только постоянные кросс-ролевые нормы для текущего workspace `/home/projects/gamedev`.
 Дефолтное поведение для всех сессий задаётся в `.github/instructions/copilot-instructions.md`.
 
-На текущий момент оркестрационный контур в `.github/agents/` состоит из `Consilium-Boss.agent.md` и подчинённых `Consilium-*` аналитиков и Devils. 
+На текущий момент каталог `.github/agents/` пуст. Активный orchestration-контур этого workspace сейчас состоит из instructions, skills, hooks, prompts и MCP-конфигурации.
 
 ## 0) Базовые пользовательские правила (НОРМАТИВНО)
 
@@ -91,28 +91,25 @@
 
 - Любые summary в `.github/*` должны описывать реальное состояние control plane, а не желаемую будущую схему.
 - Нельзя ссылаться на отсутствующие файлы, агенты, skills, hooks, MCP servers или registries как на уже существующие.
-- На момент этой инструкции в `.github/agents/` реально присутствуют только `Consilium-Boss` и `Consilium-*` аналитики/Devils. Упоминания `Conductor`, `UI-Governor`, `AGENTS.md` и любых чужих отсутствующих пайплайнов считаются stale, пока эти сущности не появятся в репозитории.
+- На текущий момент `.github/agents/` пуст. Любые упоминания удалённых custom agents, старых orchestration-режимов и отсутствующего registry-файла считаются stale, пока соответствующие файлы реально не вернутся в репозиторий.
 - Hooks должны ссылаться только на реальные скрипты внутри `.github/hooks/`.
 - На текущий момент рабочие guardrails заданы через `.github/hooks/pretool-guard.sh`, `.github/hooks/posttool-quality.sh` и `.github/hooks/posttool-security.sh`; если инструкции описывают поведение hooks, оно должно совпадать с этими файлами.
 - При изменениях в `.github/instructions/*`, `.github/agents/*`, `.github/hooks/*`, `.github/mcp/*` нужно особенно внимательно проверять cross-file consistency и убирать legacy traces.
 
-### Общая доктрина Consilium
+### Custom Agents
 
-- `Consilium-Boss` — это decision engine, а не implementation agent. Его задача: сформировать рамку проблемы, запустить 4 аналитика, агрегировать выводы, запустить 4 Devils и выдать final ruling.
-- Аналитики и Devils работают read-only. Для них нормой считаются чтение, поиск, трассировка, проверка docs и MCP-исследование, но не запись файлов и не выполнение мутаций.
-- Для правок и ревью самих agent-файлов сохранять текущую общую фазовую логику Boss: `crash/crash` для framing → `memory/*` для retrieval → `task-manager/*` для task state → skill routing → параллельный запуск аналитиков/Devils.
-- При изменениях orchestration-файлов не ломать ключевые invariants текущего контура: аналитики запускаются одним параллельным батчем, Devils запускаются одним параллельным батчем, Boss не должен выполнять code changes.
-- Если в agent-доках есть `MANDATORY`-требование на skill, MCP или protocol step, оно должно быть исполнимо в текущем репо. Нельзя держать обязательные шаги, которые ссылаются на отсутствующий файл или несуществующий tool namespace.
+- Если agent-layer будет расширен, его файлы и все ссылки на него должны появляться в одном и том же change set.
+- Если в instruction или skill есть `MANDATORY`-требование на agent, skill, MCP или protocol step, оно должно быть исполнимо в текущем репо. Нельзя держать обязательные шаги, которые ссылаются на отсутствующий файл или несуществующий tool namespace.
 
 ### Skills и prompts: что реально есть в репо
 
 | Skill | Статус | Когда применять | Файл |
 |---|---|---|---|
 | `octocode-code-forensics` | real | code forensics, impact analysis, call chains, локальный поиск реального управляющего пути | `.github/skills/octocode-code-forensics/SKILL.md` |
-| `orchestration-qa` | real | правки `.github/*`, валидация agents / skills / hooks / MCP / instructions | `.github/skills/orchestration-qa/SKILL.md` |
+| + 72 gamedev skills | real | см. `.github/skills/` — code-review, perf-profile, security-audit, sprint-plan и др. | `.github/skills/` |
 
-- Ссылки в agent-файлах на `feature-dev`, `security-guidance`, `pr-review-toolkit`, `docker-diagnostics`, `facebook-observability-lab`, `playwright-ui-evidence`, `fb-front-*` и другие отсутствующие skill directories считаются config debt, а не доступной функциональностью.
-- Если instruction или agent описывает skill routing, обязательными можно делать только реально существующие `SKILL.md`.
+- `orchestration-qa` удалён (был Consilium-специфичным). Вместо него — `octocode-code-forensics` для forensics и прямое чтение файлов для control-plane правок.
+- Если instruction или agent описывает skill routing, обязательными можно делать только реально существующие `SKILL.md` в `.github/skills/`.
 
 | Prompt | Статус | Назначение | Файл |
 |---|---|---|---|
@@ -140,18 +137,18 @@
 - Болванка под `memory` существует отдельно в `.vscode/mcp.memory.template.json`; пока локальный `memory-server` реально не добавлен в репо, она не должна подключаться в активный autostart MCP config.
 - Если agent-файлы требуют `postgres/*` или `pgtuner/*`, это truthfulness gap: такие servers не объявлены в актуальном `.vscode/mcp.json`, несмотря на упоминания в `serverSampling` и agent docs.
 - Если instructions или agent docs перечисляют `apify`, `github-support-docs` или `github-copilot`, нужно различать источник: `apify` сейчас не объявлен в активном MCP config, а GitHub-related возможности приходят из built-in GitHub MCP в `.vscode/settings.json`, а не из `.vscode/mcp.json` или `.github/mcp/mcp.json`.
-- При недоступности MCP серверов использовать деградационные теги только там, где это реально описано в agent protocol. В текущем `Consilium-Boss.agent.md` уже используются: `context7_down`, `db_ro_fallback`, `db_perf_fallback`, `memory_snapshot_used`, `devtools_fallback`, `playwright_fallback`.
+- При недоступности MCP серверов описывать деградацию можно только там, где существует реальный protocol owner. Нельзя ссылаться на теги или режимы из удалённого agent-контура.
 
 ### Режимы анализа
 
-- `deep-analysis` и `diagnostics` — это реальные operational modes текущего Consilium-контура, потому что они описаны в `Consilium-Boss.agent.md`.
-- Если инструкция или agent активирует `diagnostics`, нужно сохранять текущую доктрину: типизация находок (`logic`, `consistency`, `best-practice`, `docs-drift`, `dead-code`, `duplication`, `complexity`, `TODO`) и табличный формат из `diagnostique.prompt.md`.
-- Если инструкция или agent активирует `deep-analysis`, нельзя снижать evidence floor по сравнению с тем, что уже требует `Consilium-Boss.agent.md`.
+- `diagnostique.prompt.md` — реальный prompt artifact для структурированной диагностики.
+- Пока `.github/agents/` пуст, нельзя описывать `deep-analysis`, `diagnostics` или любой другой analysis mode как режим удалённого custom-agent-контура.
+- Если инструкция ссылается на `diagnostique.prompt.md`, нужно сохранять его реальную полезную нагрузку: типизация находок (`logic`, `consistency`, `best-practice`, `docs-drift`, `dead-code`, `duplication`, `complexity`, `TODO`) и табличный формат.
 
 ## 8) Технологический фокус этого workspace
 
 - Этот workspace Godot-first. Нельзя по умолчанию навязывать ему Node.js / React / TypeORM / pnpm / turbo workflow, если задача реально относится к `my-game` или к Godot library set.
-- Google Play Billing, Nakama, Rapier, Jolt и другие интеграции в этом workspace существуют как опциональные библиотеки/референсы. О них нужно говорить только если задача действительно попадает в соответствующий срез.
+- Google Play Billing и другие реально присутствующие библиотеки из `godot-lib-pazzle` существуют как опциональные интеграции. О них нужно говорить только если задача действительно попадает в соответствующий срез и библиотека физически присутствует в дереве.
 
 ## 9) Разделение ответственности
 

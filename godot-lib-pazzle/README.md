@@ -29,7 +29,7 @@
 | Данные и предметы | `pandora` + `gloot` | игровые данные отдельно от кода + инвентарь |
 | Диалоги и подача | `godot_dialogue_manager`, `phantom-camera`, `godot_sound_manager`, `GoTween` | быстрый прирост качества презентации |
 | Управление и mobile | `godot_input_helper`, `virtual-joystick-godot`, `godot-touch-input-manager` | единый ввод и мобильные жесты |
-| Сохранения и онлайн | `Godot-Save-System`, `GodotFirebase`, `nakama-godot` | локальный прогресс, облако, мультиплеер |
+| Сохранения | `Godot-Save-System` | локальный прогресс без отдельного backend |
 | Тесты и дебаг | `gut`, `panku-console`, `godot-logger` | быстрая диагностика и регресс-контроль |
 
 ## Карта библиотек
@@ -50,11 +50,10 @@
 - `godot-google-play-billing` — Android IAP через Google Play Billing. Нужен только если в проекте действительно будут покупки или подписки. Смотреть: [godot-google-play-billing/godot-google-play-billing/](godot-google-play-billing/godot-google-play-billing/), [godot-google-play-billing/demo/](godot-google-play-billing/demo/), [godot-google-play-billing/docs/](godot-google-play-billing/docs/).
 - `godot_input_helper` — единый слой ввода для клавиатуры, геймпада и тача, плюс rebinding и UI-подсказки. Хорошая базовая библиотека, если хочется нормализовать управление на раннем этапе. Смотреть: [godot_input_helper/addons/input_helper/](godot_input_helper/addons/input_helper/), [godot_input_helper/addons/input_helper/components/](godot_input_helper/addons/input_helper/components/), [godot_input_helper/addons/input_helper/views/](godot_input_helper/addons/input_helper/views/).
 
-### Сохранения, сервисы и онлайн
+### Сохранения
 
 - `Godot-Save-System` — простая локальная система сохранений. Подходит как быстрый старт до появления более сложного persistence-слоя. Смотреть: [alternatives/erdavids__Godot-Save-System/SaveSystem.tscn](alternatives/erdavids__Godot-Save-System/SaveSystem.tscn), [alternatives/erdavids__Godot-Save-System/Scenes/](alternatives/erdavids__Godot-Save-System/Scenes/).
-- `GodotFirebase` — Firebase для авторизации, облачных данных, аналитики, storage, remote config и прочих сервисов. Подходит, если проекту нужны облачные фичи без собственного backend. Смотреть: [GodotFirebase/addons/godot-firebase/](GodotFirebase/addons/godot-firebase/), [GodotFirebase/addons/http-sse-client/](GodotFirebase/addons/http-sse-client/), [GodotFirebase/ios_plugins/](GodotFirebase/ios_plugins/).
-- `nakama-godot` — клиент Heroic Labs Nakama для матчей, чата, лидербордов и realtime-сокетов. Имеет смысл, если проект идёт в мультиплеер или social features. Смотреть: [nakama-godot/addons/com.heroiclabs.nakama/](nakama-godot/addons/com.heroiclabs.nakama/).
+- Облачный и multiplayer-стек сейчас не входит в локальный vendor set. Если он понадобится, его нужно добавлять заново и документировать только после фактического появления в дереве.
 
 ### Камера, UI, диалоги и подача
 
@@ -69,12 +68,10 @@
 - `gut` — главный кандидат для unit и integration тестов в Godot. Если появится реальная логика в `my-game`, это базовый инструмент для регрессий. Смотреть: [gut/addons/gut/](gut/addons/gut/).
 - `panku-console` — внутриигровая консоль разработчика и REPL. Удобна для debug-сборок, когда нужно быстро дёргать функции и смотреть состояние мира. Смотреть: [alternatives/Ark2000__PankuConsole/addons/panku_console/](alternatives/Ark2000__PankuConsole/addons/panku_console/), [alternatives/Ark2000__PankuConsole/addons/panku_console/modules/](alternatives/Ark2000__PankuConsole/addons/panku_console/modules/).
 - `godot-logger` — логирование с уровнями и выводом в файл. Полезно, если проект идёт на Android или нужен стабильный crash trail. Смотреть: [alternatives/KOBUGE-Games__godot-logger/](alternatives/KOBUGE-Games__godot-logger/), [alternatives/KOBUGE-Games__godot-logger/logger.gd](alternatives/KOBUGE-Games__godot-logger/logger.gd).
-- `godot-ci` — шаблоны CI/CD для автосборки Godot-проектов. Это не геймплейная библиотека, а инфраструктурный референс. Смотреть: [godot-ci/](godot-ci/).
 
 ### Физика и производительность
 
-- `godot-rapier-physics` — альтернатива встроенной физике Godot для 2D и 3D через Rapier. Имеет смысл исследовать при большом количестве тел или если штатная физика упрётся в стабильность/производительность. Смотреть: [alternatives/appsinacup__godot-rapier-physics/](alternatives/appsinacup__godot-rapier-physics/), [alternatives/appsinacup__godot-rapier-physics/docs/](alternatives/appsinacup__godot-rapier-physics/docs/).
-- `godot-jolt` — 3D-физика на Jolt. Актуально, если проект уходит в сложный 3D, транспорт, ragdoll или тяжёлую физику сцены. Смотреть: [godot-jolt/](godot-jolt/), [godot-jolt/docs/](godot-jolt/docs/), [godot-jolt/examples/](godot-jolt/examples/).
+- Отдельных альтернатив физики в текущем локальном vendor set сейчас нет. Если Rapier, Jolt или другой physics stack понадобятся снова, их нужно возвращать в дерево и документировать только после фактического добавления.
 
 ### Шаблоны, генерация и специальные плагины
 
@@ -101,8 +98,7 @@
 | `Yagich/Godot-Save-System` | `erdavids/Godot-Save-System` | [alternatives/erdavids__Godot-Save-System/](alternatives/erdavids__Godot-Save-System/) |
 | `kurotori4423/panku-console` | `Ark2000/PankuConsole` | [alternatives/Ark2000__PankuConsole/](alternatives/Ark2000__PankuConsole/) |
 | `Scony/godot-logger` | `KOBUGE-Games/godot-logger` | [alternatives/KOBUGE-Games__godot-logger/](alternatives/KOBUGE-Games__godot-logger/) |
-| `godot-rapier/godot-rapier-2d` | `appsinacup/godot-rapier-physics` | [alternatives/appsinacup__godot-rapier-physics/](alternatives/appsinacup__godot-rapier-physics/) |
 | `awesomemau/godot-tween-sequence` | `okefonok/GoTween` | [alternatives/okefonok__GoTween/](alternatives/okefonok__GoTween/) |
 | `baconandgames/godot-component-system` | `Beliar83/godot-component-system-asset` | [alternatives/Beliar83__godot-component-system-asset/](alternatives/Beliar83__godot-component-system-asset/) |
 
-Сейчас все 28 пунктов из исходного списка представлены в дереве: либо точным репозиторием, либо локальной заменой в `alternatives/`.
+После чистки vendor set выше перечислены только реально оставшиеся в дереве библиотеки и локальные замены.

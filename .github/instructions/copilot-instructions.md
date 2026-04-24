@@ -21,11 +21,9 @@
 
 ## Оркестрация
 
-- В текущем `.github/agents/` реально присутствует `@Consilium-Boss` и его подагенты `Consilium-*`.
-- Для сложных архитектурных решений, спорных подходов и мультимодельного анализа использовать `@Consilium-Boss`.
-- Не ссылаться на `@Conductor`, `@UI-Governor` или `.github/agents/AGENTS.md` как на существующие элементы, пока они реально не добавлены в репозиторий.
-- Для правок в `.github/instructions/**`, `.github/agents/**`, `.github/hooks/**` и других control-plane файлах сначала читать skill `orchestration-qa`.
-- Для code forensics, impact analysis и поиска реального управляющего пути сначала читать skill `octocode-code-forensics`.
+- В `.github/agents/` сейчас нет активных custom agents: каталог пуст.
+- Не ссылаться на удалённые custom agents, отсутствующие agent registry-файлы или несуществующие orchestration-режимы как на активные элементы репо.
+- Для code forensics и impact analysis — skill `octocode-code-forensics`.
 
 ## Hooks
 
