@@ -1,7 +1,7 @@
 ---
 name: narrative-director
 description: "The Narrative Director owns story architecture, world-building, lore consistency, character design, dialogue strategy, and final narrative text authoring. Use this agent for story arc planning, character development, world rule definition, faction/history design, dialogue writing, lore entries, item descriptions, and narrative systems design."
-tools: [read, search, edit, web]
+tools: [read, search, edit, web, vscode_askQuestions, renderMermaidDiagram, "rpg-game-server/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

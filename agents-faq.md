@@ -400,59 +400,49 @@
 
 ### 2. Полная tool matrix по user-facing агентам
 
-| Агент | user-invocable | Tools |
+Теперь схема снова role-based, а не `полный доступ у всех`.
+
+Базовый реалистичный пакет для этого Godot workspace такой:
+
+- `read` и `search` есть у всех агентов
+- `edit` есть почти у всех доменных ролей, кроме чистого роутера `game-orchestrator`
+- `execute` даётся только там, где роль реально должна что-то запускать, валидировать или автоматизировать
+
+### 3. Реальные bundles по ролям
+
+| Bundle | Агенты | Что им реально выдано |
 |---|---|---|
-| `game-orchestrator` | yes | `read`, `search`, `agent`, `todo` |
-| `creative-director` | yes | `read`, `search`, `edit`, `web`, `agent` |
-| `technical-director` | yes | `read`, `search`, `edit`, `execute`, `web`, `agent` |
-| `producer` | yes | `read`, `search`, `edit`, `web`, `agent`, `todo` |
-| `game-designer` | yes | `read`, `search`, `edit`, `web`, `agent` |
-| `art-director` | yes | `read`, `search`, `edit`, `web`, `agent` |
-| `ux-designer` | yes | `read`, `search`, `edit`, `execute`, `web`, `agent` |
-| `godot-specialist` | yes | `read`, `search`, `edit`, `execute`, `web`, `agent` |
+| Routing core | `game-orchestrator` | `read`, `search`, `agent`, `todo`, `vscode_askQuestions`, `memory`, `crash/*` |
+| Production orchestration | `producer` | planning/delegation bundle, `edit`, `web`, `todo`, `memory`, release-oriented GitHub activators |
+| Creative leadership | `creative-director`, `game-designer`, `art-director` | `edit`, `web`, `agent`, `vscode_askQuestions`, `renderMermaidDiagram`, `view_image`, а narrative/game-design роли получают `rpg-game-server/*` там, где это осмысленно |
+| UI / accessibility | `ux-designer`, `accessibility-specialist` | `execute`, `get_errors`, browser tools, `view_image`, плюс Godot UI-oriented scene/script/input tools |
+| Technical governance | `technical-director` | самый широкий техпакет: `execute`, symbol tools, planning/memory, GitHub activators, Godot activators, `crash/*`, `context7/*`, `octocode/*`, Godot MCP wildcard-ы |
+| Godot authority | `godot-specialist` | Godot architecture bundle: symbol tools, scene/script/project/resource activators, `context7/*`, `octocode/*`, Godot MCP wildcard-ы |
+| Godot implementation | `gameplay-programmer`, `ai-programmer`, `godot-gdscript-specialist`, `godot-csharp-specialist`, `godot-gdextension-specialist`, `network-programmer`, `prototyper` | `execute`, `get_errors`, symbol tools, Godot scene/script/project/resource activators, `context7/*`, `octocode/*`, Godot MCP wildcard-ы |
+| Visual Godot implementation | `godot-shader-specialist`, `technical-artist` | тот же implementation bundle, но ещё и `view_image` |
+| Content / system specialists | `audio-director`, `narrative-director`, `level-designer`, `systems-designer`, `live-ops-designer`, `localization-lead` | в основном `read/search/edit/web`, диаграммы и narrative/RPG tooling только там, где это реально связано с ролью; `execute` у `localization-lead` оставлен для проверки i18n-пайплайна |
+| QA | `qa-lead` | `execute`, `get_errors`, browser tools, GitHub actions/PR inspection, Godot QA-facing activators |
+| Security | `security-engineer` | repo/security activators, symbol navigation, project analysis/logging, `context7/*`, `octocode/*` |
+| Tooling / data | `devops-engineer`, `tools-programmer`, `performance-analyst`, `analytics-engineer` | VS Code/workspace tools, notebook tools там где нужны, GitHub ops, analysis tooling, `context7/*`, `octocode/*` |
 
-### 3. Полная tool matrix по скрытым активным leaf-агентам
+### 4. Что важно понимать про tools
 
-| Агент | user-invocable | Tools |
-|---|---|---|
-| `accessibility-specialist` | no | `read`, `search`, `edit`, `execute` |
-| `ai-programmer` | no | `read`, `search`, `edit`, `execute` |
-| `audio-director` | no | `read`, `search`, `edit`, `web` |
-| `devops-engineer` | no | `read`, `search`, `edit`, `execute` |
-| `gameplay-programmer` | no | `read`, `search`, `edit`, `execute` |
-| `godot-gdscript-specialist` | no | `read`, `search`, `edit`, `execute` |
-| `godot-shader-specialist` | no | `read`, `search`, `edit`, `execute` |
-| `level-designer` | no | `read`, `search`, `edit`, `web` |
-| `narrative-director` | no | `read`, `search`, `edit`, `web` |
-| `performance-analyst` | no | `read`, `search`, `edit`, `execute` |
-| `prototyper` | no | `read`, `search`, `edit`, `execute` |
-| `qa-lead` | no | `read`, `search`, `edit`, `execute` |
-| `security-engineer` | no | `read`, `search`, `edit`, `execute` |
-| `systems-designer` | no | `read`, `search`, `edit`, `web` |
-| `technical-artist` | no | `read`, `search`, `edit`, `execute` |
-| `tools-programmer` | no | `read`, `search`, `edit`, `execute` |
-
-### 4. Tool matrix parked feature-агентов
-
-| Агент | Статус | Tools |
-|---|---|---|
-| `analytics-engineer` | parked | `read`, `search`, `edit`, `execute`, `web` |
-| `godot-csharp-specialist` | parked | `read`, `search`, `edit`, `execute` |
-| `godot-gdextension-specialist` | parked | `read`, `search`, `edit`, `execute` |
-| `live-ops-designer` | parked | `read`, `search`, `edit`, `web` |
-| `localization-lead` | parked | `read`, `search`, `edit`, `execute` |
-| `network-programmer` | parked | `read`, `search`, `edit`, `execute` |
-
-### 5. Что важно понимать про tools
-
-- Frontmatter хранит alias-уровень, а не весь низкоуровневый runtime registry.
-- То есть `execute` не означает один конкретный вызов, а целое семейство terminal/task tooling.
-- То же самое с `read`, `search`, `edit`, `web`, `agent`, `todo`.
-- Поэтому для truthfulness важны обе плоскости: alias в agent frontmatter и реальный runtime tool registry ниже.
+- Мы больше не делим роли искусственно ради галочки, но и не держим `superuser`-allowlist у каждого агента.
+- Role boundary теперь подкреплена и body-текстом агента, и более узким `tools:`-контрактом.
+- Parked feature-агенты тоже переведены на role-appropriate bundles, а не на отдельный `полный доступ` пакет.
+- То есть в системе по-прежнему покрыт весь tool surface, но он теперь распределён по назначению, а не размазан равномерно.
 
 ## Полный MCP / МСП слой
 
 Ниже уже не alias-уровень, а реальный MCP/МСП-контур этого workspace.
+
+Важно:
+
+- `godot-coding-solo/*` и `godot-tomyud1/*` выданы в основном technical/Godot/UI/QA/implementation ролям.
+- `rpg-game-server/*` выдан только creative/narrative/design/live-ops ролям, где он реально связан с задачей.
+- `context7/*` и `octocode/*` сосредоточены в technical, security, tooling и implementation ролях.
+- `crash/*` оставлен только там, где он реально помогает orchestration/technical reasoning.
+- Built-in GitHub MCP не приходит как project-local wildcard из `.vscode/mcp.json`; доступ к нему разложен через activator tools у producer/technical/devops/qa/security/tooling ролей.
 
 ### 1. Реально подключённые project-local MCP servers из `.vscode/mcp.json`
 

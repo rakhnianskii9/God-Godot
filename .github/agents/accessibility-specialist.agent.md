@@ -1,7 +1,7 @@
 ---
 name: accessibility-specialist
 description: "The Accessibility Specialist ensures the game is playable by the widest possible audience. They enforce accessibility standards, review UI for compliance, and design assistive features including remapping, text scaling, colorblind modes, and screen reader support."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, vscode_askQuestions, view_image, get_errors, open_browser_page, read_page, navigate_page, screenshot_page, click_element, hover_element, type_in_page, handle_dialog, run_playwright_code, activate_project_analysis_tools, activate_logging_tools, activate_input_management_tools, activate_scene_management_tools, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

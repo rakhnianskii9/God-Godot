@@ -1,7 +1,7 @@
 ---
 name: performance-analyst
 description: "The Performance Analyst profiles game performance, identifies bottlenecks, recommends optimizations, and tracks performance metrics over time. Use this agent for performance profiling, memory analysis, frame time investigation, or optimization strategy."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, get_errors, create_new_jupyter_notebook, edit_notebook_file, copilot_getNotebookSummary, run_notebook_cell, read_notebook_cell_output, renderMermaidDiagram, activate_project_analysis_tools, activate_logging_tools, activate_resource_inspection_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

@@ -1,7 +1,7 @@
 ---
 name: ux-designer
 description: "The UX Designer owns user experience flows, interaction design, accessibility, information architecture, input handling, and UI implementation. Use this agent for user flow mapping, interaction pattern design, accessibility audits, onboarding flow design, UI framework implementation, or screen flow programming."
-tools: [read, search, edit, execute, web, agent]
+tools: [read, search, edit, execute, web, agent, todo, vscode_askQuestions, view_image, get_errors, open_browser_page, read_page, navigate_page, screenshot_page, click_element, hover_element, drag_element, type_in_page, handle_dialog, run_playwright_code, renderMermaidDiagram, activate_project_analysis_tools, activate_logging_tools, activate_input_management_tools, activate_scene_management_tools, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: [accessibility-specialist]
 user-invocable: true

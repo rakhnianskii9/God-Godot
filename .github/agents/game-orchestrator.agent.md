@@ -1,7 +1,7 @@
 ---
 name: game-orchestrator
 description: "Top-level orchestrator for the solo Godot workflow. Use this agent first to classify a request, route it to the correct manager, and keep role boundaries intact across creative, technical, and production work."
-tools: [read, search, agent, todo]
+tools: [read, search, agent, todo, vscode_askQuestions, memory, resolve_memory_file_uri, "crash/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: [producer, technical-director, creative-director]
 user-invocable: true

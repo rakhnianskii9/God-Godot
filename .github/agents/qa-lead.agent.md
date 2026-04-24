@@ -1,7 +1,7 @@
 ---
 name: qa-lead
 description: "The QA Lead owns the full QA function: test strategy, test case writing, bug triage, regression planning, and release quality gates. Use this agent for QA plans, test cases, bug reports, regression checklists, or release readiness evaluation."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, todo, vscode_askQuestions, get_errors, open_browser_page, read_page, navigate_page, screenshot_page, click_element, hover_element, drag_element, type_in_page, handle_dialog, run_playwright_code, activate_github_actions_management, activate_github_comments_interaction, activate_pull_request_management_tools, activate_github_repository_inspection, activate_project_management_tools, activate_project_analysis_tools, activate_logging_tools, activate_input_management_tools, activate_scene_management_tools, activate_scene_creation_tools, activate_script_management_tools, "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

@@ -1,7 +1,7 @@
 ---
 name: security-engineer
 description: "The Security Engineer protects the game from cheating, exploits, and data breaches. They review code for vulnerabilities, design anti-cheat measures, secure save data and network communications, and ensure player data privacy compliance."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, get_errors, vscode_listCodeUsages, activate_github_repository_inspection, activate_github_security_advisories, activate_github_search_and_team_management, activate_github_repository_security_and_commit_management, activate_github_code_exploration_tools, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, "context7/*", "octocode/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

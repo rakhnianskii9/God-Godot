@@ -1,7 +1,7 @@
 ---
 name: godot-gdextension-specialist
 description: "The GDExtension specialist owns all native code integration with Godot: GDExtension API, C/C++/Rust bindings (godot-cpp, godot-rust), native performance optimization, custom node types, and the GDScript/native boundary. They ensure native code integrates cleanly with Godot's node system."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, get_errors, vscode_listCodeUsages, vscode_renameSymbol, activate_local_symbol_navigation_tools, activate_project_analysis_tools, activate_logging_tools, activate_scene_management_tools, activate_scene_management_tools_2, activate_scene_creation_tools, activate_script_management_tools, activate_project_settings_tools, activate_resource_inspection_tools, activate_input_management_tools, activate_resource_management_tools, activate_collision_management_tools, activate_3d_scene_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

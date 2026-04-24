@@ -1,7 +1,7 @@
 ---
 name: tools-programmer
 description: "The Tools Programmer builds internal development tools: editor extensions, content authoring tools, debug utilities, and pipeline automation. Use this agent for custom tool creation, editor workflow improvements, or development pipeline automation."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, execute, web, get_errors, create_new_workspace, get_project_setup_info, get_vscode_api, install_extension, run_vscode_command, vscode_searchExtensions_internal, create_and_run_task, create_new_jupyter_notebook, edit_notebook_file, copilot_getNotebookSummary, run_notebook_cell, read_notebook_cell_output, vscode_listCodeUsages, vscode_renameSymbol, activate_github_actions_management, activate_pull_request_management_tools, activate_repository_management_tools, activate_github_repository_inspection, activate_github_code_exploration_tools, activate_local_symbol_navigation_tools, activate_project_management_tools, activate_project_analysis_tools, activate_script_management_tools, "context7/*", "octocode/*", "godot-coding-solo/*", "godot-tomyud1/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false

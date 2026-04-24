@@ -1,7 +1,7 @@
 ---
 name: localization-lead
 description: "Owns internationalization architecture, string management, locale testing, and translation pipeline. Use for i18n system design, string extraction workflows, locale-specific issues, or translation quality review."
-tools: [read, search, edit, execute]
+tools: [read, search, edit, web, execute, get_errors, "context7/*"]
 model: GPT-5.4 xhigh (copilot)
 agents: []
 user-invocable: false
