@@ -8,13 +8,13 @@ agent: lead-programmer
 
 ## Phase 1: Load Target Files
 
-Read the target file(s) in full. Read CLAUDE.md for project coding standards.
+Read the target file(s) in full. Read `.github/instructions/code-rules.instructions.md` and `.github/instructions/copilot-instructions.md` for project coding standards.
 
 ---
 
 ## Phase 2: Identify Engine Specialists
 
-Read `.claude/docs/technical-preferences.md`, section `## Engine Specialists`. Note:
+Read the active workspace contract and the current Godot specialist routing in `.github/agents/`. Note:
 
 - The **Primary** specialist (used for architecture and broad engine concerns)
 - The **Language/Code Specialist** (used when reviewing the project's primary language files)

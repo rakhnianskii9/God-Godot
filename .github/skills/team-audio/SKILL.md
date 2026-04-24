@@ -68,7 +68,7 @@ Spawn the `technical-artist` agent to:
 - Plan streaming vs preloaded asset strategy
 - Design any audio-reactive visual effects
 
-Spawn the **primary engine specialist** in parallel (from `.claude/docs/technical-preferences.md` Engine Specialists) to validate the integration approach:
+Spawn the **primary engine specialist** in parallel (from the current Godot specialist set in `.github/agents/`) to validate the integration approach:
 - Is the proposed audio integration idiomatic for Godot (e.g., `AudioStreamPlayer`, `AudioStreamPlayer2D/3D`, buses, and `AudioServer` routing)?
 - Any engine-specific audio node/component patterns that should be used?
 - Known audio system changes in the pinned engine version that affect the integration plan?

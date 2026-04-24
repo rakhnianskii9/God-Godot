@@ -12,7 +12,7 @@ Resolve the review mode (once, store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `.claude/docs/director-gates.md` for the full check pattern.
+Use the gate names below as review labels; there is no separate gate registry file in this workspace.
 
 Read `design/gdd/game-concept.md`. If it does not exist, fail with:
 > "No game concept found. Run `/brainstorm` first — the art bible is authored after the game concept is approved."
@@ -49,7 +49,7 @@ Section | Status
 
 If the file does not exist, this is a fresh authoring session — proceed normally.
 
-Read `.claude/docs/technical-preferences.md` if it exists — extract performance budgets and engine for asset standard constraints.
+Read the active workspace contract if it exists — extract engine facts and any explicit performance constraints for asset standard decisions.
 
 ---
 
@@ -165,7 +165,7 @@ Write the approved section to file.
 
 **Agent delegation**: Spawn in parallel:
 - **`art-director`**: File format preferences, naming convention direction, texture resolution tiers, LOD level expectations, export settings philosophy
-- **`technical-artist`**: Engine-specific hard constraints — poly count budgets per asset category, texture memory limits, material slot counts, importer constraints, anything from the performance budgets in `.claude/docs/technical-preferences.md`
+- **`technical-artist`**: Engine-specific hard constraints — poly count budgets per asset category, texture memory limits, material slot counts, importer constraints, anything from the active workspace contract or user-confirmed performance budgets
 
 If any art preference conflicts with a technical constraint (e.g., art-director wants 4K textures but performance budget requires 2K for mobile), resolve the conflict explicitly — note both the ideal and the constrained standard, and explain the tradeoff. Ambiguity in asset standards is where production costs are born.
 
@@ -190,11 +190,11 @@ Write the approved section to file.
 - `lean` → skip (not a PHASE-GATE). Note: "AD-ART-BIBLE skipped — Lean mode." Proceed to Phase 6.
 - `full` → spawn as normal.
 
-After all sections are complete (or the scoped set from Phase 1 is complete), spawn `creative-director` via Task using gate **AD-ART-BIBLE** (`.claude/docs/director-gates.md`).
+After all sections are complete (or the scoped set from Phase 1 is complete), spawn `creative-director` via Task using gate **AD-ART-BIBLE**.
 
 Pass: art bible file path, game pillars, visual identity anchor.
 
-Handle verdict per standard rules in `director-gates.md`. Record the verdict in the art bible's status header:
+Handle verdict per the standard gate rules in this skill. Record the verdict in the art bible's status header:
 `> **Art Director Sign-Off (AD-ART-BIBLE)**: APPROVED [date] / CONCERNS (accepted) [date] / REVISED [date]`
 
 ---
@@ -203,7 +203,7 @@ Handle verdict per standard rules in `director-gates.md`. Record the verdict in 
 
 Before presenting next steps, check project state:
 - Does `design/gdd/systems-index.md` exist? → map-systems is done, skip that option
-- Does `.claude/docs/technical-preferences.md` contain a configured engine (not `[TO BE CONFIGURED]`)? → setup-engine is done, skip that option
+- Does the active workspace contract already define a concrete engine/project entry point? → setup-engine is done, skip that option
 - Does `design/gdd/` contain any `*.md` files? → design-system has been run, skip that option
 - Does `design/gdd/gdd-cross-review-*.md` exist? → review-all-gdds is done
 - Do GDDs exist (check above)? → include /consistency-check option

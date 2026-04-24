@@ -1,6 +1,6 @@
 ---
 name: setup-engine
-description: "Configure the project's game engine and version. Pins the engine in CLAUDE.md, detects knowledge gaps, and populates engine reference docs via WebSearch when the version is beyond the LLM's training data."
+description: "Configure the project's game engine and version. Records the engine in the workspace's chosen project-context file, detects knowledge gaps, and populates engine reference docs when the version is beyond the LLM's training data."
 argument-hint: "[engine] | [engine version] | refresh | upgrade [old-version] [new-version] | no args for guided selection"
 user-invocable: true
 ---
@@ -88,7 +88,7 @@ Once the engine is chosen:
 
 ---
 
-## 4. Update CLAUDE.md Technology Stack
+## 4. Update the Workspace Engine Record
 
 ### Language Selection (Godot only)
 
@@ -102,12 +102,12 @@ If Godot was chosen, ask the user which language to use **before** showing the p
 >
 > Which will this project primarily use?"
 
-Record the choice. It determines the CLAUDE.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
+Record the choice. It determines the workspace engine record, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
 
 ---
 
-Read `CLAUDE.md` and show the user the proposed Technology Stack changes.
-Ask: "May I write these engine settings to `CLAUDE.md`?"
+Read the current workspace contract files and show the user the proposed engine-record changes.
+Ask: "May I write these engine settings to the chosen project-context file?"
 
 Wait for confirmation before making any edits.
 
@@ -115,10 +115,9 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 
 ---
 
-## 5. Populate Technical Preferences
+## 5. Populate Project Technical Preferences
 
-After updating CLAUDE.md, create or update `.claude/docs/technical-preferences.md` with
-engine-appropriate defaults. Read the existing template first, then fill in:
+After updating the workspace's chosen engine record, capture the same preferences in a user-approved project-local preferences file. This workspace does not ship with a default technical-preferences path. Read any existing project-local template first, then fill in:
 
 ### Engine & Language Section
 - Fill from the engine choice made in step 4
@@ -176,7 +175,7 @@ Example filled section:
 
 ### Engine Specialists Routing
 
-Also populate the `## Engine Specialists` section in `technical-preferences.md` using the Godot routing table from **Appendix A**. Pick the GDScript, C#, or mixed-language variant that matches the language choice from Section 4.
+Also populate the `## Engine Specialists` section in that project-local preferences file using the Godot routing table from **Appendix A**. Pick the GDScript, C#, or mixed-language variant that matches the language choice from Section 4.
 
 ### Collaborative Step
 Present the filled-in preferences to the user. For Godot, include the chosen language and note where the full naming conventions and routing tables live:
@@ -271,9 +270,9 @@ Wait for confirmation before writing any files.
 
 ---
 
-## 8. Update CLAUDE.md Import
+## 8. Update the Project-Context Import
 
-Ask: "May I update the `@` import in `CLAUDE.md` to point to the new engine reference?"
+Ask: "May I update the relevant import in the chosen project-context file to point to the new engine reference?"
 
 Wait for confirmation, then update the `@` import under "Engine Version Reference" to point to the
 correct engine:
@@ -437,7 +436,7 @@ Engine:          [name] [version]
 Language:        [GDScript | C# | GDScript + C#]
 Knowledge Risk:  [LOW/MEDIUM/HIGH]
 Reference Docs:  [created/skipped]
-CLAUDE.md:       [updated]
+Project context:  [updated]
 Tech Prefs:      [created/updated]
 Agent Config:    [verified]
 
@@ -459,9 +458,9 @@ Verdict: **COMPLETE** — engine configured and reference docs populated.
 - NEVER guess an engine version — always verify via WebSearch or user confirmation
 - NEVER overwrite existing reference docs without asking — append or update
 - If reference docs already exist for a different engine, ask before replacing
-- Always show the user what you're about to change before making CLAUDE.md edits
+- Always show the user what you're about to change before making project-context edits
 - If WebSearch returns ambiguous results, show the user and let them decide
-- When the user chose **GDScript**: copy the GDScript CLAUDE.md template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
+- When the user chose **GDScript**: copy the GDScript workspace engine-record template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
 
 ---
 
@@ -471,7 +470,7 @@ All Godot-specific variants for language-dependent configuration. Referenced fro
 
 ---
 
-### A1. CLAUDE.md Technology Stack Templates
+### A1. Workspace Engine Record Templates
 
 **GDScript:**
 ```markdown
@@ -522,7 +521,7 @@ All Godot-specific variants for language-dependent configuration. Referenced fro
 - Constants: PascalCase (`MaxHealth`, `DefaultMoveSpeed`)
 
 **Both — GDScript + C#:**
-Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mixed-language files do not exist — the boundary is per-file. When in doubt about which language a new system should use, ask the user and record the decision in `technical-preferences.md`.
+Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mixed-language files do not exist — the boundary is per-file. When in doubt about which language a new system should use, ask the user and record the decision in that project-local preferences file.
 
 ---
 

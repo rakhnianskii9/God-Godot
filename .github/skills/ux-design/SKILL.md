@@ -89,7 +89,7 @@ must satisfy the accessibility tier committed to there.
 
 ### 2h: Input Method (from Project Config)
 
-Read `.claude/docs/technical-preferences.md` and extract the `## Input & Platform`
+Read the active workspace contract and extract the current input/platform expectations. If they are not explicit, ask the user.
 section. Store these values for use throughout the skill — they drive the
 Interaction Map and inform accessibility requirements:
 
@@ -119,7 +119,7 @@ Before any design work, present a brief summary to the user:
 > - Related screens already specced: [list, or "none yet"]
 > - Known patterns available: [count, or "no pattern library yet"]
 > - Accessibility tier: [from requirements doc, or "not yet defined"]
-> - Input methods: [from technical-preferences.md, or "asked above"]
+> - Input methods: [from the active workspace contract, or "asked above"]
 
 Then ask: "Anything else I should read before we start, or shall we proceed?"
 
@@ -551,7 +551,7 @@ For each interactive component identified in the Layout Specification, define:
 - The immediate feedback (visual, audio, haptic)
 - The outcome (navigation target, state change, data write)
 
-Use the input methods loaded from `technical-preferences.md` in Phase 2h — do
+Use the input methods loaded from the active workspace contract in Phase 2h — do
 not ask the user again. State them upfront: "Mapping interactions for:
 [Input Methods from tech-prefs]. Covering [Gamepad Support] gamepad support."
 

@@ -29,7 +29,7 @@ status. Re-run whenever new ADRs are accepted or existing ADRs are revised.
 - Note the ADR number and title for every rule sourced
 
 ### Technical Preferences
-- Read `.claude/docs/technical-preferences.md`
+- Read the active workspace contract and any user-approved project technical preferences file
 - Extract: naming conventions, performance budgets, approved libraries/addons,
   forbidden patterns
 
@@ -80,7 +80,7 @@ If an ADR spans multiple layers, duplicate the rule into each relevant layer.
 
 Combine rules that apply to all layers:
 
-### From technical-preferences.md:
+### From the active workspace contract or project technical preferences:
 - Naming conventions (classes, variables, signals/events, files, constants)
 - Performance budgets (target framerate, frame budget, draw call limits, memory ceiling)
 
@@ -90,7 +90,7 @@ Combine rules that apply to all layers:
 ### From current-best-practices.md (if available):
 - Engine-recommended patterns → Required entries
 
-### From technical-preferences.md forbidden patterns:
+### From the active workspace contract or project technical preferences forbidden patterns:
 - Copy any "Forbidden Patterns" entries directly
 
 ---
@@ -122,9 +122,9 @@ Ask: "Does this look complete? Any rules to add or remove before I write the man
 - `lean` → skip. Note: "TD-MANIFEST skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-Spawn `technical-director` via Task using gate **TD-MANIFEST** (`.claude/docs/director-gates.md`).
+Spawn `technical-director` via Task using gate **TD-MANIFEST**.
 
-Pass: the Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list), the list of ADRs covered, engine version, and any rules sourced from technical-preferences.md or engine reference docs.
+Pass: the Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list), the list of ADRs covered, engine version, and any rules sourced from the workspace contract, any project technical preferences file, or engine reference docs.
 
 The technical-director reviews whether:
 - All mandatory ADR patterns are captured and accurately stated

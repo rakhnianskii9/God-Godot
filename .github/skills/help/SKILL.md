@@ -18,22 +18,22 @@ gap analysis, use `/project-stage-detect`.
 
 ---
 
-## Step 1: Read the Catalog
+## Step 1: Read the Live Workflow State
 
-Read `.claude/docs/workflow-catalog.yaml`. This is the authoritative list of all
-phases, their steps (in order), whether each step is required or optional, and
-the artifact globs that indicate completion.
+This workspace has no standalone workflow catalog file. Build a lightweight
+workflow view from the live skill tree at `.github/skills/*/SKILL.md`,
+`production/stage.txt` if it exists, and the phase order embedded in this skill.
 
 ---
 
-## Step 1b: Find Skills Not in the Catalog
+## Step 1b: Find Extra Installed Skills
 
-After reading the catalog, Glob `.claude/skills/*/SKILL.md` to get the full list
+After reading the live skill tree, Glob `.github/skills/*/SKILL.md` to get the full list
 of installed skills. For each file, extract the `name:` field from its frontmatter.
 
-Compare against the `command:` values in the catalog. Any skill whose name does
-not appear as a catalog command is an **uncataloged skill** — still usable but not
-part of the phase-gated workflow.
+Compare against the core commands you recommend for the detected phase. Any skill
+whose name does not appear in that core path is an **extra installed skill** — still
+usable, but not part of the main recommendation.
 
 Collect these for the output in Step 7 — show them as a footer block:
 
@@ -54,7 +54,7 @@ skills in production/polish, etc.).
 Check in this order:
 
 1. **Read `production/stage.txt`** — if it exists and has content, this is the
-   authoritative phase name. Map it to a catalog phase key:
+   authoritative phase name. Map it to a phase key:
    - "Concept" → `concept`
    - "Systems Design" → `systems-design`
    - "Technical Setup" → `technical-setup`
@@ -87,7 +87,7 @@ the output.
 
 ## Step 4: Check Step Completion for the Current Phase
 
-For each step in the current phase (from the catalog):
+For each step in the current phase based on the live phase order in this skill and the repo state:
 
 ### Artifact-based checks
 

@@ -15,7 +15,7 @@ Read the argument for the target platform (`pc`, `console`, `mobile`, or `all`).
 
 ## Phase 2: Load Project Context
 
-- Read `CLAUDE.md` for project context, version information, and platform targets.
+- Read the active workspace contract (`.github/instructions/code-rules.instructions.md`, `.github/instructions/copilot-instructions.md`, and `.github/context/VERSION.md`) for project context, version information, and platform targets.
 - Read the current milestone from `production/milestones/` to understand what features and content should be included in this release.
 
 ---

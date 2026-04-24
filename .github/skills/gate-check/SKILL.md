@@ -93,8 +93,8 @@ Note: in `solo` mode, director spawns (CD-PHASE-GATE, TD-PHASE-GATE, PR-PHASE-GA
 ### Gate: Technical Setup → Pre-Production
 
 **Required Artifacts:**
-- [ ] Engine chosen (CLAUDE.md Technology Stack is not `[CHOOSE]`)
-- [ ] Technical preferences configured (`.claude/docs/technical-preferences.md` populated)
+- [ ] Engine/project chosen (the active workspace contract and project files define a concrete engine/project entry point)
+- [ ] Technical preferences configured (workspace contract or a project-local technical preferences file is populated)
 - [ ] Art bible exists at `design/art/art-bible.md` with at least Sections 1–4 (Visual Identity Foundation)
 - [ ] At least 3 Architecture Decision Records in `docs/architecture/` covering
       Foundation-layer systems (scene management, event architecture, save/load)
@@ -204,7 +204,7 @@ A depends on B). If any cycle is detected (e.g. A→B→A, or A→B→C→A):
 - [ ] Tests are passing (run test suite via Bash)
 - [ ] No critical/blocker bugs in any bug tracker or known issues
 - [ ] Core loop plays as designed (compare to GDD acceptance criteria)
-- [ ] Performance is within budget (check technical-preferences.md targets)
+- [ ] Performance is within budget (check workspace-contract or project technical-preference targets)
 - [ ] Playtest findings have been reviewed and critical fun issues addressed (not just documented)
 - [ ] No "confusion loops" identified — no point in the game where >50% of playtesters got stuck without knowing why
 - [ ] Difficulty curve matches the Difficulty Curve design doc (if one exists at `design/difficulty-curve.md`)
@@ -269,7 +269,7 @@ cross-GDD consistency check failed and must be resolved before advancing.
 ### Quality Checks
 - For test checks: Run the test suite via `Bash` if a test runner is configured
 - For design review checks: `Read` the GDD and check for the 8 required sections
-- For performance checks: `Read` technical-preferences.md and compare against any
+- For performance checks: `Read` the workspace contract or any project technical preferences file and compare against any
   profiling data in `tests/performance/` or recent `/perf-profile` output
 - For localization checks: `Grep` for hardcoded strings in `src/`
 
@@ -294,14 +294,14 @@ For items that can't be automatically verified, **ask the user**:
 
 ## 4b. Director Panel Assessment
 
-Before generating the final verdict, spawn all four directors as **parallel subagents** via Task using the parallel gate protocol from `.claude/docs/director-gates.md`. Issue all four Task calls simultaneously — do not wait for one before starting the next.
+Before generating the final verdict, spawn all four directors as **parallel subagents** via Task using the parallel gate protocol defined in this skill. Issue all four Task calls simultaneously — do not wait for one before starting the next.
 
 **Spawn in parallel:**
 
-1. **`creative-director`** — gate **CD-PHASE-GATE** (`.claude/docs/director-gates.md`)
-2. **`technical-director`** — gate **TD-PHASE-GATE** (`.claude/docs/director-gates.md`)
-3. **`producer`** — gate **PR-PHASE-GATE** (`.claude/docs/director-gates.md`)
-4. **`art-director`** — gate **AD-PHASE-GATE** (`.claude/docs/director-gates.md`)
+1. **`creative-director`** — gate **CD-PHASE-GATE**
+2. **`technical-director`** — gate **TD-PHASE-GATE**
+3. **`producer`** — gate **PR-PHASE-GATE**
+4. **`art-director`** — gate **AD-PHASE-GATE**
 
 Pass to each: target phase name, list of artifacts present, and the context fields listed in that gate's definition.
 
@@ -467,7 +467,7 @@ Based on the verdict, suggest specific next steps:
   - If "Create it now": use a second `AskUserQuestion` to ask for the tier:
     - Prompt: "Which accessibility tier fits this project?"
     - Options: `Basic — remapping + subtitles only (lowest effort)`, `Standard — Basic + colorblind modes + scalable UI`, `Comprehensive — Standard + motor accessibility + full settings menu`, `Exemplary — Comprehensive + external audit + full customization`
-  - Then write `design/accessibility-requirements.md` using the template at `.claude/docs/templates/accessibility-requirements.md`, filling in the chosen tier. Confirm: "May I write `design/accessibility-requirements.md`?"
+  - Then write `design/accessibility-requirements.md` with the chosen tier and a short summary of required accommodations. Confirm: "May I write `design/accessibility-requirements.md`?"
 - **No interaction pattern library?** → `/ux-design patterns` to initialize it
 - **GDDs not cross-reviewed?** → `/review-all-gdds` (run after all MVP GDDs are individually approved)
 - **Cross-GDD consistency issues?** → fix flagged GDDs, then re-run `/review-all-gdds`

@@ -14,7 +14,7 @@ Resolve the review mode (once, store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `.claude/docs/director-gates.md` for the full check pattern.
+Use the gate names below as review labels; there is no separate gate registry file in this workspace.
 
 A system name or retrofit path is **required**. If missing:
 
@@ -159,7 +159,7 @@ Map the system's category (from systems-index.md) to an engine domain:
 | Dialogue, quests, narrative | Scripting |
 
 **Step 2 — Read engine context (if available):**
-- Read `.claude/docs/technical-preferences.md` to identify the engine and version
+- Read the active workspace contract to identify the engine and version
 - If engine is configured, read `docs/engine-reference/[engine]/VERSION.md`
 - Read `docs/engine-reference/[engine]/modules/[domain].md` if it exists
 - Read `docs/engine-reference/[engine]/breaking-changes.md` for domain-relevant entries
@@ -213,7 +213,7 @@ Use `AskUserQuestion`:
 Once the user confirms, **immediately** create the GDD file with empty section
 headers. This ensures incremental writes have a target.
 
-Use the template structure from `.claude/docs/templates/game-design-document.md`:
+Use the GDD section structure defined in this skill:
 
 ```markdown
 # [System Name]
@@ -658,11 +658,11 @@ the source of truth). Verify:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-GDD-ALIGN skipped — Lean mode." Proceed to Step 5b.
 - `full` → spawn as normal.
 
-Before finalizing the GDD, spawn `creative-director` via Task using gate **CD-GDD-ALIGN** (`.claude/docs/director-gates.md`).
+Before finalizing the GDD, spawn `creative-director` via Task using gate **CD-GDD-ALIGN**.
 
 Pass: completed GDD file path, game pillars (from `design/gdd/game-concept.md` or `design/gdd/game-pillars.md`), MDA aesthetics target.
 
-Handle verdict per the standard rules in `director-gates.md`. After resolution, record the verdict in the GDD Status header:
+Handle verdict per the standard gate rules in this skill. After resolution, record the verdict in the GDD Status header:
 `> **Creative Director Review (CD-GDD-ALIGN)**: APPROVED [date] / CONCERNS (accepted) [date] / REVISED [date]`
 
 ---
@@ -706,7 +706,7 @@ Present a completion summary:
 > - Provisional assumptions: [list any assumptions about undesigned dependencies]
 > - Cross-system conflicts found: [list or "none"]
 
-> **To validate this GDD, open a fresh Claude Code session and run:**
+> **To validate this GDD, open a fresh chat session and run:**
 > `/design-review design/gdd/[system-name].md`
 >
 > **Never run `/design-review` in the same session as `/design-system`.** The reviewing
@@ -827,7 +827,7 @@ shows context at or above 70%. If so, append this notice to the response:
 
 > **Context is approaching the limit (≥70%).** Your progress is saved — all approved
 > sections are written to `design/gdd/[system-name].md`. When you're ready to continue,
-> open a fresh Claude Code session and run `/design-system [system-name]` — it will
+> open a fresh chat session and run `/design-system [system-name]` — it will
 > detect which sections are complete and resume from the next one.
 
 ---

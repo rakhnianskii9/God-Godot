@@ -18,7 +18,7 @@ This skill is the entry point for new users. It does NOT assume you have a game 
 Before asking anything, silently gather context so you can tailor your guidance. Do NOT show these results unprompted — they inform your recommendations, not the conversation opener.
 
 Check:
-- **Engine configured?** Read `.claude/docs/technical-preferences.md`. If the Engine field contains `[TO BE CONFIGURED]`, the engine is not set.
+- **Engine configured?** Read `.github/instructions/copilot-instructions.md` and the active project file under `my-game/` if it exists. If the workspace still has no concrete engine/project entry point, the engine is not set.
 - **Game concept exists?** Check for `design/gdd/game-concept.md`.
 - **Source code exists?** Glob for source files in `src/` (`*.gd`, `*.cs`, `*.cpp`, `*.h`, `*.rs`, `*.py`, `*.js`, `*.ts`).
 - **Prototypes exist?** Check for subdirectories in `prototypes/`.
@@ -33,7 +33,7 @@ Store these findings internally to validate the user's self-assessment and tailo
 
 This is the first thing the user sees. Use `AskUserQuestion` with these exact options so the user can click rather than type:
 
-- **Prompt**: "Welcome to Claude Code Game Studios! Before I suggest anything, I'd like to understand where you're starting from. Where are you at with your game idea right now?"
+- **Prompt**: "Welcome. Before I suggest anything, I'd like to understand where you're starting from. Where are you at with your game idea right now?"
 - **Options**:
   - `A) No idea yet` — I don't have a game concept at all. I want to explore and figure out what to make.
   - `B) Vague idea` — I have a rough theme, feeling, or genre in mind (e.g., "something with space" or "a cozy farming game") but nothing concrete.

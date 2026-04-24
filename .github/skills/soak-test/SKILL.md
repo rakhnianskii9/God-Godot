@@ -51,7 +51,7 @@ human does the actual playing.**
 ## 2. Load Context
 
 Read:
-- `.claude/docs/technical-preferences.md` — engine (for engine-specific memory
+- Active workspace contract (`.github/instructions/code-rules.instructions.md`, `.github/instructions/copilot-instructions.md`, `.github/context/VERSION.md`, and `my-game/my-game.godot` when present) — engine (for engine-specific memory
   monitoring guidance), performance budgets (memory ceiling, target FPS)
 - `design/gdd/game-concept.md` — intended session length (for comparison against
   soak duration), core loop description
@@ -60,7 +60,7 @@ Read:
 - Most recent file in `production/qa/qa-plan-*.md` — current sprint test coverage
   (to understand what has been formally tested vs. what the soak covers)
 
-Note any performance budget targets from technical-preferences.md:
+Note any performance budget targets from the active workspace contract or project technical preferences:
 - Memory ceiling: [N MB, or "not set"]
 - Target FPS: [N, or "not set"]
 - Frame budget: [N ms, or "not set"]

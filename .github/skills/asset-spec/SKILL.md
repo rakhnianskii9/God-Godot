@@ -39,7 +39,7 @@ Read all source material **before** asking the user anything.
   > "No art bible found. Run `/art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."
   Extract: Visual Identity Statement, Color System (semantic colors), Shape Language, Asset Standards (Section 8 — dimensions, formats, polycount budgets, texture resolution tiers).
 
-- **Technical preferences**: Read `.claude/docs/technical-preferences.md` — extract performance budgets and naming conventions.
+- **Technical preferences**: Read the active workspace contract (`.github/instructions/code-rules.instructions.md`, `.github/instructions/copilot-instructions.md`, `.github/context/VERSION.md`, and `my-game/my-game.godot` when present) — extract engine facts, naming guidance, and any explicit performance constraints.
 
 ### Source doc reads (by target type):
 - **system**: Read `design/gdd/[target-name].md`. Extract the **Visual/Audio Requirements** section. If it doesn't exist or reads `[To be designed]`:
@@ -99,8 +99,8 @@ Spawn specialist agents based on review mode. **Issue all Task calls simultaneou
 - Ask: "For each asset in this list, produce: (1) a 2–3 sentence visual description anchored to the art bible's shape language and color system — be specific enough that two different artists would produce consistent results; (2) a generation prompt ready for use with AI image tools (Midjourney/Stable Diffusion style — include style keywords, composition, color palette anchors, negative prompts); (3) which art bible rules directly govern this asset (cite by section). For audio assets, describe the sonic character instead of a generation prompt."
 
 **`technical-artist`** via Task:
-- Provide: full asset list, art bible Asset Standards (Section 8), technical-preferences.md performance budgets, engine name and version
-- Ask: "For each asset in this list, specify: (1) exact dimensions or polycount (match the art bible Asset Standards tiers — do not invent new sizes); (2) file format and export settings; (3) naming convention (from technical-preferences.md); (4) any engine-specific constraints this asset type must respect; (5) LOD requirements if applicable. Flag any asset type where the art bible's preferred standard conflicts with the engine's constraints."
+- Provide: full asset list, art bible Asset Standards (Section 8), any performance budgets from the active workspace contract or project technical preferences, engine name and version
+- Ask: "For each asset in this list, specify: (1) exact dimensions or polycount (match the art bible Asset Standards tiers — do not invent new sizes); (2) file format and export settings; (3) naming convention (from the active workspace contract or project technical preferences); (4) any engine-specific constraints this asset type must respect; (5) LOD requirements if applicable. Flag any asset type where the art bible's preferred standard conflicts with the engine's constraints."
 
 ### Lean mode — spawn art-director only (skip technical-artist).
 

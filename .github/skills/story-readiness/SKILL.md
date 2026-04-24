@@ -28,7 +28,7 @@ Resolve the review mode once at startup (store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `.claude/docs/director-gates.md` for the full check pattern and mode definitions.
+Use the gate names below as review labels; there is no separate gate registry file in this workspace.
 
 ---
 
@@ -324,7 +324,7 @@ Apply the review mode resolved in Phase 0 before spawning QL-STORY-READY:
 - `lean` → skip. Note: "QL-STORY-READY skipped — Lean mode." Proceed to close.
 - `full` → spawn as normal.
 
-Spawn `qa-lead` via Task using gate **QL-STORY-READY** (`.claude/docs/director-gates.md`).
+Spawn `qa-lead` via Task using gate **QL-STORY-READY**.
 
 Pass the following context:
 - Story title
@@ -332,7 +332,7 @@ Pass the following context:
 - Dependency status (all dependencies listed and their current state: exist / DRAFT / missing)
 - Overall verdict (READY / NEEDS WORK / BLOCKED) from Phase 4
 
-Handle the verdict per standard rules in `director-gates.md`:
+Handle the verdict per the standard gate rules in this skill:
 - **ADEQUATE** → story is cleared. Proceed to close.
 - **GAPS [list]** → surface the specific gaps to the user via `AskUserQuestion`:
   options: `Update story with suggested gaps` / `Accept and proceed anyway` / `Discuss further`.

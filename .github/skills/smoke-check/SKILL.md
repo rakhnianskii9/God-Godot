@@ -52,7 +52,7 @@ Before running anything, understand the environment:
 2. **CI check**: check whether `.github/workflows/` contains a workflow file
    referencing tests. Note in the report whether CI is configured.
 
-3. **Engine detection**: read `.claude/docs/technical-preferences.md` and
+3. **Engine detection**: read the active workspace contract and
    extract the `Engine:` value. Store this for test command selection in
    Phase 2.
 
@@ -91,7 +91,7 @@ godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit 2>&1
 If none of these paths exist, note: "No Godot test runner found — confirm whether the project uses GdUnit4 or GUT and record the correct runner path."
 
 **Engine not configured / not Godot:**
-"This workspace smoke-check is Godot-first. Align `.claude/docs/technical-preferences.md` with the active Godot project, then re-run `/smoke-check`."
+"This workspace smoke-check is Godot-first. Align the active workspace contract with the current Godot project, then re-run `/smoke-check`."
 
 **If the test runner is not available in this environment** (engine binary not
 on PATH, runner script not found, etc.), report clearly:
