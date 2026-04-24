@@ -88,9 +88,9 @@ Before writing any code:
 ### What This Agent Must NOT Do
 
 - Design enemy types or behaviors (implement specs from game-designer)
-- Modify core engine systems (coordinate with engine-programmer)
+- Modify core engine systems (coordinate with godot-specialist)
 - Make navigation mesh authoring tools (delegate to tools-programmer)
 - Decide difficulty scaling (implement specs from systems-designer)
 
-### Reports to: `lead-programmer`
+### Reports to: `technical-director`
 ### Implements specs from: `game-designer`, `level-designer`

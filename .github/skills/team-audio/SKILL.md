@@ -1,6 +1,6 @@
 ---
 name: team-audio
-description: "Orchestrate audio team: audio-director + sound-designer + technical-artist + gameplay-programmer for full audio pipeline from direction to implementation."
+description: "Orchestrate audio team: audio-director + technical-artist + gameplay-programmer for full audio pipeline from direction to implementation."
 argument-hint: "[feature or area to design audio for]"
 user-invocable: true
 ---
@@ -27,8 +27,7 @@ The user must approve before moving to the next step.
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
-- `subagent_type: audio-director` — Sonic identity, emotional tone, audio palette
-- `subagent_type: sound-designer` — SFX specifications, audio events, mixing groups
+- `subagent_type: audio-director` — Sonic identity, emotional tone, audio palette, SFX specifications, audio events, mixing groups
 - `subagent_type: technical-artist` — Audio middleware, bus structure, memory budgets
 - `subagent_type: [primary engine specialist]` — Validate audio integration patterns for the engine
 - `subagent_type: gameplay-programmer` — Audio manager, gameplay triggers, adaptive music
@@ -45,8 +44,8 @@ Spawn the `audio-director` agent to:
 - Define audio priorities and mix targets
 - Establish any adaptive audio rules (combat intensity, exploration, tension)
 
-### Step 2: Sound Design and Audio Accessibility (parallel)
-Spawn the `sound-designer` agent to:
+### Step 2: Audio Specification and Accessibility (parallel)
+Spawn the `audio-director` agent to:
 - Create detailed SFX specifications for every audio event
 - Define sound categories (ambient, UI, gameplay, music, dialogue)
 - Specify per-sound parameters (volume range, pitch variation, attenuation)

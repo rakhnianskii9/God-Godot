@@ -338,18 +338,18 @@ After writing the master architecture document, perform an explicit sign-off bef
 
 Apply gate **TD-ARCHITECTURE** as a self-review. Check all four criteria from that gate definition against the completed document.
 
-**Review mode check** — apply before spawning LP-FEASIBILITY:
-- `solo` → skip. Note: "LP-FEASIBILITY skipped — Solo mode." Proceed to Phase 8 handoff.
-- `lean` → skip (not a PHASE-GATE). Note: "LP-FEASIBILITY skipped — Lean mode." Proceed to Phase 8 handoff.
+**Review mode check** — apply before spawning TD-FEASIBILITY:
+- `solo` → skip. Note: "TD-FEASIBILITY skipped — Solo mode." Proceed to Phase 8 handoff.
+- `lean` → skip (not a PHASE-GATE). Note: "TD-FEASIBILITY skipped — Lean mode." Proceed to Phase 8 handoff.
 - `full` → spawn as normal.
 
-**Step 2 — Spawn `lead-programmer` via Task using gate LP-FEASIBILITY:**
+**Step 2 — Spawn `technical-director` via Task using gate TD-FEASIBILITY:**
 
 Pass: architecture document path, technical requirements baseline summary, ADR list.
 
 **Step 3 — Present both assessments to the user:**
 
-Show the Technical Director assessment and Lead Programmer verdict side by side.
+Show the Technical Director assessment and Technical Director feasibility verdict side by side.
 
 Use `AskUserQuestion` — "Technical Director and Lead Programmer have reviewed the architecture. How would you like to proceed?"
 Options: `Accept — proceed to handoff` / `Revise flagged items first` / `Discuss specific concerns`

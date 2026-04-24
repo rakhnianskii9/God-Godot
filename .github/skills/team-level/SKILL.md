@@ -1,6 +1,6 @@
 ---
 name: team-level
-description: "Orchestrate level design team: level-designer + narrative-director + world-builder + art-director + systems-designer + qa-tester for complete area/level creation."
+description: "Orchestrate level design team: level-designer + narrative-director + art-director + systems-designer + qa-lead for complete area/level creation."
 argument-hint: "[level name or area to design]"
 user-invocable: true
 ---
@@ -25,28 +25,25 @@ The user must approve before moving to the next step.
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
-- `subagent_type: narrative-director` — Narrative purpose, characters, emotional arc
-- `subagent_type: world-builder` — Lore context, environmental storytelling, world rules
+- `subagent_type: narrative-director` — Narrative purpose, characters, emotional arc, lore context, environmental storytelling, world rules
 - `subagent_type: level-designer` — Spatial layout, pacing, encounters, navigation
 - `subagent_type: systems-designer` — Enemy compositions, loot tables, difficulty balance
 - `subagent_type: art-director` — Visual theme, color palette, lighting, asset requirements
 - `subagent_type: accessibility-specialist` — Navigation clarity, colorblind safety, cognitive load
-- `subagent_type: qa-tester` — Test cases, boundary testing, playtest checklist
+- `subagent_type: qa-lead` — Test cases, boundary testing, playtest checklist
 
 Always provide full context in each agent's prompt (game concept, pillars, existing level docs, narrative docs).
 
 3. **Orchestrate the level design team** in sequence:
 
-### Step 1: Narrative + Visual Direction (narrative-director + world-builder + art-director, parallel)
+### Step 1: Narrative + Visual Direction (narrative-director + art-director, parallel)
 
-Spawn all three agents simultaneously — issue all three Task calls before waiting for any result.
+Spawn both agents simultaneously — issue both Task calls before waiting for any result.
 
 Spawn the `narrative-director` agent to:
 - Define the narrative purpose of this area (what story beats happen here?)
 - Identify key characters, dialogue triggers, and lore elements
 - Specify emotional arc (how should the player feel entering, during, leaving?)
-
-Spawn the `world-builder` agent to:
 - Provide lore context for the area (history, faction presence, ecology)
 - Define environmental storytelling opportunities
 - Specify any world rules that affect gameplay in this area
@@ -60,12 +57,12 @@ Spawn the `art-director` agent to:
 
 **The art-director's visual targets from Step 1 must be passed to the level-designer in Step 2** as explicit constraints. Layout decisions happen within the visual direction, not before it.
 
-**Gate**: Use `AskUserQuestion` to present all three Step 1 outputs (narrative brief, lore foundation, visual direction targets) and confirm before proceeding to Step 2.
+**Gate**: Use `AskUserQuestion` to present both Step 1 outputs (narrative/lore brief and visual direction targets) and confirm before proceeding to Step 2.
 
 ### Step 2: Layout and Encounter Design (level-designer)
 Spawn the `level-designer` agent with the full Step 1 output as context:
 - Narrative brief (from narrative-director)
-- Lore foundation (from world-builder)
+- Lore foundation (from narrative-director)
 - **Visual direction targets (from art-director)** — layout must work within these targets, not contradict them
 
 The level-designer should:
@@ -123,8 +120,8 @@ Wait for both agents to return before proceeding.
 
 Do NOT proceed to Step 5 without the user acknowledging any BLOCKING accessibility concerns.
 
-### Step 5: QA Planning (qa-tester)
-Spawn the `qa-tester` agent to:
+### Step 5: QA Planning (qa-lead)
+Spawn the `qa-lead` agent to:
 - Write test cases for the critical path
 - Identify boundary and edge cases (sequence breaks, softlocks)
 - Create a playtest checklist for the area

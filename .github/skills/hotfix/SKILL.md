@@ -41,8 +41,8 @@ Status: IN PROGRESS
 [What was tested and how]
 
 ### Approvals
-- [ ] Fix reviewed by lead-programmer
-- [ ] Regression test passed (qa-tester)
+- [ ] Fix reviewed by technical-director
+- [ ] Regression test passed (qa-lead)
 - [ ] Release approved (producer)
 
 ### Rollback Plan
@@ -79,8 +79,8 @@ Update the hotfix record with root cause, fix details, and test results.
 
 Use the Task tool to request sign-off in parallel:
 
-- `subagent_type: lead-programmer` — Review the fix for correctness and side effects
-- `subagent_type: qa-tester` — Run targeted regression tests on the affected system
+- `subagent_type: technical-director` — Review the fix for correctness and side effects
+- `subagent_type: qa-lead` — Run targeted regression tests on the affected system
 - `subagent_type: producer` — Approve deployment timing and communication plan
 
 All three must return APPROVE before proceeding. If any returns CONCERNS or REJECT, do not deploy — surface the issue and resolve it first.
@@ -127,7 +127,7 @@ Output a deployment summary:
 **Root cause**: [one line]
 **Fix**: [one line]
 **QA gate**: [Smoke check PASS / Team-QA APPROVED]
-**Approvals**: lead-programmer ✓ / qa-tester ✓ / producer ✓
+**Approvals**: technical-director ✓ / qa-lead ✓ / producer ✓
 **Rollback plan**: [from Phase 2 record]
 
 Merge to: release branch AND development branch

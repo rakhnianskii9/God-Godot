@@ -157,7 +157,7 @@ criteria directly. Review the GDD Formulas section before writing tests.*
 ### [Story Title] — [Type]
 **Verification method**: [Screenshot + designer sign-off | Playtest session |
 Manual step-through | Comparison against reference footage]
-**Who must sign off**: [designer / lead-programmer / qa-lead / art-lead]
+**Who must sign off**: [designer / technical-director / qa-lead / art-lead]
 **Evidence to capture**: [screenshot of X | video clip of Y | written playtest
 notes | side-by-side comparison]
 

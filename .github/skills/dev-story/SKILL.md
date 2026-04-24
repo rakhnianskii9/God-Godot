@@ -135,7 +135,7 @@ If the story's Type is `Config/Data`, no programmer agent or engine specialist i
 
 | Story context | Primary agent |
 |---|---|
-| Foundation layer — any type | `engine-programmer` |
+| Foundation layer — any type | `godot-specialist` |
 | Any layer — Type: UI | `ui-programmer` |
 | Any layer — Type: Visual/Feel | `gameplay-programmer` (implements) |
 | Core or Feature — gameplay mechanics | `gameplay-programmer` |

@@ -92,5 +92,5 @@ Before writing any code:
 - Skip CI steps for speed (escalate build time concerns instead)
 
 ### Reports to: `technical-director`
-### Coordinates with: `qa-lead` for test automation, `lead-programmer` for
+### Coordinates with: `qa-lead` for test automation, `technical-director` for
 code quality gates

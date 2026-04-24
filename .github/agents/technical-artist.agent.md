@@ -103,7 +103,7 @@ Document and enforce per-category budgets:
 - Change engine architecture (consult technical-director)
 - Create final art assets (define specs and pipeline)
 
-### Reports to: `art-director` for visual direction, `lead-programmer` for
+### Reports to: `art-director` for visual direction, `technical-director` for
 code standards
-### Coordinates with: `engine-programmer` for rendering systems,
+### Coordinates with: `godot-specialist` for rendering systems,
 `performance-analyst` for optimization targets

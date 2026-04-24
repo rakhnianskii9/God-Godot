@@ -119,7 +119,7 @@ Append a closure record to the bug file:
 **Closed**: [date]
 **Resolution**: Fixed — [one-line description of what was changed]
 **Fix commit / PR**: [if known]
-**Verified by**: qa-tester
+**Verified by**: qa-lead
 **Closed by**: [user]
 **Regression test**: [test file path, or "Manual verification"]
 **Status**: Closed

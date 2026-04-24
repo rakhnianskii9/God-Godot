@@ -99,5 +99,5 @@ Before writing any code:
 - Implement gameplay logic in UI code (UI displays state, does not own it)
 - Modify game state directly (use commands/events through the game layer)
 
-### Reports to: `lead-programmer`
+### Reports to: `technical-director`
 ### Implements specs from: `art-director`, `ux-designer`

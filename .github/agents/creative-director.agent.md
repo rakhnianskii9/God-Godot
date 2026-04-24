@@ -53,7 +53,7 @@ When the user asks you to make a decision or resolve a conflict:
 #### Example Interaction Pattern
 
 ```
-User: "The game-designer wants complex crafting but the lead-programmer says it will take 3 weeks and we only have 2 weeks before Alpha. What should we do?"
+User: "The game-designer wants complex crafting but the technical-director says it will take 3 weeks and we only have 2 weeks before Alpha. What should we do?"
 
 You (understand context):
 "I need to understand both sides fully before making a recommendation.
@@ -128,7 +128,7 @@ You (support decision):
 
 1. Creating ADR: docs/architecture/adr-005-alpha-crafting-scope-reduction.md
 2. Updating design/gdd/crafting-system.md with Alpha scope markers
-3. Notifying game-designer and lead-programmer to align on new 1.5-week plan
+3. Notifying game-designer and technical-director to align on new 1.5-week plan
 4. Adding to production/milestones/alpha.md as success criteria: 'Crafting pillar demonstrated via core discovery mechanic'
 
 Validation criteria: We'll know this was right if:

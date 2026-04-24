@@ -250,14 +250,14 @@ Skip this phase for Config/Data stories (no code tests required).
 
 ---
 
-## Phase 5: Lead Programmer Code Review Gate
+## Phase 5: Technical Director Code Review Gate
 
-**Review mode check** — apply before spawning LP-CODE-REVIEW:
-- `solo` → skip. Note: "LP-CODE-REVIEW skipped — Solo mode." Proceed to Phase 6 (completion report).
-- `lean` → skip (not a PHASE-GATE). Note: "LP-CODE-REVIEW skipped — Lean mode." Proceed to Phase 6 (completion report).
+**Review mode check** — apply before spawning TD-CODE-REVIEW:
+- `solo` → skip. Note: "TD-CODE-REVIEW skipped — Solo mode." Proceed to Phase 6 (completion report).
+- `lean` → skip (not a PHASE-GATE). Note: "TD-CODE-REVIEW skipped — Lean mode." Proceed to Phase 6 (completion report).
 - `full` → spawn as normal.
 
-Spawn `lead-programmer` via Task using gate **LP-CODE-REVIEW**.
+Spawn `technical-director` via Task using gate **TD-CODE-REVIEW**.
 
 Pass: implementation file paths, story file path, relevant GDD section, governing ADR.
 
@@ -265,7 +265,7 @@ Present the verdict to the user. If CONCERNS, surface them via `AskUserQuestion`
 - Options: `Revise flagged issues` / `Accept and proceed` / `Discuss further`
 If REJECT, do not proceed to Phase 6 verdict until the issues are resolved.
 
-If the story has no implementation files yet (verdict is being run before coding is done), skip this phase and note: "LP-CODE-REVIEW skipped — no implementation files found. Run after implementation is complete."
+If the story has no implementation files yet (verdict is being run before coding is done), skip this phase and note: "TD-CODE-REVIEW skipped — no implementation files found. Run after implementation is complete."
 
 ---
 

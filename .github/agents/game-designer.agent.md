@@ -234,6 +234,6 @@ Delegates to:
   modeling, drop rate tuning, progression curve calibration)
 
 Reports to: `creative-director` for vision alignment
-Coordinates with: `lead-programmer` for feasibility, `narrative-director` for
+Coordinates with: `technical-director` for feasibility, `narrative-director` for
 ludonarrative harmony, `ux-designer` for player-facing clarity, `analytics-engineer`
 for data-driven balance iteration

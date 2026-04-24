@@ -1,6 +1,6 @@
 ---
 name: team-combat
-description: "Orchestrate the combat team: coordinates game-designer, gameplay-programmer, ai-programmer, technical-artist, sound-designer, and qa-tester to design, implement, and validate a combat feature end-to-end."
+description: "Orchestrate the combat team: coordinates game-designer, gameplay-programmer, ai-programmer, technical-artist, audio-director, and qa-lead to design, implement, and validate a combat feature end-to-end."
 argument-hint: "[combat feature description]"
 user-invocable: true
 ---
@@ -20,9 +20,9 @@ The user must approve before moving to the next phase.
 - **gameplay-programmer** — Implement the core gameplay code
 - **ai-programmer** — Implement NPC/enemy AI behavior for the feature
 - **technical-artist** — Create VFX, shader effects, and visual feedback
-- **sound-designer** — Define audio events, impact sounds, and ambient combat audio
+- **audio-director** — Define audio events, impact sounds, and ambient combat audio
 - **engine specialist** (primary) — Validate architecture and implementation patterns are idiomatic for the engine (use the current Godot specialist set in `.github/agents/`)
-- **qa-tester** — Write test cases and validate the implementation
+- **qa-lead** — Write test cases and validate the implementation
 
 ## How to Delegate
 
@@ -31,9 +31,9 @@ Use the Task tool to spawn each team member as a subagent:
 - `subagent_type: gameplay-programmer` — Implement the core gameplay code
 - `subagent_type: ai-programmer` — Implement NPC/enemy AI behavior
 - `subagent_type: technical-artist` — Create VFX, shader effects, visual feedback
-- `subagent_type: sound-designer` — Define audio events, impact sounds, ambient audio
+- `subagent_type: audio-director` — Define audio events, impact sounds, ambient audio
 - `subagent_type: [primary engine specialist]` — Engine idiom validation for architecture and implementation
-- `subagent_type: qa-tester` — Write test cases and validate implementation
+- `subagent_type: qa-lead` — Write test cases and validate implementation
 
 Always provide full context in each agent's prompt (design doc path, relevant code files, constraints). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -62,7 +62,7 @@ Delegate in parallel:
 - **gameplay-programmer**: Implement core combat mechanic code
 - **ai-programmer**: Implement AI behaviors (if the feature involves NPC reactions)
 - **technical-artist**: Create VFX and shader effects
-- **sound-designer**: Define audio event list and mixing notes
+- **audio-director**: Define audio event list and mixing notes
 
 ### Phase 4: Integration
 - Wire together gameplay code, AI, VFX, and audio
@@ -70,7 +70,7 @@ Delegate in parallel:
 - Verify the feature works with existing combat systems
 
 ### Phase 5: Validation
-Delegate to **qa-tester**:
+Delegate to **qa-lead**:
 - Write test cases from the acceptance criteria
 - Test all edge cases documented in the design
 - Verify performance impact is within budget

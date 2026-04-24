@@ -373,14 +373,14 @@ Fix the failures and run `/smoke-check` again to re-gate before QA hand-off."
 Advisory items to resolve before running `/story-done` on affected stories:
 [list MISSING test evidence entries]
 
-QA hand-off: share `production/qa/qa-plan-[sprint].md` with the qa-tester
+QA hand-off: share `production/qa/qa-plan-[sprint].md` with the qa-lead
 agent to begin manual verification."
 
 **If verdict is PASS:**
 
 "Smoke check passed cleanly. The build is ready for manual QA.
 
-QA hand-off: share `production/qa/qa-plan-[sprint].md` with the qa-tester
+QA hand-off: share `production/qa/qa-plan-[sprint].md` with the qa-lead
 agent to begin manual verification."
 
 ---

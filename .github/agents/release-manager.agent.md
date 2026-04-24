@@ -177,4 +177,4 @@ Coordinates with:
 - `qa-lead` for quality gates, test results, and release readiness sign-off
 - `community-manager` for launch communications and player-facing messaging
 - `technical-director` for platform-specific technical requirements
-- `lead-programmer` for hotfix branch management
+- `technical-director` for hotfix branch management

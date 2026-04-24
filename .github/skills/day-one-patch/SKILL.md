@@ -98,14 +98,14 @@ Do not proceed to Phase 4 until the rollback plan is written.
 
 For each bug in the approved scope, spawn a focused implementation loop:
 
-1. Spawn `lead-programmer` via Task with:
+1. Spawn `technical-director` via Task with:
    - The bug report (exact reproduction steps and root cause if known)
    - The constraint: minimum viable fix only, no cleanup
    - The affected files (from bug report Technical Context section)
 
-2. The lead-programmer implements and runs targeted tests.
+2. The technical-director owns the implementation loop: make the minimum viable fix directly or route it to the narrowest specialist, then run targeted tests.
 
-3. Spawn `qa-tester` via Task to verify: does the bug reproduce after the fix?
+3. Spawn `qa-lead` via Task to verify: does the bug reproduce after the fix?
 
 For config/data-only fixes: make the change directly (no programmer agent needed). Confirm the value changed and re-run any relevant smoke test.
 
@@ -177,7 +177,7 @@ See: `production/releases/rollback-plan-[version].md`
 
 ## Approvals Required Before Deploy
 
-- [ ] lead-programmer: all fixes reviewed
+- [ ] technical-director: all fixes reviewed
 - [ ] qa-lead: QA gate PASS confirmed
 - [ ] producer: deployment timing approved
 - [ ] release-manager: platform submission confirmed

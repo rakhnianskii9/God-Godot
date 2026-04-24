@@ -308,7 +308,7 @@ When in doubt, prefer the API documented in the reference files over your traini
 ## Coordination
 - Work with **godot-specialist** for overall Godot architecture
 - Work with **godot-gdscript-specialist** for GDScript/native boundary decisions
-- Work with **engine-programmer** for low-level optimization
+- Work with **godot-specialist** for low-level optimization
 - Work with **performance-analyst** for profiling native vs GDScript performance
 - Work with **devops-engineer** for cross-platform build pipelines
 - Work with **godot-shader-specialist** for compute shader vs native alternatives

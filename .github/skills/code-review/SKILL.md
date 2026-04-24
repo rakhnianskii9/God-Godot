@@ -3,7 +3,7 @@ name: code-review
 description: "Performs an architectural and quality code review on a specified file or set of files. Checks for coding standard compliance, architectural pattern adherence, SOLID principles, testability, and performance concerns."
 argument-hint: "[path-to-file-or-directory]"
 user-invocable: true
-agent: lead-programmer
+agent: technical-director
 ---
 
 ## Phase 1: Load Target Files
@@ -97,19 +97,19 @@ Also spawn the **Primary Specialist** for any file touching engine architecture 
 
 ### QA Testability Review
 
-For Logic and Integration stories, also spawn `qa-tester` via Task in parallel with the engine specialists. Pass:
+For Logic and Integration stories, also spawn `qa-lead` via Task in parallel with the engine specialists. Pass:
 - The implementation files being reviewed
 - The story's `## QA Test Cases` section (the pre-written test specs from qa-lead)
 - The story's `## Acceptance Criteria`
 
-Ask the qa-tester to evaluate:
+Ask the qa-lead to evaluate:
 - [ ] Are all test hooks and interfaces exposed (not hidden behind private/internal access)?
 - [ ] Do the QA test cases from the story's `## QA Test Cases` section map to testable code paths?
 - [ ] Are any acceptance criteria untestable as implemented (e.g., hardcoded values, no seam for injection)?
 - [ ] Does the implementation introduce any new edge cases not covered by the existing QA test cases?
 - [ ] Are there any observable side effects that should have a test but don't?
 
-For Visual/Feel and UI stories: qa-tester reviews whether the manual verification steps in `## QA Test Cases` are achievable with the implementation as written — e.g., "is the state the manual checker needs to reach actually reachable?"
+For Visual/Feel and UI stories: qa-lead reviews whether the manual verification steps in `## QA Test Cases` are achievable with the implementation as written — e.g., "is the state the manual checker needs to reach actually reachable?"
 
 Collect all specialist findings before producing output.
 
@@ -124,7 +124,7 @@ Collect all specialist findings before producing output.
 [Findings from engine specialist(s), or "No engine configured." if skipped]
 
 ### Testability: [N/A — Visual/Feel or Config story / TESTABLE / GAPS / BLOCKING]
-[qa-tester findings: test hooks, coverage gaps, untestable paths, new edge cases]
+[qa-lead findings: test hooks, coverage gaps, untestable paths, new edge cases]
 [If BLOCKING: implementation must expose [X] before tests in ## QA Test Cases can run]
 
 ### ADR Compliance: [NO ADRS FOUND / COMPLIANT / DRIFT / VIOLATION]

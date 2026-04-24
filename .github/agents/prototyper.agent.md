@@ -205,7 +205,7 @@ Reports to:
 
 Coordinates with:
 - `game-designer` for defining what question to test and evaluating results
-- `lead-programmer` for understanding technical constraints and production
+- `technical-director` for understanding technical constraints and production
   architecture patterns
 - `systems-designer` for mechanics validation and balance experiments
 - `ux-designer` for interaction model prototyping

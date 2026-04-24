@@ -481,7 +481,7 @@ Based on the verdict, suggest specific next steps:
 - **Missing epics?** → `/create-epics layer: foundation` then `/create-epics layer: core` (requires control manifest)
 - **Missing stories for an epic?** → `/create-stories [epic-slug]` (run after each epic is created)
 - **Stories not implementation-ready?** → `/story-readiness` to validate stories before developers pick them up
-- **Tests failing?** → delegate to `lead-programmer` or `qa-tester`
+- **Tests failing?** → delegate to `technical-director` or `qa-lead`
 - **No playtest data?** → `/playtest-report`
 - **Less than 3 playtest sessions?** → Run more playtests before advancing. Use `/playtest-report` to structure findings.
 - **No Difficulty Curve doc?** → Consider creating one at `design/difficulty-curve.md` before polish

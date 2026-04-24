@@ -1,6 +1,6 @@
 ---
 name: team-qa
-description: "Orchestrate the QA team through a full testing cycle. Coordinates qa-lead (strategy + test plan) and qa-tester (test case writing + bug reporting) to produce a complete QA package for a sprint or feature. Covers: test plan generation, test case writing, smoke check gate, manual QA execution, and sign-off report."
+description: "Orchestrate the QA lead through a full testing cycle. Uses qa-lead for strategy, test case writing, bug reporting, smoke check gating, manual QA execution, and sign-off for a sprint or feature."
 argument-hint: "[sprint | feature: system-name]"
 user-invocable: true
 agent: qa-lead
@@ -15,16 +15,14 @@ The user must approve before moving to the next phase.
 
 ## Team Composition
 
-- **qa-lead** — QA strategy, test plan generation, story classification, sign-off report
-- **qa-tester** — Test case writing, bug report writing, manual QA documentation
+- **qa-lead** — QA strategy, test plan generation, story classification, test case writing, bug reports, manual QA documentation, sign-off report
 
 ## How to Delegate
 
 Use the Task tool to spawn each team member as a subagent:
-- `subagent_type: qa-lead` — Strategy, planning, classification, sign-off
-- `subagent_type: qa-tester` — Test case writing and bug report writing
+- `subagent_type: qa-lead` — Strategy, planning, classification, test case writing, bug reports, execution, sign-off
 
-Always provide full context in each agent's prompt (story file paths, QA plan path, scope constraints). Launch independent qa-tester tasks in parallel where possible (e.g., multiple stories in Phase 5 can be scaffolded simultaneously).
+Always provide full context in each agent's prompt (story file paths, QA plan path, scope constraints). Launch independent qa-lead tasks in parallel where possible (e.g., multiple stories in Phase 4 can be scaffolded simultaneously).
 
 ## Pipeline
 
@@ -95,13 +93,13 @@ Ask: "May I write the QA plan to `production/qa/qa-plan-[sprint]-[date].md`?"
 
 Write only after receiving approval.
 
-### Phase 4: Test Case Writing (qa-tester)
+### Phase 4: Test Case Writing (qa-lead)
 
 > **Smoke check** is performed as part of Phase 2 (QA Strategy). If the smoke check returned FAIL in Phase 2, the cycle was stopped there. This phase only runs when the Phase 2 smoke check was PASS or PASS WITH WARNINGS.
 
 For each story requiring manual QA (Visual/Feel, UI, Integration without automated tests):
 
-Spawn `qa-tester` via Task for each story (run in parallel where possible), providing:
+Spawn `qa-lead` via Task for each story (run in parallel where possible), providing:
 - The story file path
 - The relevant section of the QA plan for that story
 - The GDD acceptance criteria for the system being tested (if available)
@@ -141,7 +139,7 @@ options:
   - "BLOCKED — cannot test yet (reason)"
 ```
 
-After each FAIL result: use `AskUserQuestion` to collect the failure description, then spawn `qa-tester` via Task to write a formal bug report in `production/qa/bugs/`.
+After each FAIL result: use `AskUserQuestion` to collect the failure description, then spawn `qa-lead` via Task to write a formal bug report in `production/qa/bugs/`.
 
 Bug report naming: `BUG-[NNN]-[short-slug].md` (increment NNN from existing bugs in the directory).
 
