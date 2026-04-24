@@ -1,0 +1,366 @@
+{
+    "git.ignoreLimitWarning": true,
+    "scm.showInputActionButton": false,
+    "chat.tools.autoApprove": true,
+    "chat.tools.global.autoApprove": true,
+    "chat.tools.urls.autoApprove": {
+        "https://*": {
+            "approveRequest": true,
+            "approveResponse": true
+        },
+        "http://*": {
+            "approveRequest": true,
+            "approveResponse": true
+        }
+    },
+    "chat.tools.terminal.enableAutoApprove": true,
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.startupPrompt": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "github.copilot.chat.anthropic.tools.websearch.enabled": true,
+    "github.copilot.chat.anthropic.tools.websearch.maxUses": 20,
+    "github.copilot.chat.anthropic.tools.websearch.allowedDomains": [
+        "*"
+    ],
+    
+    // === MCP CONFIG ===
+    "github.copilot.chat.mcp.enabled": true,
+    "github.copilot.chat.githubMcpServer.enabled": true,
+    "github.copilot.chat.githubMcpServer.toolsets": [
+        "default",
+        "repos",
+        "issues",
+        "code_search",
+        "pull_requests",
+        "actions",
+        "code_security",
+        "secret_protection",
+        "security_advisories",
+        "copilot",
+        "copilot_spaces",
+        "github_support_docs_search"
+    ],
+    // Используем .vscode/mcp.json (основной)
+    
+    // === TERMINAL AUTO-APPROVE (READ-ONLY КОМАНДЫ) ===
+    "github.copilot.chat.runCommand.enabled": true,
+    "terminal.integrated.allowedShellIntegrationCommands": [
+        // GIT READ-ONLY
+        "git log*", "git show*", "git diff*", "git status*", "git branch*",
+        "git fetch*", "git remote*", "git tag*", "git stash list*", "git blame*",
+        "git shortlog*", "git reflog*", "git describe*", "git rev-parse*",
+        "git ls-files*", "git ls-tree*", "git cat-file*",
+        
+        // FILE SYSTEM READ-ONLY
+        "ls*", "cat*", "head*", "tail*", "less*", "more*", "wc*", "find*",
+        "tree*", "file*", "stat*", "du*", "df*", "pwd*", "realpath*",
+        
+        // TEXT PROCESSING / SEARCH
+        "grep*", "egrep*", "awk*", "sed -n*", "cut*", "sort*", "uniq*", "diff*", "xargs*", "nl*",
+        
+        // SYSTEM INFO
+        "echo*", "date*", "whoami*", "hostname*", "uname*", "env*", "printenv*", "which*", "type*",
+
+        // SHELL HELPERS
+        "command -v*", "cd*", "set -e*", "set +e*", "sh -lc*",
+
+        // LOGS / OBSERVABILITY
+        "journalctl*", "dmesg*", "tail -f*", "less +F*",
+        
+        // PACKAGE INFO
+        "npm list*", "npm ls*", "npm view*", "npm outdated*", "npm -v*",
+        "pnpm list*", "pnpm ls*", "pnpm why*", "pnpm -v*", "pnpm install*", "pnpm i*", "pnpm build*", "pnpm --filter* build*",
+        "node -v*", "node --version*", "tsc --version*", "tsc --noEmit*", "npx tsc --noEmit*",
+        
+        // DB READ-ONLY INSPECTION
+        "psql*", "pg_isready*",
+
+        // NGINX READ-ONLY INSPECTION
+        "nginx -t*",
+
+        // DOCKER / K8S READ-ONLY
+        "docker --version*", "docker version*", "docker ps*", "docker images*", "docker logs*", "docker inspect*", "docker stats*", "docker exec*",
+        "docker-compose ps*", "docker-compose logs*", "kubectl logs*", "kubectl get*", "kubectl describe*",
+
+        // PROJECT SCRIPTS
+        "bash /home/projects/new-flowise/scripts/*"
+    ],
+    
+    // === VALIDATION DISABLED ===
+    "files.associations": {
+        "*.md": "plaintext",
+        "*.markdown": "plaintext",
+        "*.mdx": "plaintext"
+    },
+    "markdown.validate.enabled": false,
+    "markdown.validate.fileLinks.enabled": "ignore",
+    "markdown.validate.fragmentLinks.enabled": "ignore",
+    "markdown.validate.ignoredLinks": ["#sec-*"],
+    "css.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownAtRules": "ignore",
+    "less.lint.unknownAtRules": "ignore",
+    "markdownlint.ignore": [
+        "**/*.md",
+        "**/*.markdown",
+        "**/*.mdx"
+    ],
+    
+    // === MCP AUTOSTART ===
+    "chat.mcp.autostart": "newAndOutdated",
+    
+    // === AGENT SKILLS ===
+    "chat.useAgentSkills": true,
+
+    // === JS/TS CHAT FEATURES (PREVIEW) ===
+    "jsts-chat-features.skills.enabled": true,
+    
+    // === TYPESCRIPT/JAVASCRIPT (отключено для производительности) ===
+    "js/ts.validate.enabled": false,
+    "js/ts.tsserver.enableProjectDiagnostics": false,
+    "js/ts.tsserver.experimental.enableProjectDiagnostics": false,
+    "js/ts.tsserver.maxMemory": 4096,
+    "files.exclude": {
+        "**/x-old-projects": true,
+        "**/user-export": true,
+        "**/code-export": true,
+        "**/tmp": true,
+        "**/node_modules": true,
+        "**/.turbo": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true
+    },
+    "search.exclude": {
+        "**/x-old-projects": true,
+        "**/user-export": true,
+        "**/code-export": true,
+        "**/tmp": true,
+        "**/node_modules": true,
+        "**/.turbo": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true
+    },
+    "files.watcherExclude": {
+        "**/x-old-projects/**": true,
+        "**/user-export/**": true,
+        "**/code-export/**": true,
+        "**/tmp/**": true,
+        "**/node_modules/**": true,
+        "**/.turbo/**": true,
+        "**/dist/**": true,
+        "**/build/**": true,
+        "**/coverage/**": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        "/[\\s\\S]*/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/.*/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd \/home\/projects\/new-flowise\/packages\/server && pnpm test:unit$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    },
+    "chat.tools.edits.autoApprove": {
+        "**/*": true
+    },
+
+    // === VS Code 1.110: Agent Plugins (Experimental) ===
+    "chat.plugins.enabled": true,
+
+    // === VS Code 1.110: Agentic Browser Tools (Experimental) ===
+    // Native browser tools: openBrowserPage, readPage, screenshotPage, clickElement,
+    // hoverElement, dragElement, typeInPage, handleDialog, runPlaywrightCode
+    // Works without external deps — complements Playwright MCP + Chrome DevTools MCP
+    "workbench.browser.enableChatTools": true,
+
+    // === VS Code 1.110: Feature Discovery Tips ===
+    "chat.tips.enabled": true,
+
+    "chat.tools.filesystem.autoApprove": {
+        "/home/**": {
+            "read": true,
+            "write": true
+        },
+        "**/*.json": {
+            "read": true,
+            "write": true
+        },
+        "**/settings.json": {
+            "read": true,
+            "write": true
+        },
+        "**": {
+            "read": true,
+            "write": false
+        }
+    },
+    "github.copilot.enable": {
+        "*": true,
+        "scminput": false
+    },
+    "[scminput]": {
+        "editor.inlineSuggest.enabled": false,
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        },
+        "editor.suggestOnTriggerCharacters": false,
+        "editor.wordBasedSuggestions": "off"
+    },
+    "chat.mcp.serverSampling": {
+        "new-flowise/.vscode/mcp.json: chrome-devtools": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: context7": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: crash": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: figma": {
+            "allowedModels": [
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: filesystem": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: kaggle": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: mcp-files": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: memory": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: octocode": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: playwright": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: postgres": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: pgtuner": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilot/gemini-3.1-pro-preview"
+            ]
+        },
+        "new-flowise/.vscode/mcp.json: task-manager": {
+            "allowedModels": [
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6"
+            ]
+        }
+    },
+    "chat.agent.sandbox.enabled": "on"
+}

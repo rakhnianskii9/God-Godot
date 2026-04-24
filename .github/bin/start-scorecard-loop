@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+# Usage (copy-ready):
+# NOTE: `--deep-analysis` / `--business-table` are flags of THIS script.
+# If you split the command across lines, keep `\` at the end of each continued line,
+# otherwise the next line becomes a separate shell command (you'll get: `--business-table: command not found`).
+#
+#   bash .github/bin/start-scorecard-loop --module <module-name> --request "<goal or problem>" \
+#     --tasks "<task 1>; <task 2>; <task 3>" \
+#     --deep-analysis \
+#     --business-table
+#
+# What it does:
+# - Prints a copy-ready Copilot Chat prompt that starts the full Conductor loop in `scorecard=true` mode
+
+set -euo pipefail
+
+ROOT="/home/projects/new-flowise"
+
+module=""
+request=""
+tasks=""
+deep_analysis="0"
+business_table="0"
+stdin_mode="0"
+
+die() {
+  echo "error: $*" >&2
+  exit 2
+}
+
+usage() {
+  cat >&2 <<'USAGE'
+usage:
+  # Simple (one-line values):
+  bash .github/bin/start-scorecard-loop --module <name> --request <text> --tasks <t1; t2; ...> [--deep-analysis] [--business-table]
+
+  # Recommended for long multi-line text (no quoting headaches):
+  bash .github/bin/start-scorecard-loop --stdin [--deep-analysis] [--business-table] <<'EOF'
+  MODULE: <module or scope>
+  REQUEST:
+  <describe the problem or desired result here>
+  ---TASKS---
+  <task 1>
+  <task 2>
+  <task 3>
+  EOF
+
+examples:
+  bash .github/bin/start-scorecard-loop \
+    --module analytics \
+    --request "Починить проблемный модуль и подтвердить поведение evidence-based проверками" \
+    --tasks "Локализовать корневую причину; Внести минимальные правки; Проверить отсутствие регрессий" \
+    --deep-analysis \
+    --business-table
+USAGE
+  exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --stdin) stdin_mode="1"; shift 1;;
+    --module) module="${2:-}"; shift 2;;
+    --request) request="${2:-}"; shift 2;;
+    --tasks) tasks="${2:-}"; shift 2;;
+    --deep-analysis) deep_analysis="1"; shift 1;;
+    --business-table) business_table="1"; shift 1;;
+    -h|--help) usage;;
+    *) die "unknown arg: $1";;
+  esac
+done
+
+if [[ "$stdin_mode" == "1" ]]; then
+  input="$(cat)"
+  module="$(printf '%s\n' "$input" | sed -n 's/^MODULE:[[:space:]]*//p' | head -n1)"
+  [[ -n "$module" ]] || die "--stdin requires a line like: MODULE: <name>"
+
+  # REQUEST: ... until ---TASKS--- (or TASKS:)
+  request="$(printf '%s\n' "$input" | awk '
+    BEGIN{in_req=0}
+    /^REQUEST:[[:space:]]*$/ {in_req=1; next}
+    /^---TASKS---[[:space:]]*$/ {exit}
+    /^TASKS:[[:space:]]*$/ {exit}
+    { if (in_req) print }
+  ' | sed 's/[[:space:]]*$//')"
+
+  tasks="$(printf '%s\n' "$input" | awk '
+    BEGIN{in_tasks=0}
+    /^---TASKS---[[:space:]]*$/ {in_tasks=1; next}
+    /^TASKS:[[:space:]]*$/ {in_tasks=1; next}
+    { if (in_tasks) print }
+  ' | sed 's/[[:space:]]*$//')"
+
+  [[ -n "$(printf '%s' "$request" | tr -d '\n' | tr -d ' ' | tr -d '\t')" ]] || die "--stdin requires a REQUEST: section"
+  [[ -n "$(printf '%s' "$tasks" | tr -d '\n' | tr -d ' ' | tr -d '\t')" ]] || die "--stdin requires a TASKS section (---TASKS--- or TASKS:)"
+else
+  [[ -n "$module" ]] || die "--module is required"
+  [[ -n "$request" ]] || die "--request is required"
+  [[ -n "$tasks" ]] || die "--tasks is required (semicolon-separated)"
+fi
+
+mode_line="scorecard=true"
+if [[ "$deep_analysis" == "1" ]]; then
+  mode_line="$mode_line deep-analysis=true"
+fi
+if [[ "$business_table" == "1" ]]; then
+  mode_line="$mode_line business-table=true"
+fi
+
+# Generate T-01.. list
+# - CLI mode: expects semicolon-separated tasks
+# - stdin mode: expects newline-separated tasks
+if [[ "$stdin_mode" == "1" ]]; then
+  mapfile -t task_arr <<< "$tasks"
+else
+  IFS=';' read -r -a task_arr <<< "$tasks"
+fi
+
+printf '\n'
+printf '===== COPY-READY PROMPT (paste into Copilot Chat) =====\n'
+printf '%s\n\n' "$mode_line"
+
+printf 'Контекст/модуль: %s\n' "$module"
+printf '\n'
+
+printf 'Требование (описание проблемы/цели):\n%s\n\n' "$request"
+
+printf 'Список задач (явный, для scorecard; обязательно):\n'
+idx=1
+for raw in "${task_arr[@]}"; do
+  t="$(echo "$raw" | sed 's/^ *//;s/ *$//')"
+  [[ -n "$t" ]] || continue
+  printf -- '- T-%02d: %s\n' "$idx" "$t"
+  idx=$((idx+1))
+done
+
+cat <<'TAIL'
+
+Ограничения процесса:
+- В режиме scorecard: 8 оценок (0–10) на каждую T-xx, FAIL если любой столбец < 8/10.
+- Обязателен Evidence Log.
+- Перед новым циклом задач: Conductor обязан STOP и ждать моей верификации.
+- Task Drop в `.github/tasks.md` — только после моей верификации, с dedupe + DoD + Evidence pointers.
+TAIL
+
+printf '===== END PROMPT =====\n\n'

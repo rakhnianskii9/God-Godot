@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "./.github/hooks/pretool-guard.sh",
+        "timeout": 10
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "./.github/hooks/posttool-quality.sh",
+        "timeout": 30
+      },
+      {
+        "type": "command",
+        "command": "./.github/hooks/posttool-security.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}

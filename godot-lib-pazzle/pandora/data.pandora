@@ -1,0 +1,446 @@
+{
+	"_entity_data": {
+		"_categories": [
+			{
+				"_category_id": "",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/school-bag.svg",
+				"_id": "1",
+				"_ids_generation_class": "Items",
+				"_index": 0,
+				"_name": "Items",
+				"_script_path": "res://examples/inventory/item.gd"
+			},
+			{
+				"_category_id": "1",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/switch-weapon.svg",
+				"_id": "3",
+				"_ids_generation_class": "Armory",
+				"_index": 0,
+				"_name": "Armory",
+				"_property_overrides": {
+					"Description": {
+						"type": "string",
+						"value": "Armor to protect the player."
+					},
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": -10
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "1",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/toolbox.svg",
+				"_id": "4",
+				"_ids_generation_class": "Tools",
+				"_index": 0,
+				"_name": "Tools",
+				"_property_overrides": {
+					"Description": {
+						"type": "string",
+						"value": "Tools and utilities."
+					},
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": -10
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "3",
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/shield.svg",
+				"_id": "8",
+				"_index": 0,
+				"_name": "Shields",
+				"_property_overrides": {
+					"Description": {
+						"type": "string",
+						"value": "Shields to protect the player."
+					},
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": -10
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "1",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/peaks.svg",
+				"_id": "13",
+				"_ids_generation_class": "Ores",
+				"_index": 0,
+				"_name": "Ores",
+				"_property_overrides": {
+					"Description": {
+						"type": "string",
+						"value": "Ores that can be mined."
+					},
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": 99
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://examples/inventory/icons/stars-stack.svg",
+				"_id": "16",
+				"_ids_generation_class": "Rarities",
+				"_index": 0,
+				"_name": "Rarity",
+				"_script_path": "res://examples/inventory/rarity.gd"
+			},
+			{
+				"_category_id": "",
+				"_icon_color": "ffffff00",
+				"_id": "27",
+				"_index": 0,
+				"_name": "Quests"
+			},
+			{
+				"_category_id": "",
+				"_icon_color": "ffffff00",
+				"_id": "28",
+				"_index": 0,
+				"_name": "Dialogues"
+			},
+			{
+				"_category_id": "",
+				"_icon_color": "ffffff00",
+				"_id": "29",
+				"_index": 0,
+				"_name": "Spells"
+			},
+			{
+				"_category_id": "",
+				"_generate_ids": true,
+				"_icon_color": "ffffff00",
+				"_id": "54",
+				"_ids_generation_class": "MockEntities",
+				"_index": 0,
+				"_name": "Mock (Required for Testing!)",
+				"_script_path": "res://mock/custom_mock_entity.gd"
+			},
+			{
+				"_category_id": "",
+				"_icon_color": "ffffff00",
+				"_id": "2",
+				"_index": 0,
+				"_name": "NPCs"
+			}
+		],
+		"_entities": [
+			{
+				"_category_id": "8",
+				"_icon_color": "ffffff00",
+				"_id": "49",
+				"_index": 0,
+				"_name": "Shield",
+				"_property_overrides": {
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": -10
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "13",
+				"_icon_color": "ffffff00",
+				"_id": "50",
+				"_index": 0,
+				"_name": "Copper Ore",
+				"_property_overrides": {
+					"Rarity": {
+						"type": "reference",
+						"value": {
+							"_entity_id": "51",
+							"_type": 0
+						}
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			},
+			{
+				"_category_id": "16",
+				"_icon_color": "ffffff00",
+				"_id": "51",
+				"_index": 0,
+				"_name": "Legendary"
+			},
+			{
+				"_category_id": "54",
+				"_icon_color": "ffffff00",
+				"_id": "55",
+				"_index": 0,
+				"_name": "MockEntity"
+			},
+			{
+				"_category_id": "2",
+				"_icon_color": "ffffff00",
+				"_id": "6",
+				"_index": 0,
+				"_name": "Florence",
+				"_property_overrides": {
+					"Name": {
+						"type": "string",
+						"value": "Florence"
+					},
+					"Shop Items": {
+						"type": "array",
+						"value": {
+							"0": {
+								"_entity_id": "50",
+								"_type": 0.0
+							},
+							"1": {
+								"_entity_id": "51",
+								"_type": 0.0
+							}
+						}
+					}
+				}
+			},
+			{
+				"_category_id": "54",
+				"_icon_color": "ffffff00",
+				"_id": "7",
+				"_index": 0,
+				"_name": "1 Some Entity"
+			},
+			{
+				"_category_id": "54",
+				"_icon_color": "ffffff00",
+				"_id": "8",
+				"_index": 0,
+				"_name": "/1209I)(#)9390292084"
+			},
+			{
+				"_category_id": "1",
+				"_icon_color": "ffffff00",
+				"_id": "9",
+				"_index": 0,
+				"_name": "Apple",
+				"_property_overrides": {
+					"Maximum Stack Size": {
+						"type": "int",
+						"value": -10
+					},
+					"float property": {
+						"type": "float",
+						"value": 0.0990471839909333
+					}
+				}
+			}
+		],
+		"_properties": [
+			{
+				"_category_id": "3",
+				"_default_value": 10,
+				"_id": "11",
+				"_name": "Defense",
+				"_type": "int"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": "Item Description",
+				"_id": "12",
+				"_name": "Description",
+				"_type": "string"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": "ffffffff",
+				"_id": "15",
+				"_name": "Item Color",
+				"_type": "color"
+			},
+			{
+				"_category_id": "16",
+				"_default_value": "ffffffff",
+				"_id": "21",
+				"_name": "Rarity Color",
+				"_type": "color"
+			},
+			{
+				"_category_id": "16",
+				"_default_value": "Item rarity.",
+				"_id": "22",
+				"_name": "Rarity Description",
+				"_type": "string"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": {
+					"_entity_id": "20",
+					"_type": 0
+				},
+				"_id": "23",
+				"_name": "Rarity",
+				"_setting_overrides": {
+					"Category Filter": "16"
+				},
+				"_type": "reference"
+			},
+			{
+				"_category_id": "13",
+				"_default_value": 0.1,
+				"_id": "24",
+				"_name": "Spawn Rate",
+				"_type": "float"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": -10,
+				"_id": "35",
+				"_name": "Maximum Stack Size",
+				"_setting_overrides": {
+					"Max Value": 10.0,
+					"Min Value": -10.0
+				},
+				"_type": "int"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": 1,
+				"_id": "36",
+				"_name": "Current Stack Size",
+				"_type": "int"
+			},
+			{
+				"_category_id": "8",
+				"_default_value": "res://splash.png",
+				"_id": "38",
+				"_name": "My Resouce",
+				"_type": "resource"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": {
+					"_entity_id": "14",
+					"_type": 0
+				},
+				"_id": "40",
+				"_name": "reference property",
+				"_setting_overrides": {
+					"Category Filter": "1",
+					"Category Mode": true
+				},
+				"_type": "reference"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": 0.0990471839909333,
+				"_id": "45",
+				"_name": "float property",
+				"_setting_overrides": {
+					"Max Value": 20.0,
+					"Min Value": -999.0,
+					"Steps": 0.00999999046325684
+				},
+				"_type": "float"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": 0.0,
+				"_id": "46",
+				"_name": "float property7",
+				"_type": "float"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": null,
+				"_id": "47",
+				"_name": "reference property8",
+				"_type": "reference"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": null,
+				"_id": "48",
+				"_name": "resource property",
+				"_type": "resource"
+			},
+			{
+				"_category_id": "2",
+				"_default_value": "",
+				"_id": "3",
+				"_name": "Name",
+				"_type": "string"
+			},
+			{
+				"_category_id": "2",
+				"_default_value": {
+
+				},
+				"_id": "4",
+				"_name": "Shop Items",
+				"_setting_overrides": {
+					"Array Type": "reference"
+				},
+				"_type": "array"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": {
+					"0": {
+						"type": "color",
+						"value": "000000ff"
+					},
+					"1": {
+						"type": "color",
+						"value": "000000ff"
+					}
+				},
+				"_id": "5",
+				"_name": "array property",
+				"_type": "array"
+			},
+			{
+				"_category_id": "1",
+				"_default_value": null,
+				"_id": "17.0",
+				"_name": "test_property property",
+				"_type": "test_property"
+			}
+		]
+	},
+	"_id_generator": {
+		"_ids_by_context": {
+			"default": 17.0
+		}
+	}
+}

@@ -1,0 +1,364 @@
+# Сравнение топовых китайских AI-моделей (март 2026)
+
+> **Дата анализа:** 9 марта 2026  
+> **Источники:** HuggingFace model cards, arXiv papers, бенчмарки вендоров  
+> **Важно:** Все бенчмарки — self-reported вендорами. Независимая верификация (Artificial Analysis) для этих моделей ещё не доступна. Числа между вендорами сравниваются с осторожностью — методологии оценки различаются.
+
+---
+
+## Модели в сравнении
+
+| Модель | Вендор | Архитектура | Всего параметров | Активных параметров | Контекст | Мультимодальность | Лицензия |
+|--------|--------|:-----------:|:----------------:|:-------------------:|:--------:|:-----------------:|:--------:|
+| **Qwen3.5-397B-A17B** | Alibaba (Qwen) | MoE + Gated DeltaNet | 397B | **17B** | **262K → 1M** | ✅ Image+Video | Apache-2.0 |
+| **GLM-4.7** | Zhipu AI (Z.ai) | MoE | ~355B | ~32B | 200K | ❌ Только текст | API (bigmodel.cn) |
+| **Kimi K2.5** | Moonshot AI | MoE + MLA | **1T** | 32B | 256K | ✅ Image+Video | Modified MIT |
+| **MiniMax M2.5** | MiniMax | MoE | **229B** | н/д | н/д | ❌ Только текст | Modified MIT |
+
+> **Ценовой контекст:** MiniMax M2.5: $0.3/$2.4 за 1M токенов (Lightning, 100 tok/s) или $0.15/$1.2 (Standard, 50 tok/s). GLM-4.7: ~$0.41/$1.92 за 1M (bigmodel.cn, стандартный tier); FlashX: ~$0.07/$0.41; Flash: бесплатно. Остальные: DashScope (Qwen), platform.moonshot.ai (Kimi).
+
+---
+
+## Технические особенности
+
+### Qwen3.5-397B-A17B
+- **Unified Vision-Language Foundation:** ранняя фьюжн-тренировка на мультимодальных токенах — единая модель для текста, изображений, видео
+- **Gated DeltaNet + MoE:** гибридная архитектура — 512 экспертов (10 routed + 1 shared), 60 слоёв с чередованием DeltaNet и Attention
+- **MTP (Multi-Token Prediction):** ускорение инференса через спекулятивное декодирование
+- **201 язык**, включая редкие диалекты
+- **Qwen3.5-Plus:** hosted-версия с 1M контекстом по умолчанию, встроенными tools, адаптивным tool use
+
+### GLM-4.7
+- **Базируется на GLM-4.5** (355B/32B active), улучшенный пост-трейнинг для кодинга и агентных задач
+- **200K контекст / 128K max output** — один из наибольших лимитов вывода среди китайских моделей
+- **Structured Output (JSON):** нативная поддержка — прямая совместимость с JSON-pipelines
+- **Thinking Mode:** встроенный режим рассуждений (think-before-acting)
+- **LiveCodeBench V6: 84.9** — SOTA среди open-source, превосходит Claude Sonnet 4.5
+- **Code Arena #1** среди open-source и китайских моделей, обходит GPT-5.2
+- **3 варианта:** GLM-4.7 (flagship), GLM-4.7-FlashX (быстрый/дешёвый), GLM-4.7-Flash (бесплатный)
+
+### Kimi K2.5
+- **MLA (Multi-Latent Attention):** 384 эксперта, 8 selected + 1 shared
+- **MoonViT:** визуальный энкодер 400M параметров для нативной мультимодальности
+- **Agent Swarm:** уникальная возможность — декомпозиция задач на параллельные подзадачи с динамическим созданием доменных агентов
+- **15T смешанных визуально-текстовых токенов** continual pretraining поверх Kimi-K2-Base
+- **Thinking + Instant** режимы с interleaved tool calling
+
+### MiniMax M2.5
+- **229B — самая компактная** среди сравниваемых моделей
+- **100 tok/s** (Lightning) — в 2 раза быстрее других фронтирных моделей
+- **Forge:** agent-native RL фреймворк с ~40x ускорением тренировки
+- **CISPO алгоритм** для стабильности MoE при масштабном RL
+- **80% нового кода MiniMax** генерируется M2.5; 30% задач компании выполняются автономно
+- **$1/час** непрерывной работы при 100 tok/s
+
+---
+
+## Сводная таблица: оценки по 10-балльной шкале
+
+Критерии оценки основаны на бенчмарках + практических особенностях. 10 = лучший в классе среди сравниваемых, 1 = худший.
+
+| Критерий | Qwen3.5 | GLM-4.7 | Kimi K2.5 | MiniMax M2.5 |
+|----------|:-------:|:-------:|:---------:|:------------:|
+| **Intelligence Index** (композитный) | **10** | 7 | 8 | 9 |
+| **Кодинг / SWE** | 9 | 7 | 8 | **10** |
+| **Глубокое рассуждение** | **10** | 7 | 8 | 9 |
+| **Следование инструкциям** | **9** | 7 | 7 | **9** |
+| **Научные задачи (GPQA/HLE)** | **10** | 7 | 8 | 8 |
+| **Скорость генерации** | 7 | 6 | 6 | **10** |
+| **Латентность (TTFT)** | 7 | 6 | 6 | **9** |
+| **Контекстное окно** | **10** | 8 | 9 | 7 |
+| **Цена / качество** | 9 | **9** | 8 | **10** |
+| **Безопасность / отказы** | **8** | **8** | 7 | 7 |
+| **Работа с агентами** | 8 | 7 | **10** | 9 |
+| **Мультимодальность** | **10** | 4 | 9 | 3 |
+| | | | | |
+| **ИТОГО (из 120)** | **107** | **83** | **94** | **100** |
+| **Средний балл** | **8.9** | **6.9** | **7.8** | **8.3** |
+
+---
+
+## Расшифровка критериев
+
+### Intelligence Index (композитный)
+Оценка на основе совокупности самых сложных бенчмарков: GPQA Diamond, HLE, SWE-bench, AIME, HMMT, IMOAnswerBench.
+
+- **Qwen3.5 = 10** — GPQA 92.4 (#1), HMMT Feb 99.4, HMMT Nov 100, AIME26 96.7, HLE 35.5, SWE 80.0
+- **MiniMax M2.5 = 9** — AIME25 98.0, SWE 80.2, GPQA 90.0, HLE 31.4
+- **GLM-4.7 = 7** — GPQA 85.7, HLE 24.8 (HLE+tools 42.8 — выше GPT-5.1), SWE 73.8, LiveCodeBench V6 84.9
+- **Kimi K2.5 = 8** — AIME 96.1, GPQA 87.6, SWE 76.8, HLE 30.1
+
+### Кодинг / SWE
+SWE-Bench Verified, SWE-Bench Multilingual, SWE-Bench Pro, Terminal-Bench 2.0, LiveCodeBench, CyberGym.
+
+- **MiniMax M2.5 = 10** — лидер: SWE-bench 80.2% (#1), Multi-SWE 51.3%, cross-scaffold стабильность (Droid 79.7 > Opus 4.6, OpenCode 76.1 > Opus 4.6), SWE runtime 22.8 мин (на уровне Opus 4.6, при 10x меньшей стоимости)
+- **Qwen3.5 = 9** — SWE-bench 80.0%, SWE-ML 72.0%, LiveCodeBench v6 87.7, SecCodeBench 68.3
+- **GLM-4.7 = 7** — SWE-bench 73.8%, SWE-ML 66.7%, **LiveCodeBench V6 84.9 (SOTA open-source)**, Code Arena #1 среди open-source, TB2.0 41.0%
+- **Kimi K2.5 = 8** — SWE-bench 76.8%, SWE-ML 73.0%, SWE-Pro 50.7%, LiveCodeBench 85.0, но TB2.0 всего 50.8
+
+### Глубокое рассуждение
+GPQA Diamond, AIME, HMMT, IMOAnswerBench, Humanity's Last Exam.
+
+- **Qwen3.5 = 10** — абсолютный лидер в математике: HMMT Feb 99.4, **HMMT Nov 100 (идеальный результат!!)**, AIME26 96.7, IMO 86.3, GPQA 92.4
+- **MiniMax M2.5 = 9** — AIME25 98.0 (высочайший результат), GPQA 90.0
+- **GLM-4.7 = 7** — HMMT Nov 93.5, AIME26 92.9, IMO 82.0, GPQA 85.7
+- **Kimi K2.5 = 8** — AIME 96.1, HMMT Feb 95.4, IMO 81.8, GPQA 87.6
+
+### Следование инструкциям
+IFEval, IFBench, MultiChallenge.
+
+- **Qwen3.5 = 9** — IFEval 94.8, IFBench 75.4, MultiChallenge 57.9
+- **MiniMax M2.5 = 9** — IFBench 75.0 (выше Opus 4.6 = 70.0 и Gemini = 58.0 по данным MiniMax)
+- **GLM-4.7 = 7** — нет публичных данных по IFBench/IFEval; Structured Output (JSON) поддерживается нативно
+- **Kimi K2.5 = 7** — нет специфичных данных по instruction-following бенчмаркам
+
+### Научные задачи
+GPQA Diamond, Humanity's Last Exam, HLE-Verified, SciCode, SuperGPQA.
+
+- **Qwen3.5 = 10** — GPQA 92.4 (#1), HLE 35.5, HLE-Verified 43.3, SuperGPQA 67.9
+- **GLM-4.7 = 7** — HLE 24.8, HLE+tools 42.8 (выше GPT-5.1), GPQA 85.7 — солидно, но слабее Kimi K2.5 и MiniMax
+- **MiniMax M2.5 = 8** — GPQA 90.0, HLE 31.4, SciCode 52.0
+- **Kimi K2.5 = 8** — GPQA 87.6, HLE-Full 30.1, HLE+tools 50.2
+
+### Скорость генерации
+Tokens per second при инференсе.
+
+- **MiniMax M2.5 = 10** — 100 tok/s (Lightning), 50 tok/s (Standard); заявлено "в 2 раза быстрее других фронтирных моделей"
+- **Qwen3.5 = 7** — активируется всего 17B параметров (минимум среди 4-х), MTP для ускорения, но точная скорость не раскрыта
+- **Kimi K2.5 = 6** — 32B активных, MLA для эффективности, скорость не раскрыта
+- **GLM-4.7 = 6** — ~32B активных, 30-50 tok/s (документировано), компактнее GLM-5
+
+### Латентность (Time to First Token)
+Время до первого токена. Критично для интерактивных сценариев.
+
+- **MiniMax M2.5 = 9** — компактная модель (229B) + оптимизированный инференс
+- **Qwen3.5 = 7** — 17B активных параметров обеспечивают быстрый старт
+- **Kimi K2.5 = 6** — 32B активных + thinking mode увеличивает латентность
+- **GLM-4.7 = 6** — ~32B активных (~355B total), быстрее GLM-5 за счёт меньшей модели
+
+> ⚠️ Точные TTFT для всех моделей, кроме MiniMax, недоступны. Оценки основаны на размерах активной части модели.
+
+### Контекстное окно
+Нативный контекст модели + расширение.
+
+- **Qwen3.5 = 10** — 262K нативно, **до 1.01M с YaRN** (подтверждено). Qwen3.5-Plus hosted: 1M по умолчанию
+- **Kimi K2.5 = 9** — 256K нативно. Достаточно для большинства задач
+- **GLM-4.7 = 8** — 200K (подтверждено), max output 128K — один из наибольших лимитов вывода. Context caching поддерживается
+- **MiniMax M2.5 = 7** — не раскрыт явно. Предшественник MiniMax-M1 поддерживал 1M
+
+### Цена / качество
+Стоимость API, возможность self-hosting, соотношение к производительности.
+
+- **MiniMax M2.5 = 10** — $0.3/$2.4 за 1M токенов (Lightning). **$1/час непрерывной работы.** 1/10–1/20 стоимости Opus/Gemini/GPT-5. Самая компактная модель (229B) — дешевле в self-hosting
+- **Qwen3.5 = 9** — Apache-2.0 (полная свобода self-hosting), DashScope API, 17B активных = эффективный инференс
+- **GLM-4.7 = 9** — ~$0.41/$1.92 за 1M (bigmodel.cn); FlashX: ~$0.07/$0.41; Flash: бесплатно. ~32B active = эффективнее в self-host
+- **Kimi K2.5 = 8** — Modified MIT, platform.moonshot.ai, 32B активных, 1T total = требует серьёзных ресурсов
+
+### Безопасность / минимизация отказов
+Safety training, ограничения, ложные отказы.
+
+- **Qwen3.5 = 8** — 201 язык, масштабный safety pipeline, Apache-2.0 позволяет аудит
+- **GLM-4.7 = 8** — Tsinghua/Zhipu — академический фон, Z.ai API с базовыми safety-гарантиями
+- **Kimi K2.5 = 7** — Modified MIT, базовый safety
+- **MiniMax M2.5 = 7** — Modified MIT, фокус на производительности, не на safety
+
+### Работа с агентами
+Tool calling, agentic loops, browse/search, multi-step task completion.
+
+- **GLM-4.7 = 7** — HLE+tools 42.8% (выше GPT-5.1), τ²-Bench 87.4, MCP-Atlas 52.0, BrowseComp 52.0. Function calling и structured output нативно
+- **Kimi K2.5 = 10** — **Agent Swarm (уникальная архитектура!)**: BrowseComp Swarm 78.4, WideSearch Swarm 79.0, Seal-0 57.4. Параллельная декомпозиция задач с самоорганизующимися агентами
+- **MiniMax M2.5 = 9** — BrowseComp 76.3, Forge RL-фреймворк, 20% меньше шагов для тех же результатов, SWE runtime 22.8 мин
+- **Qwen3.5 = 8** — TAU2-Bench 87.1, Tool-Decathlon 43.8-46.3, MCP-Mark 57.5, VITA-Bench 38.2, DeepPlanning 44.6
+
+### Мультимодальность
+Нативная работа с изображениями, видео, аудио.
+
+- **Qwen3.5 = 10** — полная мультимодальность: нативная обработка изображений, видео, 201 язык. Ранняя фьюжн-тренировка — не прикрученный vision encoder, а единая foundation model. MMMU 85.0, MMMU-Pro 79.0, VideoMME 87.5
+- **Kimi K2.5 = 9** — нативная мультимодальность через MoonViT (400M). Image + Video. MMMU-Pro 78.5, MathVision 84.2, VideoMME 87.4, ScreenSpot Pro (visual agent) — "Visual Agentic Intelligence"
+- **GLM-4.7 = 4** — **только текст**. Визуальные возможности — в отдельных моделях серии GLM-V (GLM-4.6V), но GLM-4.7 — text-only
+- **MiniMax M2.5 = 3** — **только текст**. Нет vision encoder. Полностью текстовая модель, нацеленная на кодинг и агентные задачи
+
+---
+
+## Рейтинг по сценариям использования
+
+### 1. Кодинг / разработка (IDE, агенты, code review)
+1. **MiniMax M2.5** — SWE-bench #1 (80.2%), кросс-скаффолд стабильность, $1/час, 100 tok/s — быстрее всех пишет код
+2. **Qwen3.5** — SWE-bench 80.0%, LiveCodeBench 87.7, самый маленький active footprint (17B), лучший для self-hosted сетапов
+3. **GLM-4.7** — LiveCodeBench V6 84.9 (SOTA open-source), Code Arena #1, SWE 73.8%, но TB2.0 слабее (41.0%)
+4. **Kimi K2.5** — SWE-Pro 50.7%, хорош для сложных multi-file задач через Agent Swarm
+
+### 2. Научные исследования / сложные вопросы
+1. **Qwen3.5** — GPQA 92.4 (#1), HMMT 100%, HLE-Verified 43.3, мультимодальность для анализа диаграмм/формул
+2. **Kimi K2.5** — визуальный анализ научных статей, HLE+tools 50.2, GPQA 87.6
+3. **MiniMax M2.5** — GPQA 90.0, SciCode 52.0, но нет мультимодальности для диаграмм
+4. **GLM-4.7** — HLE+tools 42.8 (выше GPT-5.1), GPQA 85.7, но слабее остальных трёх
+
+### 3. Агентные задачи / search / tool use
+1. **Kimi K2.5** — **Agent Swarm — единственная модель с нативным multi-agent**. BrowseComp Swarm 78.4
+2. **MiniMax M2.5** — BrowseComp 76.3, эффективные агентные циклы (20% меньше шагов)
+3. **Qwen3.5** — MCP-Mark 57.5, Tool-Decathlon 43.8, τ²-Bench 87.1
+4. **GLM-4.7** — HLE+tools 42.8, τ²-Bench 87.4, но BrowseComp только 52.0
+
+### 4. Мультимодальные задачи (UI-анализ, видео, документы)
+1. **Qwen3.5** — нативная early-fusion мультимодальность, MMMU 85.0, VideoMME 87.5, OSWorld 62.2
+2. **Kimi K2.5** — MoonViT, Visual Agentic Intelligence, ScreenSpot Pro, VideoMMMU 86.6
+3. ~~GLM-4.7~~ — не применимо (text-only)
+4. ~~MiniMax M2.5~~ — не применимо (text-only)
+
+### 5. Производственные задачи / масштабирование
+1. **MiniMax M2.5** — **$1/час при 100 tok/s**, 10-20x дешевле Opus, 229B = минимальные требования к HW
+2. **Qwen3.5** — Apache-2.0, 17B active, MTP, эффективный self-hosting
+3. **Kimi K2.5** — 32B active, умеренные ресурсы, Modified MIT
+4. **GLM-4.7** — ~32B active, API (bigmodel.cn), FlashX/Flash варианты для экономии
+
+---
+
+## Детальные бенчмарки (cross-reference таблица)
+
+Данные из model cards всех 4-х моделей. Где возможно — кросс-проверены между карточками.
+
+### Reasoning & Knowledge
+
+| Бенчмарк | Qwen3.5 | GLM-4.7 | Kimi K2.5 | MiniMax M2.5 | _Ref: Opus 4.6_ | _Ref: GPT-5.4_ |
+|-----------|:-------:|:-------:|:---------:|:------------:|:----------------:|:---------------:|
+| **GPQA Diamond** | **92.4** | 85.7 | 87.6 | 90.0 | ~82-91¹ | 91.9 |
+| **HLE** | **35.5** | 24.8 | 30.1² | 31.4 | 25.1 | 37.2 |
+| **HLE w/ Tools** | 45.5 | 42.8 | **50.2** | — | 40.8 | 45.8 |
+| **AIME 2025** | — | — | **96.1** | 98.0³ | ~93 | ~96 |
+| **AIME 2026 I** | **96.7**⁴ | 92.9 | — | — | 92.7 | 90.6 |
+| **HMMT Feb 2025** | **99.4** | — | 95.4 | — | ~93 | ~97 |
+| **HMMT Nov 2025** | **97.1**⁵ | 93.5 | 91.1 | — | 90.2 | 93.0 |
+| **IMOAnswerBench** | **86.3** | 82.0 | 81.8 | — | 78.3 | 83.3 |
+| **MMLU-Pro** | 87.4 | — | 87.1 | — | ~87 | ~90 |
+| **IFBench** | **75.4** | — | — | 75.0 | 70.0⁶ | 53.0⁶ |
+
+¹ Разброс из-за разных версий (Opus 4.5 vs 4.6) в разных model cards  
+² HLE-Full (включая визуальные задачи)  
+³ AIME 2025, не 2026  
+⁴ По бенчмарку z.ai/blog = не указан, 96.7 из Qwen3.5 card  
+⁵ По z.ai/blog = 97.1 (для Qwen3.5)  
+⁶ По данным MiniMax appendix
+
+### Coding & Engineering
+
+| Бенчмарк | Qwen3.5 | GLM-4.7 | Kimi K2.5 | MiniMax M2.5 | _Ref: Opus 4.6_ | _Ref: GPT-5.4_ |
+|-----------|:-------:|:-------:|:---------:|:------------:|:----------------:|:---------------:|
+| **SWE-bench Verified** | 80.0 | 73.8 | 76.8 | **80.2** | ~73-79¹ | 76.2 |
+| **SWE-bench Multilingual** | 72.0 | 66.7 | **73.0** | — | 70.2 | 65.0 |
+| **SWE-bench Pro** | — | — | **50.7** | — | — | — |
+| **Multi-SWE-bench** | — | — | — | **51.3** | — | — |
+| **Terminal-Bench 2.0** | **54.0**² | 41.0 | 50.8 | — | 39.3-46.4 | 54.2 |
+| **LiveCodeBench v6** | **87.7** | 84.9 | 85.0 | — | — | ~87 |
+| **CyberGym** | — | 23.5 | **41.3** | — | 17.3 | 39.9 |
+| **SecCodeBench** | **68.3**³ | — | — | — | — | — |
+| **PaperBench** | — | — | **63.5** | — | — | — |
+
+¹ Разные scaffolding дают разные результаты  
+² Из GLM-4.7 blog (Terminus 2 framework)  
+³ Из Qwen3.5 card
+
+### Agentic & Search
+
+| Бенчмарк | Qwen3.5 | GLM-4.7 | Kimi K2.5 | MiniMax M2.5 | _Ref: Gemini 3.1_ |
+|-----------|:-------:|:-------:|:---------:|:------------:|:------------------:|
+| **BrowseComp (basic)** | **65.8** | 52.0 | 60.6 | — | 37.0 |
+| **BrowseComp (w/ ctx mgmt)** | 65.8 | 67.5 | 74.9 | **76.3** | 67.8 |
+| **BrowseComp (Agent Swarm)** | — | — | **78.4** | — | — |
+| **BrowseComp-Zh** | **76.1** | — | 62.3 | — | 62.4 |
+| **WideSearch** | — | — | 72.7/79.0¹ | — | — |
+| **τ²-Bench** | 85.5² | 87.4 | 80.2 | — | **91.6**³ |
+| **MCP-Atlas** | — | 52.0 | **63.8** | — | 65.2 |
+| **MCP-Mark** | **57.5** | — | — | — | — |
+| **Tool-Decathlon** | **43.8-46.3**⁴ | 23.8 | 27.8 | — | 43.5 |
+| **Seal-0** | 45.0⁵ | — | **57.4** | — | 47.7 |
+
+¹ 79.0 с Agent Swarm  
+² Из GLM-4.7 blog (для Qwen3.5)  
+³ Gemini 3.1 Pro — сильнейший в τ²-Bench  
+⁴ 43.8 self-report, 46.3 по GLM-4.7 blog  
+⁵ Из GLM-4.7 blog
+
+### Vision & Multimodal (только Qwen3.5 и Kimi K2.5)
+
+| Бенчмарк | Qwen3.5 | Kimi K2.5 | _Ref: Gemini 3.1_ |
+|-----------|:-------:|:---------:|:------------------:|
+| **MMMU** | 85.0 | — | 80.7 |
+| **MMMU-Pro** | 79.0 | **78.5** | 70.6 |
+| **MathVision** | 83.0 | **84.2** | 74.3 |
+| **VideoMME (w/ sub)** | **87.5** | 87.4 | 77.6 |
+| **VideoMMMU** | 84.7 | **86.6** | 84.4 |
+| **ScreenSpot Pro** | 65.6 | — | 45.7 |
+| **OSWorld-Verified** | 62.2 | — | 66.3¹ |
+| **OCRBench** | 93.1² | **92.3** | 80.7 |
+| **OmniDocBench 1.5** | **90.8**² | 88.8 | 85.7 |
+
+¹ Gemini лидирует в OSWorld  
+² Из Qwen3.5 card (может быть 6-й столбец = не Qwen3.5)
+
+---
+
+## Ключевые выводы
+
+### Позиционирование на фоне западных моделей
+Китайские frontier-модели закрыли разрыв с западными лидерами и превосходят их в ряде бенчмарков:
+- **SWE-bench Verified:** MiniMax M2.5 (80.2) > Opus 4.6 (~73-80 в зависимости от scaffold)
+- **HLE+tools:** Kimi K2.5 (50.2) > GPT-5.4 (45.8) > Opus 4.6 (40.8) > GLM-4.7 (42.8)
+- **BrowseComp:** MiniMax (76.3), Kimi Swarm (78.4), GLM-4.7 (67.5 w/ctx) — на уровне/выше западных
+- **Математика:** Qwen3.5 HMMT Nov = 100% — идеальный результат
+- **Цена:** MiniMax M2.5 в 10-20x дешевле Opus/GPT-5
+
+### Специализация — ключевой дифференциатор
+
+| Сильная сторона | Лидер | Детали |
+|-----------------|-------|--------|
+| **Мультимодальность** | Qwen3.5 | Единственная early-fusion модель, 201 язык, видео нативно |
+| **Агенты / tools** | Kimi K2.5 | Kimi: Agent Swarm (уникален). GLM-4.7: HLE+tools 42.8, function calling |
+| **Эффективность / цена** | MiniMax M2.5 | 100 tok/s, $1/час, 229B — минимальный footprint |
+| **Математика / reasoning** | Qwen3.5 | HMMT 100%, GPQA 92.4, IMO 86.3 |
+| **Self-hosting** | Qwen3.5 (Apache-2.0) | Полная свобода + 17B active = минимальные ресурсы |
+
+### Ограничения
+- **GLM-4.7:** text-only модель — нет мультимодальности; слабее GLM-5 в агентных бенчмарках, но конкурентная цена и JSON structured output
+- **MiniMax M2.5:** text-only, нет публичных данных о контекстном окне
+- **Kimi K2.5:** 1T параметров = самые высокие требования к ресурсам для self-hosting
+- **Все:** бенчмарки self-reported, методологии не унифицированы, сравнения между моделями — с оговоркой
+
+### Общая тенденция
+1. **Каждая модель уникальна** — нет универсального "лучшего": Qwen3.5 для мультимодальности, Kimi K2.5 для агентов, MiniMax для production-scale, GLM-4.7 для цены/качества
+2. **MoE доминирует** — все 4 модели используют Mixture-of-Experts, активируя 17-40B из 229B-1T
+3. **RL-масштабирование** — все вендоры акцентируют reinforcement learning: Forge (MiniMax), Scalable RL (Qwen3.5), пост-трейнинг (GLM-4.7)
+4. **Open-source конкуренция** — все 4 модели с открытыми весами (Apache/MIT/Modified MIT)
+5. **Цена рушится** — MiniMax демонстрирует, что frontier-уровень возможен за $1/час
+
+---
+
+## Рекомендации для проекта
+
+Для нашего Flowise-стека (TypeScript/Node, React, Postgres, Redis):
+
+| Задача | Рекомендация | Почему |
+|--------|-------------|--------|
+| **Daily coding (IDE)** | MiniMax M2.5 | SWE-bench #1, 100 tok/s, $1/час, стабильный кросс-scaffold |
+| **Сложный рефакторинг** | Qwen3.5 или MiniMax M2.5 | Qwen: 17B active + 262K контекст. MiniMax: SWE 80.2% |
+| **Научный анализ** | Qwen3.5 | GPQA 92.4, мультимодальность для диаграмм, 1M контекст |
+| **Агентные пайплайны** | Kimi K2.5 | Agent Swarm уникален, BrowseComp Swarm 78.4, Seal-0 57.4 |
+| **Multi-agent / search** | Kimi K2.5 | Agent Swarm уникален, BrowseComp Swarm 78.4 |
+| **UI/визуальный анализ** | Qwen3.5 или Kimi K2.5 | Оба мультимодальные с ScreenSpot/OSWorld |
+| **Production at scale** | MiniMax M2.5 | $1/час, 80% кода MiniMax уже генерируется M2.5 |
+| **Бюджетный self-host** | Qwen3.5 (17B active) | Apache-2.0, минимальные ресурсы среди top-моделей |
+
+---
+
+## Источники
+
+1. [Qwen3.5-397B-A17B — HuggingFace Model Card](https://huggingface.co/Qwen/Qwen3.5-397B-A17B)
+2. [GLM-4.7 — Z.ai API Docs](https://docs.z.ai/guides/llm/glm-4.7)
+3. [Kimi K2.5 — HuggingFace Model Card](https://huggingface.co/moonshotai/Kimi-K2.5)
+4. [MiniMax M2.5 — HuggingFace Model Card](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
+5. [GLM-4.7: Enhanced Coding & Agents — Z.ai Blog](https://z.ai/blog/glm-5)
+6. [Kimi K2.5: Visual Agentic Intelligence — arXiv:2602.02276](https://arxiv.org/abs/2602.02276)
+7. [Qwen3.5 Blog](https://qwen.ai/blog?id=qwen3.5)
+8. [GLM-4.7 API Pricing — BigModel.cn](https://open.bigmodel.cn/pricing)
+9. [Kimi K2.5 Tech Blog](https://www.kimi.com/blog/kimi-k2-5.html)
+10. [MiniMax M2.5 — Forge: Scalable Agent RL Framework](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)

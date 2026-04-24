@@ -1,0 +1,51 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="Pandora"
+config/tags=PackedStringArray("addon", "godot4", "rpg", "data")
+run/main_scene="res://TestScene.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="pandora"
+config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/image="res://splash.png"
+config/icon="res://addons/pandora/icons/icon.png"
+
+[autoload]
+
+Pandora="*uid://bqv713p4thrli"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/pandora/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
+
+[gdunit4]
+
+settings/test/test_discovery=true
+ui/inspector/tree_sort_mode=1
+settings/common/update_notification_enabled=false
+templates/testsuite/GDScript="# GdUnit generated TestSuite
+class_name ${suite_class_name}
+extends GdUnitTestSuite
+@warning_ignore('unused_parameter')
+@warning_ignore('return_value_discarded')
+
+# TestSuite generated from
+const __source = '${source_resource_path}'
+"

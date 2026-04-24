@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "flowise-local.vscode-sessions",
+    "ms-vscode-remote.remote-containers"
+  ]
+}

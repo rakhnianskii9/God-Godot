@@ -1,0 +1,127 @@
+{
+  "inputs": [],
+  "servers": {
+    "crash": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "crash-mcp"
+      ],
+      "env": {
+        "MAX_HISTORY_SIZE": "999999999999999999",
+        "CRASH_STRICT_MODE": "false",
+        "CRASH_OUTPUT_FORMAT": "console"
+      },
+      "type": "stdio"
+    },
+    "task-manager": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-tasks"
+      ],
+      "env": {
+        "NPM_CONFIG_UPDATE_NOTIFIER": "false",
+        "NPM_CONFIG_FUND": "false",
+        "NPM_CONFIG_AUDIT": "false",
+        "NPM_CONFIG_LOGLEVEL": "silent",
+        "TASKS_FILE": "/home/projects/new-flowise/.github/tasks.md"
+      },
+      "type": "stdio"
+    },
+    "memory": {
+      "command": "/home/projects/new-flowise/.github/mcp/venv-memory/bin/memory-server",
+      "args": [],
+      "env": {
+        "MCP_MEMORY_STORAGE_BACKEND": "sqlite_vec",
+        "MCP_MEMORY_SQLITE_PATH": "/home/projects/new-flowise/.github/mcp/data/sqlite_vec.db",
+        "MCP_MEMORY_CHROMA_PATH": "/home/projects/new-flowise/.github/mcp/data/chroma",
+        "MCP_MEMORY_BACKUPS_PATH": "/home/projects/new-flowise/.github/mcp/data/backups"
+      },
+      "type": "stdio"
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "env": {
+        "CONTEXT7_API_KEY": "${env:CONTEXT7_API_KEY}"
+      },
+      "type": "stdio"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--headless",
+        "--isolated"
+      ],
+      "env": {
+        "NPM_CONFIG_UPDATE_NOTIFIER": "false",
+        "NPM_CONFIG_FUND": "false",
+        "NPM_CONFIG_AUDIT": "false",
+        "NPM_CONFIG_LOGLEVEL": "silent"
+      },
+      "type": "stdio"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "env": {
+        "NPM_CONFIG_UPDATE_NOTIFIER": "false",
+        "NPM_CONFIG_FUND": "false",
+        "NPM_CONFIG_AUDIT": "false",
+        "NPM_CONFIG_LOGLEVEL": "silent"
+      },
+      "type": "stdio"
+    },
+    "octocode": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "octocode-mcp@latest"
+      ],
+      "env": {
+        "NPM_CONFIG_UPDATE_NOTIFIER": "false",
+        "NPM_CONFIG_FUND": "false",
+        "NPM_CONFIG_AUDIT": "false",
+        "NPM_CONFIG_LOGLEVEL": "silent"
+      },
+      "type": "stdio"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/projects/new-flowise",
+        "/home/projects/new-flowise/packages",
+        "/home/projects/new-flowise/nginx"
+      ],
+      "type": "stdio"
+    },
+    "mcp-files": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-files"
+      ],
+      "type": "stdio"
+    },
+    "mcpvault": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@bitbonsai/mcpvault@latest",
+        "/Volumes/v-rh@bk.ru/Obsidian"
+      ],
+      "type": "stdio"
+    }
+  }
+}

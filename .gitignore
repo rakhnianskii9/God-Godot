@@ -1,0 +1,15 @@
+# Godot import and editor cache
+.import/
+.godot/
+
+# Export configuration
+export.cfg
+export_presets.cfg
+
+# Generated localization assets
+*.translation
+
+# Mono/.NET generated files
+.mono/
+data_*/
+mono_crash.*.json

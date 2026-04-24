@@ -1,0 +1,306 @@
+extends AbstractTest
+
+
+func test_can_parse_cues() -> void:
+	var output: DMCompilerResult = compile("~ some_cue\nNathan: Hello.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.cues.size() == 1, "Should have one cue.")
+	assert(output.cues.has("some_cue"), "Should have known cue.")
+	assert(output.cues["some_cue"] == "1", "Should point to the next line.")
+
+	output = compile("
+~ start
+if StateForTests.some_property
+	Nathan: Some unrelated but indented line.
+	=> cue_directly_after_dedent
+~ cue_directly_after_dedent")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.cues.size() == 2, "Should have two cues.")
+	assert(output.cues.keys()[1] == "cue_directly_after_dedent", "Should have second cue.")
+
+	output = compile("
+~ start
+if true
+	~ indented_cue
+	Nathan: Some unrelated but indented line.
+Nathan: After.
+=> indented_cue")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.cues.size() == 2, "Should have two cues.")
+	assert(output.cues["indented_cue"] == "4", "Should have second cue.")
+
+	output = compile("~ t")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert("t" in output.cues.keys(), "Should include cue.")
+
+
+func test_can_parse_basic_dialogue() -> void:
+	var output: DMCompilerResult = compile("Nathan: This is dialogue with a name.\nThis is dialogue without a name")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines.values()[0].character == "Nathan", "First line should have a character.")
+	assert(not output.lines.values()[1].has("character"), "Second line should not have a character.")
+
+
+func test_can_parse_dialogue_with_static_ids() -> void:
+	var output: DMCompilerResult = compile("
+~ start
+Nathan: Hello [ID:HELLO]
+Nathan: Something[if true] conditional[/if] [ID:SOMETHING]
+=> END")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["2"].static_id == "HELLO", "Should have correct translation key.")
+	assert(output.lines["3"].static_id == "SOMETHING", "Should have correct translation key.")
+
+
+func test_can_run_basic_dialogue() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+Nathan: This is dialogue with a name.
+Coco: Meow.
+This is dialogue without a name.")
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start")
+
+	assert(line.character == "Nathan", "Nathan is talking")
+	assert(line.text == "This is dialogue with a name.", "Should match dialogue.")
+
+	line = await resource.get_next_dialogue_line(line.next_id)
+
+	assert(line.character == "Coco", "Coco is talking")
+	assert(line.text == "Meow.", "Should match dialogue.")
+
+	line = await resource.get_next_dialogue_line(line.next_id)
+
+	assert(line.character == "", "Nobody is talking.")
+	assert(line.text == "This is dialogue without a name.", "Should match dialogue.")
+
+
+func test_can_parse_multiline_dialogue() -> void:
+	var output: DMCompilerResult = compile("
+~ start
+Nathan: This is the first line.
+	This is the second line.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["2"].text == "This is the first line.\nThis is the second line.", "Should concatenate the lines.")
+
+	output = compile("
+~ start
+Nathan: This is the first line.
+
+	This is the third line with a gap line above it.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["2"].text == "This is the first line.\n\nThis is the third line with a gap line above it.", "Should concatenate the lines.")
+
+	output = compile("
+~ start
+Nathan: This is the first line.
+	This is the second line.
+	do something()")
+
+	assert(output.errors.size() == 1, "Should have 1 error.")
+	assert(output.errors[0].line_number == 5, "Error on line 5.")
+	assert(output.errors[0].error == DMConstants.ERR_INVALID_INDENTATION, "Error on line 5.")
+
+	output = compile("
+~ start
+Nathan: First line [ID:FIRST]
+	Second line
+	Third line")
+
+	assert(output.errors.size() == 0, "Should have no errors.")
+	assert(output.lines["2"].text == "First line\nSecond line\nThird line", "Should concatenate text.")
+
+
+func test_can_parse_variables() -> void:
+	var output: DMCompilerResult = compile("{{character_name}}: Hi! I'm {{character_name}}.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+
+	var line: Dictionary = output.lines.values()[0]
+
+	assert(line.character_replacements.size() == 1, "Should be 1 character name replacement.")
+	assert("character_name" in line.character_replacements[0].value_in_text, "Should replace \"character_name\"")
+	assert("expression" in line.character_replacements[0], "Should have an expression.")
+
+
+func test_can_resolve_variables() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+{{StateForTests.character_name}}: Hi! I'm {{StateForTests.character_name}}.
+do StateForTests.character_name = \"changed\"
+Nathan: Your name is {{StateForTests.character_name}}?")
+
+	StateForTests.character_name = "Coco"
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start")
+	assert(line.character == "Coco", "Character should be Coco.")
+	assert(line.text == "Hi! I'm Coco.", "Character should be Coco.")
+
+	line = await resource.get_next_dialogue_line(line.next_id)
+	assert(line.text == "Your name is changed?", "Name should have changed.")
+
+
+func test_can_parse_tags() -> void:
+	var output: DMCompilerResult = compile("Nathan: This is some dialogue [#tag1, #tag2]")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["0"].tags.size() == 2, "Should have 2 tags")
+	assert(output.lines["0"].tags[0] == "tag1", "Should have tag1 tag.")
+	assert(output.lines["0"].tags[1] == "tag2", "Should have tag2 tag.")
+
+
+func test_can_use_tag_values() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+Nathan: Hello [#mood=happy]
+Nathan: Bye [#simple]
+=> END")
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start")
+	assert(line.has_tag("mood"), "Should have tag.")
+	assert(line.get_tag_value("mood") == "happy", "Should get tag value.")
+
+	line = await resource.get_next_dialogue_line(line.next_id)
+	assert(line.has_tag("simple"), "Should have simple tag.")
+	assert(line.get_tag_value("simple") == "", "Should have no value.")
+
+
+func test_can_parse_random_lines() -> void:
+	var output: DMCompilerResult = compile("
+% Nathan: Random 1.
+%2 Nathan: Random 2.
+% Nathan: Random 3.
+
+% => jump_1
+% => jump_2
+%3 => jump_3
+~ jump_1
+Nathan: Jump 1.
+~ jump_2
+Nathan: Jump 2.
+~ jump_3
+Nathan: Jump 3.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["1"].siblings.size() == 3, "Should have 3 random siblings.")
+	assert(output.lines["1"].siblings[0].weight == 1, "Undefined weight should be 1.")
+	assert(output.lines["1"].siblings[1].weight == 2, "Weight of 2 should be 2.")
+
+	assert(output.lines["5"].siblings.size() == 3, "Should have 3 random siblings.")
+	assert(output.lines["5"].siblings[0].weight == 1, "Undefined weight should be 1.")
+	assert(output.lines["5"].siblings[2].weight == 3, "Weight of 3 should be 3.")
+
+	output = compile("
+~ start
+% First
+%
+	Second (block)
+	Second of Second
+=> END")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["1"].next_id == "2", "Cue should point to first random line.")
+	assert(output.lines["2"].type == DMConstants.TYPE_DIALOGUE, "Should be a dialogue line.")
+	assert(output.lines["2"].siblings.size() == 2, "Should have two siblings")
+
+
+func test_can_parse_basic_random_conditional_lines() -> void:
+	var output: DMCompilerResult = compile("
+% Nathan: Random 1.
+%2 [if false /] Nathan: Random 2.
+% Nathan: Random 3.
+
+% [if false /] => jump_1
+% [if true /] => jump_2
+%3 => jump_3
+~ jump_1
+Nathan: Jump 1.
+~ jump_2
+Nathan: Jump 2.
+~ jump_3
+Nathan: Jump 3.")
+
+	assert(output.errors.is_empty(), "Should have no errors.")
+	assert(output.lines["2"].siblings.size() == 3, "Should have 3 random siblings.")
+	assert(output.lines["2"].siblings[0].weight == 1, "Undefined weight should be 1.")
+	assert(output.lines["2"].siblings[1].weight == 2, "Weight of 2 should be 2.")
+	assert(output.lines["2"].siblings[1].condition.expression[0].value == "false", "Should parse expression.")
+
+	assert(output.lines["5"].siblings.size() == 3, "Should have 3 random siblings.")
+	assert(output.lines["5"].siblings[0].weight == 1, "Undefined weight should be 1.")
+	assert(output.lines["5"].siblings[1].condition.expression[0].value == "true", "Should parse expression.")
+	assert(output.lines["5"].siblings[2].weight == 3, "Weight of 3 should be 3.")
+
+
+func test_will_skip_random_condition_lines_if_none_pass() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+Nathan: Hello.
+% [if false /] Nathan: Fail 1
+% [if false /] Nathan: Fail 2
+Nathan: After.")
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start")
+	assert(line.text == "Hello.", "Should be first line.")
+	line = await resource.get_next_dialogue_line(line.next_id)
+	assert(line.text == "After.", "Should skip failed lines.")
+
+
+class TestClass:
+	var string: String = ""
+	var number: int = -1
+
+	func set_values(s: String, i: int = 0) -> void:
+		string = s
+		number = i
+
+
+func test_can_run_methods() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+do set_values(\"foo\")
+Nathan: Without optional arguments.
+do set_values(\"bar\", 1)
+Nathan: With optional arguments.
+")
+
+	var test: TestClass = TestClass.new()
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start", [test])
+	assert(test.string == "foo", "Method call should set required argument")
+	assert(test.number == 0, "Method call should set optional argument to default value")
+
+	line = await resource.get_next_dialogue_line(line.next_id, [test])
+	assert(test.string == "bar", "Method call should set required argument")
+	assert(test.number == 1, "Method call should set optional argument")
+
+
+func test_can_have_subsequent_cues() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+~ another_cue
+~ third_cue
+Nathan: Hello.")
+
+	var line: DialogueLine = await resource.get_next_dialogue_line("start")
+	assert(line.text == "Hello.", "Should jump to dialogue.")
+
+
+func test_can_resolve_static_line_id() -> void:
+	var resource: DialogueResource = create_resource("
+~ start
+Nathan: First line [ID:FIRST]
+Nathan: Second line [ID:SECOND]
+Nathan: Third line [ID:THIRD]")
+
+	var id: String = DialogueManager.static_id_to_line_id(resource, "SECOND")
+	var line: DialogueLine = await resource.get_next_dialogue_line(id)
+	assert(line.text == "Second line", "Should match second line")
