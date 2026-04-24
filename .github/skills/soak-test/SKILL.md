@@ -96,16 +96,6 @@ Engine-specific monitoring guidance:
 - Note: `Performance.get_monitor(Performance.MEMORY_STATIC)` returns bytes
   in Godot 4.6
 
-**Unity:**
-- Open Memory Profiler (Window → Analysis → Memory Profiler)
-- Record: Total Reserved Memory (MB), GC Allocated (MB), Object Count at each checkpoint
-- Alert threshold: GC Allocated growing monotonically across 3+ checkpoints
-
-**Unreal Engine:**
-- Use `stat memory` console command at each checkpoint
-- Record: Physical Memory Used (MB), Physical Memory Available
-- Alert threshold: Physical Memory Used growth > 50MB over the full soak
-
 ### Stability observation items (if focus = stability or all)
 
 At each checkpoint, note:
@@ -146,9 +136,7 @@ Before starting the soak:
 - [ ] Game is running from a **fresh launch** (not resumed from a prior session)
 - [ ] All background applications closed (minimise OS memory interference)
 - [ ] Performance monitoring tool open and recording:
-  - **Godot**: Debugger → Monitors tab → Memory section visible
-  - **Unity**: Memory Profiler window open
-  - **Unreal**: `stat memory` ready in console
+  - **Godot**: Debugger → Monitors tab → Memory and Objects sections visible
 - [ ] Soak target confirmed: [session design intent from game concept]
 - [ ] Prior known issues to watch for: [from most recent playtest / qa-plan]
 

@@ -3,13 +3,7 @@
 Этот документ хранит только постоянные кросс-ролевые нормы для текущего workspace `/home/projects/gamedev`.
 Дефолтное поведение для всех сессий задаётся в `.github/instructions/copilot-instructions.md`.
 
-На текущий момент каталог `.github/agents/` пуст. Активный orchestration-контур этого workspace сейчас состоит из instructions, skills, hooks, prompts и MCP-конфигурации.
-
-## 0) Базовые пользовательские правила (НОРМАТИВНО)
-
-- Язык коммуникации — русский.
-- Системные сообщения и логи не переводить без явного запроса пользователя.
-- Команды и пути давать copy-ready.
+В `.github/agents/` присутствуют 39 custom agents. Активный orchestration-контур этого workspace состоит из agents, instructions, skills, hooks, prompts и MCP-конфигурации.
 
 ### Поведение при анализе и ревью (НОРМАТИВНО)
 
@@ -39,16 +33,11 @@
 - `/home/projects/gamedev/godot-lib-pazzle/` — локальный vendor/reference-набор библиотек, аддонов, демо-проектов и интеграционных образцов.
 - `/home/projects/gamedev/godot-lib-pazzle/README.md` — основная карта готовых компонентов, рекомендуемого стартового стека и замен внутри `alternatives/`; при выборе готового решения начинать оттуда.
 - `/home/projects/gamedev/godot-lib-pazzle/alternatives/` — локальные замены недоступных или неудобных upstream-источников.
-- `/home/projects/gamedev/game-studios-agents/` — отдельный референсный каталог по агентам и workflow, не основной gameplay-код.
 - `.github/` — orchestration/config слой текущего workspace.
 
-## 2) Запреты (ОБЯЗАТЕЛЬНО)
+## 2) Специфичные ограничения
 
-- Запрещено выполнять destructive git-команды без явного запроса пользователя: `git reset`, `git restore`, `git clean`, `git checkout -- ...`.
-- Запрещено запускать container image builds без явного запроса пользователя: `docker build`, `docker compose build`, `docker-compose build`, `podman build` и эквиваленты.
-- Запрещено вносить фейковые данные, placeholder-конфиги, моковые секреты или «временные» значения, которые пользователь потом случайно утащит в рабочий код.
-- Запрещено менять реальные секреты, токены, billing keys, Firebase/Nakama/Google Play credentials без прямого запроса пользователя.
-- Запрещено начинать задачу с правок тестов, конфигов или документации, если корневая проблема ещё не исправлена в реальном коде.
+- Смотри базовые запреты в `copilot-instructions.md`.
 - Если у пользователя есть неотвеченный материальный вопрос по текущей задаче, нельзя делать рискованные изменения, которые зависят от этого ответа.
 
 ## 3) Область правок и границы ответственности
@@ -91,7 +80,7 @@
 
 - Любые summary в `.github/*` должны описывать реальное состояние control plane, а не желаемую будущую схему.
 - Нельзя ссылаться на отсутствующие файлы, агенты, skills, hooks, MCP servers или registries как на уже существующие.
-- На текущий момент `.github/agents/` пуст. Любые упоминания удалённых custom agents, старых orchestration-режимов и отсутствующего registry-файла считаются stale, пока соответствующие файлы реально не вернутся в репозиторий.
+- В `.github/agents/` реально лежат 39 custom agents, но их body-тексты ещё частично содержат legacy Claude-era tool references. При расхождении между markdown-описанием агента и реальным VS Code tool registry источником истины считать реальный tool registry.
 - Hooks должны ссылаться только на реальные скрипты внутри `.github/hooks/`.
 - На текущий момент рабочие guardrails заданы через `.github/hooks/pretool-guard.sh`, `.github/hooks/posttool-quality.sh` и `.github/hooks/posttool-security.sh`; если инструкции описывают поведение hooks, оно должно совпадать с этими файлами.
 - При изменениях в `.github/instructions/*`, `.github/agents/*`, `.github/hooks/*`, `.github/mcp/*` нужно особенно внимательно проверять cross-file consistency и убирать legacy traces.
@@ -106,9 +95,10 @@
 | Skill | Статус | Когда применять | Файл |
 |---|---|---|---|
 | `octocode-code-forensics` | real | code forensics, impact analysis, call chains, локальный поиск реального управляющего пути | `.github/skills/octocode-code-forensics/SKILL.md` |
+| `orchestration-qa` | real | аудит `.github/*`, проверка agents / skills / hooks / MCP / instructions на truthfulness и structural drift | `.github/skills/orchestration-qa/SKILL.md` |
 | + 72 gamedev skills | real | см. `.github/skills/` — code-review, perf-profile, security-audit, sprint-plan и др. | `.github/skills/` |
 
-- `orchestration-qa` удалён (был Consilium-специфичным). Вместо него — `octocode-code-forensics` для forensics и прямое чтение файлов для control-plane правок.
+- `orchestration-qa` реально присутствует и должен использоваться для аудита control-plane файлов `.github/*`.
 - Если instruction или agent описывает skill routing, обязательными можно делать только реально существующие `SKILL.md` в `.github/skills/`.
 
 | Prompt | Статус | Назначение | Файл |
@@ -123,16 +113,17 @@
 - Актуальный workspace-source of truth для MCP в этом репо — `.vscode/mcp.json`, а не `.github/mcp/mcp.json`.
 - В `.vscode/settings.json` MCP действительно включён через `github.copilot.chat.mcp.enabled=true`, autostart включён через `chat.mcp.autostart=newAndOutdated`, и отдельно включён built-in GitHub MCP через `github.copilot.chat.githubMcpServer.enabled=true`.
 - После выравнивания конфигов `.github/mcp/mcp.json` синхронизирован с активным `.vscode/mcp.json` по одному и тому же набору project-local servers.
-- Реально объявленные в `.vscode/mcp.json` и `.github/mcp/mcp.json` servers: `crash`, `context7`, `octocode`, `filesystem`, `mcp-files`.
+- Реально объявленные в `.vscode/mcp.json` и `.github/mcp/mcp.json` servers: `crash`, `context7`, `octocode`, `filesystem`, `mcp-files`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server`.
 - Отдельно от `.vscode/mcp.json` через built-in GitHub MCP в `.vscode/settings.json` включены GitHub toolsets: `default`, `repos`, `issues`, `code_search`, `pull_requests`, `actions`, `code_security`, `secret_protection`, `security_advisories`, `copilot`, `copilot_spaces`, `github_support_docs_search`.
 - Базовая рабочая группировка для документации и маршрутизации:
 	- reasoning/state: `crash`
 	- code/docs research: `octocode`, `context7`, built-in GitHub MCP
+	- Godot/RPG MCP integrations: `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server`
 	- filesystem/utilities: `filesystem`, `mcp-files`
 	- browser/runtime evidence: встроенные browser tools VS Code, а не отдельные MCP servers
 - Для MCP в этом workspace обязательно различать три состояния, а не два: сервер объявлен в конфиге, сервер структурно валиден, сервер реально project-local.
 - По фактическому состоянию локальных привязок:
-	- `crash`, `octocode`, `filesystem`, `mcp-files` — объявлены и project-local для текущего репо.
+	- `crash`, `octocode`, `filesystem`, `mcp-files`, `godot-coding-solo`, `godot-tomyud1`, `rpg-game-server` — объявлены и project-local для текущего репо.
 	- `context7` — объявлен, но зависит от `CONTEXT7_API_KEY`; без него сервер нужно считать environment-bound и потенциально деградированным.
 - Болванка под `memory` существует отдельно в `.vscode/mcp.memory.template.json`; пока локальный `memory-server` реально не добавлен в репо, она не должна подключаться в активный autostart MCP config.
 - Если agent-файлы требуют `postgres/*` или `pgtuner/*`, это truthfulness gap: такие servers не объявлены в актуальном `.vscode/mcp.json`, несмотря на упоминания в `serverSampling` и agent docs.
@@ -142,12 +133,12 @@
 ### Режимы анализа
 
 - `diagnostique.prompt.md` — реальный prompt artifact для структурированной диагностики.
-- Пока `.github/agents/` пуст, нельзя описывать `deep-analysis`, `diagnostics` или любой другой analysis mode как режим удалённого custom-agent-контура.
+- Нельзя описывать `deep-analysis`, `diagnostics` или любой другой analysis mode как активный режим удалённого custom-agent-контура, если этот режим не подтверждён реальным agent-файлом или prompt artifact в репозитории.
 - Если инструкция ссылается на `diagnostique.prompt.md`, нужно сохранять его реальную полезную нагрузку: типизация находок (`logic`, `consistency`, `best-practice`, `docs-drift`, `dead-code`, `duplication`, `complexity`, `TODO`) и табличный формат.
 
 ## 8) Технологический фокус этого workspace
 
-- Этот workspace Godot-first. Нельзя по умолчанию навязывать ему Node.js / React / TypeORM / pnpm / turbo workflow, если задача реально относится к `my-game` или к Godot library set.
+- Этот workspace Godot-first. Нельзя по умолчанию навязывать ему non-Godot web/application workflow, если задача реально относится к `my-game` или к Godot library set.
 - Google Play Billing и другие реально присутствующие библиотеки из `godot-lib-pazzle` существуют как опциональные интеграции. О них нужно говорить только если задача действительно попадает в соответствующий срез и библиотека физически присутствует в дереве.
 
 ## 9) Разделение ответственности

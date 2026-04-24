@@ -76,7 +76,7 @@ Report findings before proceeding: "Environment: [engine]. Test directory:
 Attempt to run the test suite via Bash. Select the command based on the engine
 detected in Phase 1:
 
-**Godot 4:**
+**Godot 4 — preferred order:**
 ```bash
 godot --headless --script tests/gdunit4_runner.gd 2>&1
 ```
@@ -84,29 +84,14 @@ If the GDUnit4 runner script does not exist at that path, try:
 ```bash
 godot --headless -s addons/gdunit4/GdUnitRunner.gd 2>&1
 ```
-If neither path exists, note: "GDUnit4 runner not found — confirm the runner
-path for your test framework."
-
-**Unity:**
-Unity tests require the editor and cannot be run headlessly via shell in most
-environments. Check for recent test result artifacts:
+If the project uses GUT instead, try:
 ```bash
-ls -t test-results/ 2>/dev/null | head -5
+godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit 2>&1
 ```
-If test result files exist (XML or JSON), read the most recent one and parse
-PASS/FAIL counts. If no artifacts exist: "Unity tests must be run from the
-editor or CI pipeline. Please confirm test status manually before proceeding."
+If none of these paths exist, note: "No Godot test runner found — confirm whether the project uses GdUnit4 or GUT and record the correct runner path."
 
-**Unreal Engine:**
-```bash
-ls -t Saved/Logs/ 2>/dev/null | grep -i "test\|automation" | head -5
-```
-If no matching log found: "UE automation tests must be run via the Session
-Frontend or CI pipeline. Please confirm test status manually."
-
-**Unknown engine / not configured:**
-"Engine not configured in `.claude/docs/technical-preferences.md`. Run
-`/setup-engine` to specify the engine, then re-run `/smoke-check`."
+**Engine not configured / not Godot:**
+"This workspace smoke-check is Godot-first. Align `.claude/docs/technical-preferences.md` with the active Godot project, then re-run `/smoke-check`."
 
 **If the test runner is not available in this environment** (engine binary not
 on PATH, runner script not found, etc.), report clearly:

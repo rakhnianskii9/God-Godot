@@ -278,7 +278,7 @@ just translating text. This mode validates the implementation.
 Read `.claude/docs/technical-preferences.md` to determine the engine. Then check:
 
 **Layout mirroring**
-- Is RTL layout enabled in the engine? (Godot: `Control.layout_direction`, Unity: `RTL Support` package, Unreal: text direction flags)
+- Is RTL layout enabled in the relevant Godot UI roots via `Control.layout_direction`?
 - Are all UI containers set to auto-mirror, or are positions hardcoded?
 - Do progress bars, health bars, and directional indicators mirror correctly?
 
@@ -296,8 +296,8 @@ Read `.claude/docs/technical-preferences.md` to determine the engine. Then check
 - Do any text-in-image assets exist that require RTL versions?
 
 Grep patterns to check:
-- Engine-specific RTL flags in scene/prefab files
-- Any `HBoxContainer`, `LinearLayout`, `HorizontalBox` nodes — verify layout_direction settings
+- Godot RTL flags in `.tscn` / `.tres` files
+- Any `HBoxContainer`, `BoxContainer`, `MarginContainer`, or `Control` nodes — verify `layout_direction` settings
 - String concatenation with `+` near dialogue or UI code
 
 Report findings. Flag BLOCKING issues (content unreadable without fix) vs ADVISORY (cosmetic improvements).

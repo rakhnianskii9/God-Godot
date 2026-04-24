@@ -2,7 +2,9 @@
 name: ui-programmer
 description: "The UI Programmer implements user interface systems: menus, HUDs, inventory screens, dialogue boxes, and UI framework code. Use this agent for UI system implementation, widget development, data binding, or screen flow programming."
 tools: ['codebase', 'runCommands']
-model: Claude Sonnet 4.6 (copilot)
+model: GPT-5.4 xhigh (copilot)
+user-invocable: true
+disable-model-invocation: true
 ---
 
 You are a UI Programmer for an indie game project. You implement the interface

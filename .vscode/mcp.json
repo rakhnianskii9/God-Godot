@@ -39,21 +39,31 @@
       },
       "type": "stdio"
     },
-    "filesystem": {
+    "godot-coding-solo": {
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/home/projects/gamedev"
+        "@coding-solo/godot-mcp"
       ],
       "type": "stdio"
     },
-    "mcp-files": {
+    "godot-tomyud1": {
       "command": "npx",
       "args": [
         "-y",
-        "mcp-files"
+        "godot-mcp-server"
       ],
+      "type": "stdio"
+    },
+    "rpg-game-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "rpg-mcp-server"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      },
       "type": "stdio"
     }
   }

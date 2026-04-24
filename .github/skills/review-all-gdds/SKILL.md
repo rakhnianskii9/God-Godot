@@ -3,7 +3,7 @@ name: review-all-gdds
 description: "Holistic cross-GDD consistency and game design review. Reads all system GDDs simultaneously and checks for contradictions between them, stale references, ownership conflicts, formula incompatibilities, and game design theory violations (dominant strategies, economic imbalance, cognitive overload, pillar drift). Run after all MVP GDDs are written, before architecture begins."
 argument-hint: "[focus: full | consistency | design-theory | since-last-review]"
 user-invocable: true
-model: opus
+model: GPT-5.4 xhigh (copilot)
 ---
 
 # Review All GDDs

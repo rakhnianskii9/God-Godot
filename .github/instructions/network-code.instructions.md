@@ -1,5 +1,5 @@
 ---
-applyTo: "src/networking/**"
+applyTo: ["my-game/scripts/network/**", "my-game/scripts/multiplayer/**"]
 ---
 
 # Network Code Rules

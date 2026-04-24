@@ -4,7 +4,7 @@ description: "Validates completeness and consistency of the project architecture
 argument-hint: "[focus: full | coverage | consistency | engine | single-gdd path/to/gdd.md]"
 user-invocable: true
 agent: technical-director
-model: opus
+model: GPT-5.4 xhigh (copilot)
 ---
 
 # Architecture Review
@@ -327,7 +327,7 @@ After completing the engine audit above, spawn the **primary engine specialist**
 - If no engine is configured, skip this consultation
 - Spawn `subagent_type: [primary specialist]` with: all ADRs that contain engine-specific decisions or `Post-Cutoff APIs Used` fields, the engine reference docs, and the Phase 5 audit findings. Ask them to:
   1. Confirm or challenge each audit finding — specialists may know of engine nuances not captured in the reference docs
-  2. Identify engine-specific anti-patterns in the ADRs that the audit may have missed (e.g., using the wrong Godot node type, Unity component coupling, Unreal subsystem misuse)
+  2. Identify engine-specific anti-patterns in the ADRs that the audit may have missed (e.g., using the wrong Godot node type, leaking gameplay state into autoloads, or misusing scene ownership)
   3. Flag ADRs that make assumptions about engine behaviour that differ from the actual pinned version
 
 Incorporate additional findings under `### Engine Specialist Findings` in the Phase 5 output. These feed into the final verdict — specialist-identified issues carry the same weight as audit-identified issues.

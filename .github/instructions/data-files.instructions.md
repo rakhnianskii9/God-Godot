@@ -1,5 +1,5 @@
 ---
-applyTo: "assets/data/**"
+applyTo: ["my-game/data/**", "**/*.json"]
 ---
 
 # Data File Rules

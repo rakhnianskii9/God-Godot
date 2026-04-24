@@ -1,5 +1,5 @@
 ---
-applyTo: "design/gdd/**"
+applyTo: ["design/gdd/**", "docs/design/**"]
 ---
 
 # Design Document Rules

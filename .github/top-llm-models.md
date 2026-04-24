@@ -262,7 +262,7 @@ Autonomous agent loops, tool use, multi-step task completion.
 
 ## Рекомендации для проекта
 
-Для нашего Flowise-стека (TypeScript/Node, React, Postgres, Redis):
+Для текущего Godot-first workspace:
 
 | Задача | Рекомендация | Почему |
 |--------|-------------|--------|

@@ -1,5 +1,5 @@
 ---
-applyTo: "design/narrative/**"
+applyTo: ["design/narrative/**", "docs/narrative/**"]
 ---
 
 # Narrative Rules

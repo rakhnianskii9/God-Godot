@@ -168,132 +168,9 @@ func load_scene_and_wait(scene_path: String) -> Node:
 
 ---
 
-### Unity (NUnit / C#)
-
-**Base helper** (`tests/helpers/GameAssertions.cs`):
-
-```csharp
-using NUnit.Framework;
-using UnityEngine;
-
-/// <summary>
-/// Game-specific assertion utilities for [Project Name] tests.
-/// Extends NUnit's Assert with domain-specific helpers.
-/// </summary>
-public static class GameAssertions
-{
-    /// <summary>
-    /// Assert a value is within an inclusive range [min, max].
-    /// Use for any formula output defined in GDD Formulas sections.
-    /// </summary>
-    public static void AssertInRange(float value, float min, float max, string label = "value")
-    {
-        Assert.That(value, Is.InRange(min, max),
-            $"{label} ({value:F2}) is outside expected range [{min:F2}, {max:F2}]");
-    }
-
-    /// <summary>Assert a UnityEvent or C# event was raised during an action.</summary>
-    public static void AssertEventRaised(ref bool wasCalled, System.Action action, string eventName)
-    {
-        wasCalled = false;
-        action();
-        Assert.IsTrue(wasCalled, $"Expected event '{eventName}' to be raised, but it was not.");
-    }
-
-    /// <summary>Assert a component exists on a GameObject.</summary>
-    public static void AssertHasComponent<T>(GameObject obj) where T : Component
-    {
-        var component = obj.GetComponent<T>();
-        Assert.IsNotNull(component,
-            $"Expected GameObject '{obj.name}' to have component {typeof(T).Name}.");
-    }
-}
-```
-
-**Factory helper** (`tests/helpers/GameFactory.cs`):
-
-```csharp
-using UnityEngine;
-
-/// <summary>
-/// Factory methods for creating minimal test objects without loading scenes.
-/// </summary>
-public static class GameFactory
-{
-    /// <summary>Create a minimal GameObject with a named component for testing.</summary>
-    public static GameObject MakeGameObject(string name = "TestObject")
-    {
-        var go = new GameObject(name);
-        return go;
-    }
-
-    /// <summary>
-    /// Create a ScriptableObject of type T for data-driven tests.
-    /// Dispose with Object.DestroyImmediate after test.
-    /// </summary>
-    public static T MakeScriptableObject<T>() where T : ScriptableObject
-    {
-        return ScriptableObject.CreateInstance<T>();
-    }
-}
-```
-
----
-
-### Unreal Engine (C++)
-
-**Base helper** (`tests/helpers/GameTestHelpers.h`):
-
-```cpp
-#pragma once
-
-#include "CoreMinimal.h"
-#include "Misc/AutomationTest.h"
-
-/**
- * Game-specific assertion macros and helpers for [Project Name] automation tests.
- * Include in any test file that needs domain-specific assertions.
- *
- * Usage:
- *   GAME_TEST_ASSERT_IN_RANGE(TestName, DamageValue, 10.0f, 50.0f, TEXT("Damage"));
- */
-
-// Assert a float value is within inclusive range [Min, Max]
-#define GAME_TEST_ASSERT_IN_RANGE(TestName, Value, Min, Max, Label) \
-    TestTrue( \
-        FString::Printf(TEXT("%s (%.2f) in range [%.2f, %.2f]"), Label, Value, Min, Max), \
-        (Value) >= (Min) && (Value) <= (Max) \
-    )
-
-// Assert a UObject pointer is valid (not null, not garbage collected)
-#define GAME_TEST_ASSERT_VALID(TestName, Ptr, Label) \
-    TestTrue( \
-        FString::Printf(TEXT("%s is valid"), Label), \
-        IsValid(Ptr) \
-    )
-
-// Assert an Actor is in the world (spawned successfully)
-#define GAME_TEST_ASSERT_SPAWNED(TestName, ActorPtr, ClassName) \
-    TestNotNull( \
-        FString::Printf(TEXT("Spawned actor of class %s"), TEXT(#ClassName)), \
-        ActorPtr \
-    )
-
-/**
- * Helper to create a minimal test world.
- * Remember to call World->DestroyWorld(false) in teardown.
- */
-namespace GameTestHelpers
-{
-    inline UWorld* CreateTestWorld(const FString& WorldName = TEXT("TestWorld"))
-    {
-        UWorld* World = UWorld::CreateWorld(EWorldType::Game, false);
-        FWorldContext& WorldContext = GEngine->CreateNewWorldContext(EWorldType::Game);
-        WorldContext.SetCurrentWorld(World);
-        return World;
-    }
-}
-```
+Current workspace note: generate and maintain Godot helpers only. If
+`technical-preferences.md` points elsewhere, stop and align the control-plane
+before creating helper libraries.
 
 ---
 
@@ -369,9 +246,7 @@ regenerated."
 After writing: Verdict: **COMPLETE** — helper files created.
 
 "Helper files created. To use them in a test:
-- Godot: `class_name` is auto-imported — no explicit import needed
-- Unity: Add `using` directive or reference the test assembly
-- Unreal: `#include \"tests/helpers/GameTestHelpers.h\"`"
+- Godot: `class_name` is auto-imported — no explicit import needed"
 
 ---
 

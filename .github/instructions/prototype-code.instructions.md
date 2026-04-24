@@ -1,5 +1,5 @@
 ---
-applyTo: "prototypes/**"
+applyTo: ["prototypes/**", "my-game/prototypes/**"]
 ---
 
 # Prototype Code Standards (Relaxed)

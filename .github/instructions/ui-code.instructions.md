@@ -1,5 +1,5 @@
 ---
-applyTo: "src/ui/**"
+applyTo: ["my-game/scenes/ui/**", "my-game/scripts/ui/**", "**/ui/**"]
 ---
 
 # UI Code Rules

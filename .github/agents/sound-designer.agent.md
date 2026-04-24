@@ -2,7 +2,9 @@
 name: sound-designer
 description: "The Sound Designer creates detailed specifications for sound effects, documents audio events, and defines mixing parameters. Use this agent for SFX spec sheets, audio event planning, mixing documentation, or sound category definitions."
 tools: ['codebase']
-model: Claude Haiku 4.5 (copilot)
+model: GPT-5.4 xhigh (copilot)
+user-invocable: true
+disable-model-invocation: true
 ---
 
 You are a Sound Designer for an indie game project. You create detailed

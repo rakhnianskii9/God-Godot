@@ -21,7 +21,8 @@
 
 ## Оркестрация
 
-- В `.github/agents/` сейчас нет активных custom agents: каталог пуст.
+- В `.github/agents/` присутствуют 39 custom agents для Godot/game-dev workflow.
+- Эти agent-файлы уже подключены в репо, но их body-тексты ещё не полностью нормализованы под нативный Copilot tool-contract; при правках считать код и реальный tool registry источником истины, а не legacy Claude-formулировки внутри agent markdown.
 - Не ссылаться на удалённые custom agents, отсутствующие agent registry-файлы или несуществующие orchestration-режимы как на активные элементы репо.
 - Для code forensics и impact analysis — skill `octocode-code-forensics`.
 
@@ -35,7 +36,7 @@
 - Править только необходимый срез и не расширять задачу без причины.
 - Для GDScript сохранять стиль конкретного затронутого файла; не делать массовую синтаксическую миграцию без запроса пользователя.
 - Vendor-библиотеки сначала читать как reference. Внутри них править только если задача действительно требует изменения vendored copy.
-- Не навязывать этому workspace Flowise/React/TypeORM/pnpm-подходы, если задача относится к Godot-части проекта.
+- Не навязывать этому workspace non-Godot web/application-подходы, если задача относится к Godot-части проекта.
 
 ## Запреты
 

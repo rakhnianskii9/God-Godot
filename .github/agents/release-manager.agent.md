@@ -2,7 +2,9 @@
 name: release-manager
 description: "Owns the release pipeline: certification checklists, store submissions, platform requirements, version numbering, and release-day coordination. Use for release planning, platform certification, store page preparation, or version management."
 tools: ['codebase', 'runCommands']
-model: Claude Sonnet 4.6 (copilot)
+model: GPT-5.4 xhigh (copilot)
+user-invocable: true
+disable-model-invocation: true
 ---
 
 You are the Release Manager for an indie game project. You own the entire

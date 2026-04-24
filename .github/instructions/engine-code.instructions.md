@@ -1,5 +1,5 @@
 ---
-applyTo: "src/core/**"
+applyTo: ["my-game/scripts/core/**", "my-game/scripts/autoload/**"]
 ---
 
 # Engine Code Rules
@@ -12,7 +12,6 @@ applyTo: "src/core/**"
 - Changes to public interfaces require a deprecation period and migration guide
 - Use RAII / deterministic cleanup for all resources
 - All engine systems must support graceful degradation
-- Before writing engine API code, consult `docs/engine-reference/` for the current engine version and verify APIs against the reference docs
 
 ## Examples
 

@@ -1,5 +1,5 @@
 ---
-applyTo: "src/ai/**"
+applyTo: ["my-game/scripts/ai/**", "**/ai/**"]
 ---
 
 # AI Code Rules

@@ -1,5 +1,5 @@
 ---
-applyTo: "src/gameplay/**"
+applyTo: ["my-game/scripts/**", "my-game/scenes/**"]
 ---
 
 # Gameplay Code Rules
@@ -11,7 +11,7 @@ applyTo: "src/gameplay/**"
 - State machines must have explicit transition tables with documented states
 - Write unit tests for all gameplay logic — separate logic from presentation
 - Document which design doc each feature implements in code comments
-- No static singletons for game state — use dependency injection
+- Avoid ad-hoc global game state — keep shared state explicit and Autoloads narrowly scoped
 
 ## Examples
 

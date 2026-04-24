@@ -52,7 +52,7 @@ Goal: validate the whole orchestration control plane, not just syntax. The skill
 - [ ] `hooks.json` is valid JSON with `PreToolUse` and/or `PostToolUse` arrays
 - [ ] Every hook script referenced in hooks.json exists and is executable
 - [ ] Hook scripts output valid JSON (`{"continue": true}` or denial with reason)
-- [ ] pretool-guard blocks: rm -rf, git reset/restore/clean, docker build, pnpm build:compose
+- [ ] pretool-guard blocks: rm -rf, destructive git commands (`git reset/restore/clean/revert`, `git checkout -- ...`), and container image builds (`docker`/`podman`/`docker-compose` build variants)
 - [ ] Hook coverage matches project rules: posttool hooks reflect current quality/security expectations from instructions
 - [ ] Hook references use real relative paths and do not point to deleted scripts
 

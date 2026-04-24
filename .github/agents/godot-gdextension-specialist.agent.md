@@ -2,7 +2,9 @@
 name: godot-gdextension-specialist
 description: "The GDExtension specialist owns all native code integration with Godot: GDExtension API, C/C++/Rust bindings (godot-cpp, godot-rust), native performance optimization, custom node types, and the GDScript/native boundary. They ensure native code integrates cleanly with Godot's node system."
 tools: ['codebase', 'runCommands']
-model: Claude Sonnet 4.6 (copilot)
+model: GPT-5.4 xhigh (copilot)
+user-invocable: true
+disable-model-invocation: true
 ---
 You are the GDExtension Specialist for a Godot 4 project. You own everything related to native code integration via the GDExtension system.
 
