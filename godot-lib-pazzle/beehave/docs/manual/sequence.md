@@ -77,31 +77,31 @@ The guard will follow this sequence, and if all actions are successful, the Sequ
 
 <ul style="list-style: none;">
     <li>
-        <img src="assets/icons/tree.svg" width="18px"/>
+        <img src="../assets/icons/tree.svg" width="18px"/>
         BeehaveTree
     </li>
     <li>
         <ul style="list-style: none;">
             <li>
-                <a href="#/manual/sequence?id=sequence-node"><img src="assets/icons/sequence.svg" width="18px"/></a>
+                <a href="#sequence-node"><img src="../assets/icons/sequence.svg" width="18px"/></a>
                 SequenceComposite
             </li>
             <li>
                 <ul style="list-style: none;">
                     <li>
-                        <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                        <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                         MoveToPointA
                     </li>
                     <li>
-                        <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                        <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                         WaitFor2Seconds
                     </li>
                     <li>
-                        <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                        <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                         MoveToPointB
                     </li>
                     <li>
-                        <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                        <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                         WaitFor2Seconds2
                     </li>
                 </ul>
@@ -110,7 +110,7 @@ The guard will follow this sequence, and if all actions are successful, the Sequ
     </li>
 </ul>
 
-Instead of creating a custom action for waiting, you could use the <a href="#/manual/decorators?id=delayer">Delayer</a> decorator.
+Instead of creating a custom action for waiting, you could use the <a href="decorators.md#delayer">Delayer</a> decorator.
 
 
 ### Example 2: NPC Conversation

@@ -32,7 +32,7 @@ In order to avoid bugs creeping into the codebase, every feature is covered by u
 
 <img src="assets/gdunit-testrun.gif" width="450px"/>
 
-> 💡 [Learn more](/manual/) about the features such as node types and internals.
+> 💡 [Learn more](manual/README.md) about the features such as node types and internals.
 
 # 📦 Installation
 
@@ -57,7 +57,7 @@ In order to avoid bugs creeping into the codebase, every feature is covered by u
 
 # 🍻 Contribute
 
-Do you want to contribute? Learn more in [the contribution section](/contribute.md).
+Do you want to contribute? Learn more in [the contribution section](contribute.md).
 
 # 🥰 Credits
 

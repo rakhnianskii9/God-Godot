@@ -1,6 +1,6 @@
 # Saving and Loading
 
-Pandora allows you to load and save changed data effortlessly. The data defined inside the Pandora editor itself will be shipped as part of your game files in `res://data.pandora`, while there might also be a separate state for save games, e.g. in `user://savegame.json`. Given this architecture, it's clear that directly modifying PandoraEntity during runtime and then saving it isn't straightforward, because PandoraEntity is fundamentally a static model descriptor. To manipulate game data, you'd first need to [create an instance of your entity](api/instancing):
+Pandora allows you to load and save changed data effortlessly. The data defined inside the Pandora editor itself will be shipped as part of your game files in `res://data.pandora`, while there might also be a separate state for save games, e.g. in `user://savegame.json`. Given this architecture, it's clear that directly modifying PandoraEntity during runtime and then saving it isn't straightforward, because PandoraEntity is fundamentally a static model descriptor. To manipulate game data, you'd first need to [create an instance of your entity](instancing.md):
 
 ```gdscript
 

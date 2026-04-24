@@ -2,7 +2,7 @@
 
 Thank you for investing your time in contributing to our project! :sparkles:. 
 
-Read our [Code of Conduct](/CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
+Read our [Code of Conduct](CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
@@ -10,12 +10,12 @@ Use the table of contents icon <img src="./images/table-of-contents.png" width="
 
 ## New contributor guide
 
-To get an overview of the project, read the [README](/README.md).
+To get an overview of the project, read the [README](README.md).
 
 ## Contributor setup
 
 Install requirements for contributing:
-1. Please install python3 on your system. (It is needed for scripts to format your commit messages and handle [CHANGELOG.rst](/CHANGELOG.rst) file)
+1. Please install python3 on your system. (It is needed for scripts to format your commit messages and handle [CHANGELOG.rst](CHANGELOG.rst) file)
 2. Install venv module for python (linux users only):
    - `sudo apt-get install python3-venv`
 3. Run this command in your terminal when you are in project directory:

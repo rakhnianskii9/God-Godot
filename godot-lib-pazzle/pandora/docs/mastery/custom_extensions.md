@@ -15,8 +15,7 @@ _pandora/extensions/new_custom_property_:
 
 Once your extension is registered, it will automatically appear in the Pandora property selector, allowing you to use it in your entities and access it at runtime like any other Pandora property.
 
-**NOTE**: If you want to add or change the extensions folder, just go to **Project/Project Settings/Pandora/Config** and set _Extensions_ array:
-![custom_extensions](../assets/pandora_settings_custom_extensions.png)
+**NOTE**: If you want to add or change the extensions folder, just go to **Project/Project Settings/Pandora/Config** and set _Extensions_ array.
 
 ## Example
 For a complete and working example of a custom property, take a look at **pandora/extensions/test_property**

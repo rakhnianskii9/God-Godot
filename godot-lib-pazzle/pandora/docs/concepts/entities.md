@@ -22,4 +22,4 @@ Categories play a pivotal role by defining a set of properties that entities und
 
 Understanding the dynamics between entities and categories is fundamental to efficiently using Pandora, ensuring your game data remains organized and accessible. However, standalone categories and entities won't do much.
 
-Therefore, Pandora also introduces [the concept of properties](/concepts/properties/).
+Therefore, Pandora also introduces [the concept of properties](properties/README.md).

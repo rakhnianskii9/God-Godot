@@ -6,7 +6,7 @@ Properties form the attributes or details of entities, allowing them to be disti
 
 - **Modularity**: Properties in Pandora are distinct from categories and entities in terms of their modeling. This design choice ensures that properties can be reused across different entities without redundancy.
 
-- **Default Value**: By design, each property has a 'default value'. This captures the entity's original, unaltered state. To modify these values during gameplay, instances of entities are created. For a deeper dive into this process, see [Entity Instancing](api/instancing).
+- **Default Value**: By design, each property has a 'default value'. This captures the entity's original, unaltered state. To modify these values during gameplay, instances of entities are created. For a deeper dive into this process, see [Entity Instancing](../../api/instancing.md).
 
 - **Unique Identification**: Every property is uniquely identifiable by an **ID**. Additionally, they have a name, or key, which is paired with a `Variant` default value. This ensures clear identification and access.
 
@@ -20,18 +20,18 @@ The following property types are supported:
 
 |Pandora Type|Godot Type|
 |---|---|
-|[String](/concepts/properties/string.md)|`String`|
-|[Integer](/concepts/properties/integer.md)|`int`|
-|[Float](/concepts/properties/float.md)|`float`|
-|[Bool](/concepts/properties/bool.md)|`bool`|
-|[Vector2i](/concepts/properties/vector2i.md)|`Vector2i`|
-|[Vector2](/concepts/properties/vector2.md)|`Vector2`|
-|[Vector3i](/concepts/properties/vector3i.md)|`Vector3i`|
-|[Vector3](/concepts/properties/vector3.md)|`Vector3`|
-|[Color](/concepts/properties/color.md)|`Color`|
-|[Reference](/concepts/properties/reference.md)|`PandoraEntity`|
-|[Resource](/concepts/properties/resource.md)|`Resource`|
-|[Array](/concepts/properties/array.md)|`Array`|
+|[String](string.md)|`String`|
+|[Integer](integer.md)|`int`|
+|[Float](float.md)|`float`|
+|[Bool](bool.md)|`bool`|
+|[Vector2i](vector2i.md)|`Vector2i`|
+|[Vector2](vector2.md)|`Vector2`|
+|[Vector3i](vector3i.md)|`Vector3i`|
+|[Vector3](vector3.md)|`Vector3`|
+|[Color](color.md)|`Color`|
+|[Reference](reference.md)|`PandoraEntity`|
+|[Resource](resource.md)|`Resource`|
+|[Array](array.md)|`Array`|
 
 ## Contribute
 

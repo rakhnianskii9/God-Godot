@@ -24,33 +24,33 @@ The enemy will move to the player and try to shoot at the same time. If the move
 
 <ul style="list-style: none;">
     <li>
-        <img src="assets/icons/tree.svg" width="18px"/>
+        <img src="../assets/icons/tree.svg" width="18px"/>
         BeehaveTree
     </li>
     <li>
         <ul style="list-style: none;">
             <li>
-                <a href="#/manual/simple_parallel"><img src="/beehave/assets/icons/simple_parallel.svg" width="18px"/></a>
+                <a href="#simple-parallel"><img src="../assets/icons/simple_parallel.svg" width="18px"/></a>
                 SimpleParallel
             </li>
             <li>
                 <ul style="list-style: none;">
                     <li>
-                        <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                        <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                         MoveToPlayer
                     </li>
                     <li>
-                        <a href="#/manual/sequence?id=sequence-node"><img src="assets/icons/sequence.svg" width="18px"/></a>
+                        <a href="sequence.md#sequence-node"><img src="../assets/icons/sequence.svg" width="18px"/></a>
                         SequenceComposite
                     </li>
                     <li>
                         <ul style="list-style: none;">
                             <li>
-                                <a href="#/manual/condition_leaf?id=condition-leaf"><img src="assets/icons/condition.svg" width="18px"/></a>
+                                <a href="condition_leaf.md#condition-leaf"><img src="../assets/icons/condition.svg" width="18px"/></a>
                                 CanShoot
                             </li>
                             <li>
-                                <a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+                                <a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
                                 Shoot
                             </li>
                         </ul>

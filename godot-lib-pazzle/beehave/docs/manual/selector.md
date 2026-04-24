@@ -75,28 +75,28 @@ The enemy will choose the first successful option, and the Selector node will re
 
 <ul style="list-style: none;">
 	<li>
-		<img src="assets/icons/tree.svg" width="18px"/>
+		<img src="../assets/icons/tree.svg" width="18px"/>
 		BeehaveTree
 	</li>
 	<ul style="list-style: none;">
 		<li>
-			<a href="#/manual/selector?id=selector-node"><img src="assets/icons/selector.svg" width="18px"/></a>
+			<a href="#selector-node"><img src="../assets/icons/selector.svg" width="18px"/></a>
 			SelectorComposite
 		</li>
 		<li>
 			<ul style="list-style: none;">
 				<li>
-					<a href="#/manual/sequence?id=sequence-node"><img src="assets/icons/sequence.svg" width="18px"/></a>
+					<a href="sequence.md#sequence-node"><img src="../assets/icons/sequence.svg" width="18px"/></a>
 					SequenceComposite
 				</li>
 				<li>
 					<ul style="list-style: none;">
 						<li>
-							<a href="#/manual/condition_leaf?id=condition-leaf"><img src="assets/icons/condition.svg" width="18px"/></a>
+							<a href="condition_leaf.md#condition-leaf"><img src="../assets/icons/condition.svg" width="18px"/></a>
 							IsPlayerFarAway
 						</li>
 						<li>
-							<a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+							<a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
 							PatrolTheArea
 						</li>
 					</ul>
@@ -106,21 +106,21 @@ The enemy will choose the first successful option, and the Selector node will re
 		<li>
 			<ul style="list-style: none;">
 				<li>
-					<a href="#/manual/sequence?id=sequence-node"><img src="assets/icons/sequence.svg" width="18px"/></a>
+					<a href="sequence.md#sequence-node"><img src="../assets/icons/sequence.svg" width="18px"/></a>
 					SequenceComposite2
 				</li>
 				<li>
 					<ul style="list-style: none;">
 						<li>
-							<a href="#/manual/condition_leaf?id=condition-leaf"><img src="assets/icons/condition.svg" width="18px"/></a>
+							<a href="condition_leaf.md#condition-leaf"><img src="../assets/icons/condition.svg" width="18px"/></a>
 							IsPlayerClose
 						</li>
 						<li>
-							<a href="#/manual/condition_leaf?id=condition-leaf"><img src="assets/icons/condition.svg" width="18px"/></a>
+							<a href="condition_leaf.md#condition-leaf"><img src="../assets/icons/condition.svg" width="18px"/></a>
 							IsHPLow
 						</li>
 						<li>
-							<a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+							<a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
 							Retreat
 						</li>
 					</ul>
@@ -130,17 +130,17 @@ The enemy will choose the first successful option, and the Selector node will re
 		<li>
 			<ul style="list-style: none;">
 				<li>
-					<a href="#/manual/sequence?id=sequence-node"><img src="assets/icons/sequence.svg" width="18px"/></a>
+					<a href="sequence.md#sequence-node"><img src="../assets/icons/sequence.svg" width="18px"/></a>
 					SequenceComposite3
 				</li>
 				<li>
 					<ul style="list-style: none;">
 						<li>
-							<a href="#/manual/condition_leaf?id=condition-leaf"><img src="assets/icons/condition.svg" width="18px"/></a>
+							<a href="condition_leaf.md#condition-leaf"><img src="../assets/icons/condition.svg" width="18px"/></a>
 							IsPlayerClose
 						</li>
 						<li>
-							<a href="#/manual/action_leaf?id=action-leaf-node"><img src="assets/icons/action.svg" width="18px"/></a>
+							<a href="action_leaf.md#action-leaf"><img src="../assets/icons/action.svg" width="18px"/></a>
 							AttackPlayer
 						</li>
 					</ul>

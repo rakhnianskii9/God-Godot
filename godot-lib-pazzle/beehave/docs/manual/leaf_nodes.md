@@ -30,8 +30,8 @@ You'll create leaf nodes whenever you need your AI to:
 While Beehave provides basic Action and Condition leaf nodes, you'll typically create your own custom leaf nodes for your specific game mechanics. This allows you to encapsulate game-specific logic within reusable components.
 
 For detailed information on the specific leaf node types, see:
-- [Action Leaf](manual/action_leaf.md)
-- [Condition Leaf](manual/condition_leaf.md)
+- [Action Leaf](action_leaf.md)
+- [Condition Leaf](condition_leaf.md)
 
 ## Example
 
@@ -52,5 +52,5 @@ In this example, the leaf nodes (`IsEnemyVisible`, `AttackEnemy`, `IsWanderPoint
 ## Next Steps
 
 To learn more about specific leaf node types, continue to:
-- [Action Leaf](manual/action_leaf.md)
-- [Condition Leaf](manual/condition_leaf.md)
+- [Action Leaf](action_leaf.md)
+- [Condition Leaf](condition_leaf.md)

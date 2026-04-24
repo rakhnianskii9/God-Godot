@@ -8,9 +8,9 @@ But, dear reader, this tale is not just of Ignis. It is also yours. For as Ignis
 
 As you accompany Ignis on his quest for the fabled Tome of Fire, your journey with Pandora's system will also unfold:
 
-1. [Craft Spells](ignis/spells.md): Dive into the properties system, and learn how to define spells, their types, and attributes.
-2. [Design the Quest](ignis/quest.md): Grasp the nuances of categories and entities, shaping the narrative and challenges that Ignis faces.
-3. [The Tome of Fire](ignis/tome.md): Understand the significance of reference properties as we locate this coveted artifact.
-4. [Weave an Adventure](ignis/adventure.md): Through mastery of the GDScript API, bring the tale to life, connecting story elements, game mechanics, and data structures seamlessly.
+1. [Craft Spells](spells.md): Dive into the properties system, and learn how to define spells, their types, and attributes.
+2. [Design the Quest](quest.md): Grasp the nuances of categories and entities, shaping the narrative and challenges that Ignis faces.
+3. [The Tome of Fire](tome.md): Understand the significance of reference properties as we locate this coveted artifact.
+4. [Weave an Adventure](adventure.md): Through mastery of the GDScript API, bring the tale to life, connecting story elements, game mechanics, and data structures seamlessly.
 
 Forge ahead, combining the magic of storytelling with the power of Pandora.

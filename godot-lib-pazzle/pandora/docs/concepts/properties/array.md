@@ -25,10 +25,10 @@ var inventory_items = Pandora.get_entity(EntityIds.MAIN_CHARACTER).get_array("In
 
 |Pandora Type|Godot Type|
 |---|---|
-|[String](/concepts/properties/string.md)|`String`|
-|[Integer](/concepts/properties/integer.md)|`int`|
-|[Float](/concepts/properties/float.md)|`float`|
-|[Bool](/concepts/properties/bool.md)|`bool`|
-|[Color](/concepts/properties/color.md)|`Color`|
-|[Reference](/concepts/properties/reference.md)|`PandoraEntity`|
-|[Resource](/concepts/properties/resource.md)|`Resource`|
+|[String](string.md)|`String`|
+|[Integer](integer.md)|`int`|
+|[Float](float.md)|`float`|
+|[Bool](bool.md)|`bool`|
+|[Color](color.md)|`Color`|
+|[Reference](reference.md)|`PandoraEntity`|
+|[Resource](resource.md)|`Resource`|

@@ -40,4 +40,4 @@ It is generally recommended to use `instantiate()` for any entity that can be un
 
 > 💡 **Did you know?** `instantiate()` also works on custom entity types! It will automagically create an instanced version of your custom script with the same super-powers as any other ordinary instance.
 
-Once an instance has been changed it would be also great to save that state in a save game - many games require saving and loading. Pandora provides an API to integrate loading and saving seamlessly. [Learn how to save and load with Pandora](/api/saveload.md).
+Once an instance has been changed it would be also great to save that state in a save game - many games require saving and loading. Pandora provides an API to integrate loading and saving seamlessly. [Learn how to save and load with Pandora](saveload.md).
