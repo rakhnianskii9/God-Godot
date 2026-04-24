@@ -2,22 +2,35 @@
 set -euo pipefail
 
 payload="$(cat)"
+tmp_dir="${TMPDIR:-/tmp}"
+grep_log="$(mktemp "$tmp_dir/posttool_security.XXXXXX")"
+trap 'rm -f "$grep_log"' EXIT
 
 readarray -t files < <(
-  printf '%s' "$payload" | python3 - <<'PY'
-import json, sys
+  PAYLOAD="$payload" python3 - <<'PY'
+import json, os, sys
 
 def emit(path):
     if isinstance(path, str) and path.strip():
         print(path.strip())
 
+def emit_from_patch(patch_text):
+  if not isinstance(patch_text, str):
+    return
+  for raw_line in patch_text.splitlines():
+    line = raw_line.strip()
+    if line.startswith("*** Update File: ") or line.startswith("*** Add File: "):
+      path = line.split(": ", 1)[1].split(" -> ", 1)[0].strip()
+      emit(path)
+
 try:
-    data = json.load(sys.stdin)
+  data = json.loads(os.environ["PAYLOAD"])
 except Exception:
     sys.exit(0)
 
 tool = str(data.get("tool_name", ""))
-if "edit" not in tool.lower():
+tool_lower = tool.lower()
+if not any(token in tool_lower for token in ("edit", "patch", "create", "write")):
     sys.exit(0)
 
 ti = data.get("tool_input", {})
@@ -34,6 +47,7 @@ if isinstance(ti, dict):
             elif isinstance(item, dict):
                 for key in ("filePath", "path", "target", "newPath"):
                     emit(item.get(key))
+    emit_from_patch(ti.get("input"))
 PY
 )
 
@@ -47,6 +61,11 @@ risk_patterns=(
   "eval\\s*\\("
   "new\\s+Function\\s*\\("
   "child_process\\.(exec|execSync|spawn)"
+  "System\\.Diagnostics\\.Process"
+  "Process\\.Start\\s*\\("
+  "OS\\.execute\\s*\\("
+  "OS\\.create_process\\s*\\("
+  "JavaScriptBridge\\.eval\\s*\\("
   "SELECT\\s+.*\\+"
   "INSERT\\s+.*\\+"
   "UPDATE\\s+.*\\+"
@@ -54,14 +73,15 @@ risk_patterns=(
   "password\\s*=\\s*['\"].+['\"]"
   "api[_-]?key\\s*=\\s*['\"].+['\"]"
   "secret\\s*=\\s*['\"].+['\"]"
+  "token\\s*=\\s*['\"].+['\"]"
 )
 
 hits=()
 for file_path in "${files[@]}"; do
   [[ -f "$file_path" ]] || continue
   for pattern in "${risk_patterns[@]}"; do
-    if grep -En -i "$pattern" "$file_path" >/tmp/posttool_security_grep.log 2>/dev/null; then
-      hit_line="$(head -n 1 /tmp/posttool_security_grep.log | cut -d: -f1)"
+    if grep -En -i "$pattern" "$file_path" >"$grep_log" 2>/dev/null; then
+      hit_line="$(head -n 1 "$grep_log" | cut -d: -f1)"
       hits+=("$file_path:$hit_line")
       break
     fi

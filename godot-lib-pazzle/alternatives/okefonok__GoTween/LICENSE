@@ -1,0 +1,106 @@
+MIT License with Attribution Requirements
+
+Copyright (c) 2026 [Ahmed GD]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files, to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+1. ATTRIBUTION REQUIREMENTS:
+   
+   a) The above copyright notice and this permission notice shall be included in
+      all copies or substantial portions of the Software.
+   
+   b) Users may NOT claim authorship or original creation of this Software.
+      Any modified versions must clearly indicate they are derived from the
+      original GoTween library.
+   
+   c) If this Software is used in any publicly released project (including but
+      not limited to games, applications, tools, or commercial products), credit
+      must be given to the original author in one of the following ways:
+      
+      - In the project's credits section (for games/applications)
+      - In the README or documentation (for libraries/tools)
+      - In a visible "About" or "Credits" section accessible to end users
+      
+   d) If this Software is mentioned, demonstrated, or featured in any public
+      content (including but not limited to tutorial videos, blog posts,
+      documentation, streaming content, or educational materials), the creator
+      must provide:
+      
+      - Clear credit to the original author
+      - A link to the original repository or official source
+      
+      Acceptable credit formats include:
+      - "Using GoTween by [Author Name] - [Repository URL]"
+      - "GoTween library: [Repository URL]"
+      - Video description links with credit text
+      - Blog post attribution with hyperlink
+
+2. MODIFICATION NOTICE:
+   
+   Modified versions of this Software must:
+   
+   a) Clearly state that the software has been modified
+   b) Not be presented as the original Software
+   c) Include attribution to the original Software and author
+   d) Optionally indicate who made the modifications
+
+   Example: "Based on GoTween by [Ahmed GD], modified by [Modifier Name]"
+
+3. DISCLAIMER:
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+SIMPLIFIED SUMMARY (Not legally binding - see full license above):
+
+✅ You CAN:
+- Use this library in personal and commercial projects
+- Modify the code for your needs
+- Distribute modified versions
+- Use it in closed-source projects
+- Sell products that use this library
+
+❌ You CANNOT:
+- Claim you created the original library
+- Remove the license or attribution
+- Redistribute without including the license
+
+📋 You MUST:
+- Include this license with the software
+- Provide a link if mentioned in tutorials/videos/content
+- Indicate if you've modified the original code
+
+---
+
+ATTRIBUTION EXAMPLES:
+
+For Tutorial Videos (in description):
+"GoTween Library: [Repository URL]
+Created by [Ahmed GD]"
+
+For Modified Versions (in header comments):
+```
+// Based on GoTween by [Ahmed GD]
+// Original: [Repository URL]
+// Modified by: [Your Name]
+// Modifications: [Brief description]
+```
+
+For Documentation/README:
+"This project uses the GoTween library ([Repository URL]) created by [Ahmed GD]."
+
+---
+
+For questions about this license, please contact: [aag75yssar@gmail.com]

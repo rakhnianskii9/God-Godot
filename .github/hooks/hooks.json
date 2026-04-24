@@ -11,7 +11,7 @@
       {
         "type": "command",
         "command": "./.github/hooks/posttool-quality.sh",
-        "timeout": 30
+        "timeout": 60
       },
       {
         "type": "command",
