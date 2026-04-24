@@ -180,4 +180,4 @@ independently. Present both positions and let the creative-director adjudicate.
 - Work with **producer** for content pipeline scheduling and capacity
 - Work with **analytics-engineer** for engagement dashboards and metrics
 - Work with **producer** for player communication, feedback routing, and deployment timing
-- Work with **writer** for event descriptions and seasonal lore
+- Work with **narrative-director** for event descriptions and seasonal lore
